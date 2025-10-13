@@ -19,6 +19,31 @@ const thesisQuery = useThesisQuery()
 const supabase = useSupabase()
 const queryClient = useQueryClient()
 
+// Get current user email/name
+const currentUserEmail = ref<string>('')
+
+// Fetch current user's email on mount
+async function fetchCurrentUser() {
+  try {
+    const { data: { user } } = await supabase.auth.getUser()
+    if (user?.email) {
+      currentUserEmail.value = user.email
+    } else if (user?.user_metadata?.name) {
+      currentUserEmail.value = user.user_metadata.name
+    } else if (props.userId) {
+      currentUserEmail.value = props.userId
+    }
+  } catch (error) {
+    console.error('Error fetching current user:', error)
+    if (props.userId) {
+      currentUserEmail.value = props.userId
+    }
+  }
+}
+
+// Call on component mount
+fetchCurrentUser()
+
 // Stock data type
 interface ThesisStock {
   id: string
@@ -168,10 +193,17 @@ function cancelEdit() {
 async function saveEdit(stock: ThesisStock, field: 'pe_ratio' | 'peg_ratio' | 'passed_checks' | 'currently_held') {
   if (!editingCell.value) return
   
+  // Check if we have user email
+  if (!currentUserEmail.value) {
+    showToast('error', 'Error', 'User information not available')
+    cancelEdit()
+    return
+  }
+  
   try {
     const updateData: any = {
       [field]: editingValue.value,
-      [`${field}_updated_by`]: props.userId,
+      [`${field}_updated_by`]: currentUserEmail.value,
       [`${field}_updated_at`]: new Date().toISOString()
     }
     
@@ -1216,7 +1248,7 @@ async function deleteThesis(id: string, title: string) {
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .thesis-card {
-    padding: 0.50rem;
+    padding: 0.5rem;
   }
   
   .thesis-header {
