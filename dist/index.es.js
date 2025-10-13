@@ -1,4 +1,4 @@
-import { defineComponent as ye, ref as v, watch as ke, computed as oe, createElementBlock as l, openBlock as n, createCommentVNode as $, createElementVNode as s, unref as T, createTextVNode as ie, toDisplayString as r, normalizeClass as le, Fragment as R, renderList as H, withDirectives as E, withKeys as g, vModelText as K, vModelCheckbox as ne, withModifiers as G, createVNode as be, TransitionGroup as ge, withCtx as we } from "vue";
+import { defineComponent as ye, ref as v, watch as be, computed as oe, createElementBlock as l, openBlock as n, createCommentVNode as $, createElementVNode as s, unref as T, createTextVNode as ie, toDisplayString as r, normalizeClass as le, Fragment as R, renderList as H, withDirectives as E, withKeys as g, vModelText as K, vModelCheckbox as ne, withModifiers as G, createVNode as ke, TransitionGroup as ge, withCtx as we } from "vue";
 import { useThesisQuery as Ce, useSupabase as $e } from "@y2kfund/core";
 import { useQueryClient as Te } from "@tanstack/vue-query";
 const Ee = { class: "thesis-card" }, Se = {
@@ -7,10 +7,10 @@ const Ee = { class: "thesis-card" }, Se = {
 }, xe = {
   key: 1,
   class: "error"
-}, De = {
+}, Ie = {
   key: 2,
   class: "thesis-container"
-}, Ae = { class: "thesis-header" }, Ue = { class: "thesis-header-actions" }, Me = { class: "thesis-list" }, Ie = {
+}, De = { class: "thesis-header" }, Ae = { class: "thesis-header-actions" }, Ue = { class: "thesis-list" }, Me = {
   key: 0,
   class: "thesis-empty"
 }, Ke = {
@@ -31,7 +31,7 @@ const Ee = { class: "thesis-card" }, Se = {
 }, Xe = {
   key: 1,
   class: "stocks-table-wrapper"
-}, Ye = { class: "stocks-table" }, Ze = { class: "stock-symbol" }, et = ["title", "onDblclick"], tt = ["onBlur", "onKeyup"], st = { key: 1 }, ot = ["title", "onDblclick"], it = ["onBlur", "onKeyup"], lt = { key: 1 }, nt = ["title", "onDblclick"], at = ["onBlur", "onKeyup"], dt = { key: 1 }, rt = ["title", "onDblclick"], ct = ["onBlur", "onKeyup"], ut = { key: 1 }, vt = { class: "stock-actions" }, ht = ["onClick"], pt = { class: "modal-header" }, _t = { class: "modal-body" }, mt = { class: "form-group" }, ft = ["for"], yt = ["id"], kt = { class: "form-group" }, bt = ["for"], gt = ["id"], wt = { class: "modal-footer" }, Ct = ["disabled"], $t = { class: "modal-header" }, Tt = { class: "modal-body" }, Et = { class: "form-group" }, St = { class: "modal-footer" }, xt = ["disabled"], Dt = { class: "toast-container" }, At = ["onClick"], Ut = { class: "toast-icon" }, Mt = { key: 0 }, It = { key: 1 }, Kt = { key: 2 }, Nt = { key: 3 }, Bt = { class: "toast-content" }, Vt = { class: "toast-title" }, Ft = {
+}, Ye = { class: "stocks-table" }, Ze = { class: "stock-symbol" }, et = ["title", "onDblclick"], tt = ["onBlur", "onKeyup"], st = { key: 1 }, ot = ["title", "onDblclick"], it = ["onBlur", "onKeyup"], lt = { key: 1 }, nt = ["title", "onDblclick"], at = ["onBlur", "onKeyup"], dt = { key: 1 }, rt = ["title", "onDblclick"], ut = ["onBlur", "onKeyup"], ct = { key: 1 }, vt = { class: "stock-actions" }, ht = ["onClick"], pt = { class: "modal-header" }, mt = { class: "modal-body" }, _t = { class: "form-group" }, ft = ["for"], yt = ["id"], bt = { class: "form-group" }, kt = ["for"], gt = ["id"], wt = { class: "modal-footer" }, Ct = ["disabled"], $t = { class: "modal-header" }, Tt = { class: "modal-body" }, Et = { class: "form-group" }, St = { class: "modal-footer" }, xt = ["disabled"], It = { class: "toast-container" }, Dt = ["onClick"], At = { class: "toast-icon" }, Ut = { key: 0 }, Mt = { key: 1 }, Kt = { key: 2 }, Nt = { key: 3 }, Bt = { class: "toast-content" }, Vt = { class: "toast-title" }, Ft = {
   key: 0,
   class: "toast-message"
 }, qt = ["onClick"], Lt = /* @__PURE__ */ ye({
@@ -42,7 +42,7 @@ const Ee = { class: "thesis-card" }, Se = {
   },
   emits: ["minimize", "navigate"],
   setup(S, { emit: q }) {
-    const f = S, N = q, m = Ce(), y = $e(), L = Te(), x = v("");
+    const f = S, N = q, _ = Ce(), y = $e(), L = Te(), x = v("");
     async function ae() {
       var o;
       try {
@@ -53,27 +53,27 @@ const Ee = { class: "thesis-card" }, Se = {
       }
     }
     ae();
-    const U = v({}), h = v(null), p = v(null), D = v(!1), Q = v(""), w = v(""), M = v(/* @__PURE__ */ new Set());
-    async function I() {
+    const A = v({}), h = v(null), p = v(null), I = v(!1), Q = v(""), w = v(""), U = v(/* @__PURE__ */ new Set());
+    async function M() {
       try {
         const { data: o, error: e } = await y.schema("hf").from("thesisStocks").select("*").order("symbol");
         if (e) throw e;
         const t = {};
         o == null || o.forEach((a) => {
           t[a.thesis_id] || (t[a.thesis_id] = []), t[a.thesis_id].push(a);
-        }), U.value = t;
+        }), A.value = t;
       } catch (o) {
-        console.error("Error loading thesis stocks:", o), u("error", "Error", `Failed to load stocks: ${o.message}`);
+        console.error("Error loading thesis stocks:", o), c("error", "Error", `Failed to load instruments: ${o.message}`);
       }
     }
-    ke(() => m.data.value, (o) => {
-      o && o.length > 0 && I();
+    be(() => _.data.value, (o) => {
+      o && o.length > 0 && M();
     }, { immediate: !0 });
     function de(o) {
-      M.value.has(o) ? M.value.delete(o) : M.value.add(o);
+      U.value.has(o) ? U.value.delete(o) : U.value.add(o);
     }
     function re(o) {
-      Q.value = o, w.value = "", D.value = !0;
+      Q.value = o, w.value = "", I.value = !0;
     }
     async function O() {
       if (!(!w.value.trim() || !Q.value))
@@ -87,31 +87,31 @@ const Ee = { class: "thesis-card" }, Se = {
             currently_held: !1
           }]).select();
           if (e) throw e;
-          await I(), w.value = "", D.value = !1, u("success", "Stock Added", `${w.value} has been added to the thesis`);
+          await M(), w.value = "", I.value = !1, c("success", "Instrument Added", `${w.value} has been added to the thesis`);
         } catch (o) {
-          console.error("Error adding stock:", o), u("error", "Error", `Failed to add stock: ${o.message}`);
+          console.error("Error adding stock:", o), c("error", "Error", `Failed to add stock: ${o.message}`);
         }
     }
-    async function ce(o, e, t) {
+    async function ue(o, e, t) {
       if (confirm(`Are you sure you want to remove ${t} from this thesis?`))
         try {
           const { error: a } = await y.schema("hf").from("thesisStocks").delete().eq("id", e);
           if (a) throw a;
-          await I(), u("success", "Stock Removed", `${t} has been removed from the thesis`);
+          await M(), c("success", "Instrument Removed", `${t} has been removed from the thesis`);
         } catch (a) {
-          console.error("Error deleting stock:", a), u("error", "Error", `Failed to remove stock: ${a.message}`);
+          console.error("Error deleting stock:", a), c("error", "Error", `Failed to remove stock: ${a.message}`);
         }
     }
     function B(o, e, t) {
       h.value = { thesisId: o, stockId: e.id, field: t }, p.value = e[t];
     }
-    function A() {
+    function D() {
       h.value = null, p.value = null;
     }
     async function C(o, e) {
       if (h.value) {
         if (!x.value) {
-          u("error", "Error", "User information not available"), A();
+          c("error", "Error", "User information not available"), D();
           return;
         }
         try {
@@ -121,9 +121,9 @@ const Ee = { class: "thesis-card" }, Se = {
             [`${e}_updated_at`]: (/* @__PURE__ */ new Date()).toISOString()
           }, { error: a } = await y.schema("hf").from("thesisStocks").update(t).eq("id", o.id);
           if (a) throw a;
-          await I(), A(), u("success", "Updated", `${e.replace("_", " ")} has been updated`);
+          await M(), D(), c("success", "Updated", `${e.replace("_", " ")} has been updated`);
         } catch (t) {
-          console.error("Error updating stock:", t), u("error", "Error", `Failed to update: ${t.message}`);
+          console.error("Error updating stock:", t), c("error", "Error", `Failed to update: ${t.message}`);
         }
       }
     }
@@ -136,20 +136,20 @@ Updated at: ${i}`;
       }
       return "No updates yet";
     }
-    const k = v(!1), c = v("add"), b = v({ title: "", description: "" }), _ = v({ id: "", title: "", description: "" }), z = oe({
-      get: () => c.value === "add" ? b.value.title : _.value.title,
+    const b = v(!1), u = v("add"), k = v({ title: "", description: "" }), m = v({ id: "", title: "", description: "" }), z = oe({
+      get: () => u.value === "add" ? k.value.title : m.value.title,
       set: (o) => {
-        c.value === "add" ? b.value.title = o : _.value.title = o;
+        u.value === "add" ? k.value.title = o : m.value.title = o;
       }
     }), j = oe({
-      get: () => c.value === "add" ? b.value.description : _.value.description,
+      get: () => u.value === "add" ? k.value.description : m.value.description,
       set: (o) => {
-        c.value === "add" ? b.value.description = o : _.value.description = o;
+        u.value === "add" ? k.value.description = o : m.value.description = o;
       }
     }), F = v([]);
-    let ue = 0;
-    function u(o, e, t) {
-      const a = ue++;
+    let ce = 0;
+    function c(o, e, t) {
+      const a = ce++;
       F.value.push({ id: a, type: o, title: e, message: t }), setTimeout(() => {
         P(a);
       }, 5e3);
@@ -159,71 +159,71 @@ Updated at: ${i}`;
       e !== -1 && F.value.splice(e, 1);
     }
     function ve() {
-      c.value = "add", b.value = { title: "", description: "" }, k.value = !0;
+      u.value = "add", k.value = { title: "", description: "" }, b.value = !0;
     }
     async function he() {
-      if (b.value.title.trim())
+      if (k.value.title.trim())
         try {
           const { data: o, error: e } = await y.schema("hf").from("thesisMaster").insert([{
-            title: b.value.title.trim(),
-            description: b.value.description.trim() || null
+            title: k.value.title.trim(),
+            description: k.value.description.trim() || null
           }]).select();
           if (e) throw e;
-          L.invalidateQueries({ queryKey: ["thesis"] }), b.value = { title: "", description: "" }, k.value = !1, u("success", "Thesis Added", "New thesis has been created successfully");
+          L.invalidateQueries({ queryKey: ["thesis"] }), k.value = { title: "", description: "" }, b.value = !1, c("success", "Thesis Added", "New thesis has been created successfully");
         } catch (o) {
-          console.error("Error adding thesis:", o), u("error", "Error", `Failed to add thesis: ${o.message}`);
+          console.error("Error adding thesis:", o), c("error", "Error", `Failed to add thesis: ${o.message}`);
         }
     }
     function pe(o) {
-      _.value = {
+      m.value = {
         id: o.id,
         title: o.title,
         description: o.description || ""
-      }, c.value = "edit", k.value = !0;
+      }, u.value = "edit", b.value = !0;
     }
-    function _e() {
-      _.value = { id: "", title: "", description: "" }, k.value = !1;
+    function me() {
+      m.value = { id: "", title: "", description: "" }, b.value = !1;
     }
-    async function me() {
-      if (_.value.title.trim())
+    async function _e() {
+      if (m.value.title.trim())
         try {
           const { error: o } = await y.schema("hf").from("thesisMaster").update({
-            title: _.value.title.trim(),
-            description: _.value.description.trim() || null
-          }).eq("id", _.value.id);
+            title: m.value.title.trim(),
+            description: m.value.description.trim() || null
+          }).eq("id", m.value.id);
           if (o) throw o;
-          L.invalidateQueries({ queryKey: ["thesis"] }), _.value = { id: "", title: "", description: "" }, k.value = !1, u("success", "Thesis Updated", "Thesis has been updated successfully");
+          L.invalidateQueries({ queryKey: ["thesis"] }), m.value = { id: "", title: "", description: "" }, b.value = !1, c("success", "Thesis Updated", "Thesis has been updated successfully");
         } catch (o) {
-          console.error("Error updating thesis:", o), u("error", "Error", `Failed to update thesis: ${o.message}`);
+          console.error("Error updating thesis:", o), c("error", "Error", `Failed to update thesis: ${o.message}`);
         }
     }
     async function fe(o, e) {
       if (confirm(`Are you sure you want to delete thesis "${e}"?
 
-Note: This will also delete all stocks associated with this thesis.`))
+Note: This will also delete all instruments associated with this thesis.`))
         try {
           await y.schema("hf").from("thesisStocks").delete().eq("thesis_id", o);
           const { error: t } = await y.schema("hf").from("thesisMaster").delete().eq("id", o);
           if (t) throw t;
-          L.invalidateQueries({ queryKey: ["thesis"] }), await I(), u("success", "Thesis Deleted", "Thesis and associated stocks have been deleted successfully");
+          L.invalidateQueries({ queryKey: ["thesis"] }), await M(), c("success", "Thesis Deleted", "Thesis and associated instruments have been deleted successfully");
         } catch (t) {
-          console.error("Error deleting thesis:", t), u("error", "Error", `Failed to delete thesis: ${t.message}`);
+          console.error("Error deleting thesis:", t), c("error", "Error", `Failed to delete thesis: ${t.message}`);
         }
     }
     return (o, e) => (n(), l("div", Ee, [
-      T(m).isLoading.value ? (n(), l("div", Se, [...e[18] || (e[18] = [
+      T(_).isLoading.value ? (n(), l("div", Se, [...e[18] || (e[18] = [
         s("div", { class: "loading-spinner" }, null, -1),
         ie(" Loading thesis... ", -1)
-      ])])) : T(m).isError.value ? (n(), l("div", xe, [
+      ])])) : T(_).isError.value ? (n(), l("div", xe, [
         e[19] || (e[19] = s("h3", null, "Error loading thesis", -1)),
-        s("p", null, r(T(m).error.value), 1)
-      ])) : T(m).isSuccess.value ? (n(), l("div", De, [
-        s("div", Ae, [
+        s("p", null, r(T(_).error.value), 1)
+      ])) : T(_).isSuccess.value ? (n(), l("div", Ie, [
+        s("div", De, [
           s("h2", {
             class: le({ "thesis-header-clickable": f.showHeaderLink }),
             onClick: e[0] || (e[0] = (t) => f.showHeaderLink && N("navigate"))
           }, " Thesis Management ", 2),
-          s("div", Ue, [
+          s("div", Ae, [
             s("button", {
               class: "btn btn-primary",
               onClick: ve
@@ -238,11 +238,11 @@ Note: This will also delete all stocks associated with this thesis.`))
             }, " ➖ ")
           ])
         ]),
-        s("div", Me, [
-          !T(m).data.value || T(m).data.value.length === 0 ? (n(), l("div", Ie, [...e[21] || (e[21] = [
+        s("div", Ue, [
+          !T(_).data.value || T(_).data.value.length === 0 ? (n(), l("div", Me, [...e[21] || (e[21] = [
             s("p", null, 'No thesis found. Click "Add New Thesis" to create one.', -1)
           ])])) : (n(), l("div", Ke, [
-            (n(!0), l(R, null, H(T(m).data.value, (t) => {
+            (n(!0), l(R, null, H(T(_).data.value, (t) => {
               var a;
               return n(), l("div", {
                 key: t.id,
@@ -253,13 +253,13 @@ Note: This will also delete all stocks associated with this thesis.`))
                     class: "thesis-content",
                     onClick: (i) => de(t.id)
                   }, [
-                    s("div", Ve, r(M.value.has(t.id) ? "▼" : "▶"), 1),
+                    s("div", Ve, r(U.value.has(t.id) ? "▼" : "▶"), 1),
                     s("div", Fe, [
                       s("div", qe, r(t.title), 1),
                       t.description ? (n(), l("div", Le, r(t.description), 1)) : $("", !0),
                       s("div", Qe, [
                         t.created_at ? (n(), l("span", ze, " Created: " + r(new Date(t.created_at).toLocaleDateString()), 1)) : $("", !0),
-                        s("span", Pe, r(((a = U.value[t.id]) == null ? void 0 : a.length) || 0) + " stocks ", 1)
+                        s("span", Pe, r(((a = A.value[t.id]) == null ? void 0 : a.length) || 0) + " instruments ", 1)
                       ])
                     ])
                   ], 8, Be),
@@ -276,15 +276,15 @@ Note: This will also delete all stocks associated with this thesis.`))
                     }, " 🗑️ Delete ", 8, Ge)
                   ])
                 ]),
-                M.value.has(t.id) ? (n(), l("div", Oe, [
+                U.value.has(t.id) ? (n(), l("div", Oe, [
                   s("div", je, [
-                    e[22] || (e[22] = s("h4", null, "Stocks", -1)),
+                    e[22] || (e[22] = s("h4", null, "Instruments", -1)),
                     s("button", {
                       class: "btn btn-primary btn-sm",
                       onClick: (i) => re(t.id)
-                    }, " ➕ Add Stock ", 8, Je)
+                    }, " ➕ Add Instrument ", 8, Je)
                   ]),
-                  !U.value[t.id] || U.value[t.id].length === 0 ? (n(), l("div", We, ' No stocks added yet. Click "Add Stock" to add one. ')) : (n(), l("div", Xe, [
+                  !A.value[t.id] || A.value[t.id].length === 0 ? (n(), l("div", We, ' No instruments added yet. Click "Add Instrument" to add one. ')) : (n(), l("div", Xe, [
                     s("table", Ye, [
                       e[23] || (e[23] = s("thead", null, [
                         s("tr", null, [
@@ -297,7 +297,7 @@ Note: This will also delete all stocks associated with this thesis.`))
                         ])
                       ], -1)),
                       s("tbody", null, [
-                        (n(!0), l(R, null, H(U.value[t.id], (i) => {
+                        (n(!0), l(R, null, H(A.value[t.id], (i) => {
                           var J, W, X, Y, Z, ee, te, se;
                           return n(), l("tr", {
                             key: i.id
@@ -316,7 +316,7 @@ Note: This will also delete all stocks associated with this thesis.`))
                                 onBlur: (d) => C(i, "pe_ratio"),
                                 onKeyup: [
                                   g((d) => C(i, "pe_ratio"), ["enter"]),
-                                  g(A, ["escape"])
+                                  g(D, ["escape"])
                                 ],
                                 autofocus: ""
                               }, null, 40, tt)), [
@@ -341,7 +341,7 @@ Note: This will also delete all stocks associated with this thesis.`))
                                 onBlur: (d) => C(i, "peg_ratio"),
                                 onKeyup: [
                                   g((d) => C(i, "peg_ratio"), ["enter"]),
-                                  g(A, ["escape"])
+                                  g(D, ["escape"])
                                 ],
                                 autofocus: ""
                               }, null, 40, it)), [
@@ -365,7 +365,7 @@ Note: This will also delete all stocks associated with this thesis.`))
                                 onBlur: (d) => C(i, "passed_checks"),
                                 onKeyup: [
                                   g((d) => C(i, "passed_checks"), ["enter"]),
-                                  g(A, ["escape"])
+                                  g(D, ["escape"])
                                 ],
                                 autofocus: ""
                               }, null, 40, at)), [
@@ -384,17 +384,17 @@ Note: This will also delete all stocks associated with this thesis.`))
                                 onBlur: (d) => C(i, "currently_held"),
                                 onKeyup: [
                                   g((d) => C(i, "currently_held"), ["enter"]),
-                                  g(A, ["escape"])
+                                  g(D, ["escape"])
                                 ],
                                 autofocus: ""
-                              }, null, 40, ct)), [
+                              }, null, 40, ut)), [
                                 [ne, p.value]
-                              ]) : (n(), l("span", ut, r(i.currently_held ? "✅" : "❌"), 1))
+                              ]) : (n(), l("span", ct, r(i.currently_held ? "✅" : "❌"), 1))
                             ], 40, rt),
                             s("td", vt, [
                               s("button", {
                                 class: "btn btn-danger btn-xs",
-                                onClick: (d) => ce(t.id, i.id, i.symbol),
+                                onClick: (d) => ue(t.id, i.id, i.symbol),
                                 title: "Remove stock"
                               }, " 🗑️ ", 8, ht)
                             ])
@@ -409,10 +409,10 @@ Note: This will also delete all stocks associated with this thesis.`))
           ]))
         ])
       ])) : $("", !0),
-      k.value ? (n(), l("div", {
+      b.value ? (n(), l("div", {
         key: 3,
         class: "modal-overlay",
-        onClick: e[12] || (e[12] = (t) => k.value = !1)
+        onClick: e[12] || (e[12] = (t) => b.value = !1)
       }, [
         s("div", {
           class: "modal-content",
@@ -420,19 +420,19 @@ Note: This will also delete all stocks associated with this thesis.`))
           }, ["stop"]))
         }, [
           s("div", pt, [
-            s("h3", null, r(c.value === "add" ? "Add New Thesis" : "Edit Thesis"), 1),
+            s("h3", null, r(u.value === "add" ? "Add New Thesis" : "Edit Thesis"), 1),
             s("button", {
               class: "modal-close",
-              onClick: e[6] || (e[6] = (t) => k.value = !1)
+              onClick: e[6] || (e[6] = (t) => b.value = !1)
             }, "×")
           ]),
-          s("div", _t, [
-            s("div", mt, [
+          s("div", mt, [
+            s("div", _t, [
               s("label", {
-                for: c.value === "add" ? "thesis-title" : "edit-thesis-title"
+                for: u.value === "add" ? "thesis-title" : "edit-thesis-title"
               }, " Title * ", 8, ft),
               E(s("input", {
-                id: c.value === "add" ? "thesis-title" : "edit-thesis-title",
+                id: u.value === "add" ? "thesis-title" : "edit-thesis-title",
                 "onUpdate:modelValue": e[7] || (e[7] = (t) => z.value = t),
                 type: "text",
                 placeholder: "Enter thesis title",
@@ -442,12 +442,12 @@ Note: This will also delete all stocks associated with this thesis.`))
                 [K, z.value]
               ])
             ]),
-            s("div", kt, [
+            s("div", bt, [
               s("label", {
-                for: c.value === "add" ? "thesis-description" : "edit-thesis-description"
-              }, " Description ", 8, bt),
+                for: u.value === "add" ? "thesis-description" : "edit-thesis-description"
+              }, " Description ", 8, kt),
               E(s("textarea", {
-                id: c.value === "add" ? "thesis-description" : "edit-thesis-description",
+                id: u.value === "add" ? "thesis-description" : "edit-thesis-description",
                 "onUpdate:modelValue": e[8] || (e[8] = (t) => j.value = t),
                 placeholder: "Enter thesis description (optional)",
                 rows: "4",
@@ -460,20 +460,20 @@ Note: This will also delete all stocks associated with this thesis.`))
           s("div", wt, [
             s("button", {
               class: "btn btn-cancel",
-              onClick: e[9] || (e[9] = (t) => c.value === "edit" ? _e() : k.value = !1)
+              onClick: e[9] || (e[9] = (t) => u.value === "edit" ? me() : b.value = !1)
             }, " Cancel "),
             s("button", {
               class: "btn btn-primary",
-              onClick: e[10] || (e[10] = (t) => c.value === "add" ? he() : me()),
+              onClick: e[10] || (e[10] = (t) => u.value === "add" ? he() : _e()),
               disabled: !z.value.trim()
-            }, r(c.value === "add" ? "Add Thesis" : "Save Changes"), 9, Ct)
+            }, r(u.value === "add" ? "Add Thesis" : "Save Changes"), 9, Ct)
           ])
         ])
       ])) : $("", !0),
-      D.value ? (n(), l("div", {
+      I.value ? (n(), l("div", {
         key: 4,
         class: "modal-overlay",
-        onClick: e[17] || (e[17] = (t) => D.value = !1)
+        onClick: e[17] || (e[17] = (t) => I.value = !1)
       }, [
         s("div", {
           class: "modal-content",
@@ -481,20 +481,20 @@ Note: This will also delete all stocks associated with this thesis.`))
           }, ["stop"]))
         }, [
           s("div", $t, [
-            e[24] || (e[24] = s("h3", null, "Add Stock to Thesis", -1)),
+            e[24] || (e[24] = s("h3", null, "Add Instrument to Thesis", -1)),
             s("button", {
               class: "modal-close",
-              onClick: e[13] || (e[13] = (t) => D.value = !1)
+              onClick: e[13] || (e[13] = (t) => I.value = !1)
             }, "×")
           ]),
           s("div", Tt, [
             s("div", Et, [
-              e[25] || (e[25] = s("label", { for: "stock-symbol" }, "Stock Symbol *", -1)),
+              e[25] || (e[25] = s("label", { for: "stock-symbol" }, "Instrument Symbol *", -1)),
               E(s("input", {
                 id: "stock-symbol",
                 "onUpdate:modelValue": e[14] || (e[14] = (t) => w.value = t),
                 type: "text",
-                placeholder: "Enter stock symbol (e.g., AAPL)",
+                placeholder: "Enter instrument symbol (e.g., AAPL)",
                 maxlength: "10",
                 autofocus: "",
                 onKeyup: g(O, ["enter"])
@@ -506,18 +506,18 @@ Note: This will also delete all stocks associated with this thesis.`))
           s("div", St, [
             s("button", {
               class: "btn btn-cancel",
-              onClick: e[15] || (e[15] = (t) => D.value = !1)
+              onClick: e[15] || (e[15] = (t) => I.value = !1)
             }, " Cancel "),
             s("button", {
               class: "btn btn-primary",
               onClick: O,
               disabled: !w.value.trim()
-            }, " Add Stock ", 8, xt)
+            }, " Add Instrument ", 8, xt)
           ])
         ])
       ])) : $("", !0),
-      s("div", Dt, [
-        be(ge, {
+      s("div", It, [
+        ke(ge, {
           name: "toast",
           tag: "div"
         }, {
@@ -527,8 +527,8 @@ Note: This will also delete all stocks associated with this thesis.`))
               class: le(["toast", `toast-${t.type}`]),
               onClick: (a) => P(t.id)
             }, [
-              s("div", Ut, [
-                t.type === "success" ? (n(), l("span", Mt, "✅")) : t.type === "error" ? (n(), l("span", It, "❌")) : t.type === "warning" ? (n(), l("span", Kt, "⚠️")) : t.type === "info" ? (n(), l("span", Nt, "ℹ️")) : $("", !0)
+              s("div", At, [
+                t.type === "success" ? (n(), l("span", Ut, "✅")) : t.type === "error" ? (n(), l("span", Mt, "❌")) : t.type === "warning" ? (n(), l("span", Kt, "⚠️")) : t.type === "info" ? (n(), l("span", Nt, "ℹ️")) : $("", !0)
               ]),
               s("div", Bt, [
                 s("div", Vt, r(t.title), 1),
@@ -539,7 +539,7 @@ Note: This will also delete all stocks associated with this thesis.`))
                 onClick: G((a) => P(t.id), ["stop"]),
                 "aria-label": "Close notification"
               }, " × ", 8, qt)
-            ], 10, At))), 128))
+            ], 10, Dt))), 128))
           ]),
           _: 1
         })
@@ -548,10 +548,10 @@ Note: This will also delete all stocks associated with this thesis.`))
   }
 }), Qt = (S, q) => {
   const f = S.__vccOpts || S;
-  for (const [N, m] of q)
-    f[N] = m;
+  for (const [N, _] of q)
+    f[N] = _;
   return f;
-}, zt = /* @__PURE__ */ Qt(Lt, [["__scopeId", "data-v-67f0f82d"]]), Gt = {
+}, zt = /* @__PURE__ */ Qt(Lt, [["__scopeId", "data-v-79a19499"]]), Gt = {
   install(S) {
     S.component("Thesis", zt);
   }

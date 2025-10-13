@@ -97,7 +97,7 @@ async function loadThesisStocks() {
     thesisStocks.value = grouped
   } catch (error: any) {
     console.error('Error loading thesis stocks:', error)
-    showToast('error', 'Error', `Failed to load stocks: ${error.message}`)
+    showToast('error', 'Error', `Failed to load instruments: ${error.message}`)
   }
 }
 
@@ -150,7 +150,7 @@ async function addStockToThesis() {
     newStockSymbol.value = ''
     showAddStockModal.value = false
     
-    showToast('success', 'Stock Added', `${newStockSymbol.value} has been added to the thesis`)
+    showToast('success', 'Instrument Added', `${newStockSymbol.value} has been added to the thesis`)
   } catch (error: any) {
     console.error('Error adding stock:', error)
     showToast('error', 'Error', `Failed to add stock: ${error.message}`)
@@ -172,7 +172,7 @@ async function deleteStock(thesisId: string, stockId: string, symbol: string) {
     // Reload stocks
     await loadThesisStocks()
     
-    showToast('success', 'Stock Removed', `${symbol} has been removed from the thesis`)
+    showToast('success', 'Instrument Removed', `${symbol} has been removed from the thesis`)
   } catch (error: any) {
     console.error('Error deleting stock:', error)
     showToast('error', 'Error', `Failed to remove stock: ${error.message}`)
@@ -377,7 +377,7 @@ async function saveEditThesis() {
 }
 
 async function deleteThesis(id: string, title: string) {
-  if (!confirm(`Are you sure you want to delete thesis "${title}"?\n\nNote: This will also delete all stocks associated with this thesis.`)) return
+  if (!confirm(`Are you sure you want to delete thesis "${title}"?\n\nNote: This will also delete all instruments associated with this thesis.`)) return
   
   try {
     // Delete associated stocks first
@@ -400,7 +400,7 @@ async function deleteThesis(id: string, title: string) {
     queryClient.invalidateQueries({ queryKey: ['thesis'] })
     await loadThesisStocks()
     
-    showToast('success', 'Thesis Deleted', 'Thesis and associated stocks have been deleted successfully')
+    showToast('success', 'Thesis Deleted', 'Thesis and associated instruments have been deleted successfully')
   } catch (error: any) {
     console.error('Error deleting thesis:', error)
     showToast('error', 'Error', `Failed to delete thesis: ${error.message}`)
@@ -471,7 +471,7 @@ async function deleteThesis(id: string, title: string) {
                       Created: {{ new Date(thesis.created_at).toLocaleDateString() }}
                     </span>
                     <span class="thesis-stock-count">
-                      {{ thesisStocks[thesis.id]?.length || 0 }} stocks
+                      {{ thesisStocks[thesis.id]?.length || 0 }} instruments
                     </span>
                   </div>
                 </div>
@@ -497,17 +497,17 @@ async function deleteThesis(id: string, title: string) {
             <!-- Stock table for expanded thesis -->
             <div v-if="expandedThesis.has(thesis.id)" class="stocks-section">
               <div class="stocks-header">
-                <h4>Stocks</h4>
+                <h4>Instruments</h4>
                 <button 
                   class="btn btn-primary btn-sm" 
                   @click="showAddStockModalForThesis(thesis.id)"
                 >
-                  ➕ Add Stock
+                  ➕ Add Instrument
                 </button>
               </div>
 
               <div v-if="!thesisStocks[thesis.id] || thesisStocks[thesis.id].length === 0" class="stocks-empty">
-                No stocks added yet. Click "Add Stock" to add one.
+                No instruments added yet. Click "Add Instrument" to add one.
               </div>
 
               <div v-else class="stocks-table-wrapper">
@@ -674,18 +674,18 @@ async function deleteThesis(id: string, title: string) {
     <div v-if="showAddStockModal" class="modal-overlay" @click="showAddStockModal = false">
       <div class="modal-content" @click.stop>
         <div class="modal-header">
-          <h3>Add Stock to Thesis</h3>
+          <h3>Add Instrument to Thesis</h3>
           <button class="modal-close" @click="showAddStockModal = false">×</button>
         </div>
         
         <div class="modal-body">
           <div class="form-group">
-            <label for="stock-symbol">Stock Symbol *</label>
+            <label for="stock-symbol">Instrument Symbol *</label>
             <input 
               id="stock-symbol"
               v-model="newStockSymbol"
               type="text" 
-              placeholder="Enter stock symbol (e.g., AAPL)"
+              placeholder="Enter instrument symbol (e.g., AAPL)"
               maxlength="10"
               autofocus
               @keyup.enter="addStockToThesis"
@@ -702,7 +702,7 @@ async function deleteThesis(id: string, title: string) {
             @click="addStockToThesis"
             :disabled="!newStockSymbol.trim()"
           >
-            Add Stock
+            Add Instrument
           </button>
         </div>
       </div>
