@@ -1,0 +1,55 @@
+{
+  "name": "@y2kfund/app-thesis",
+  "private": false,
+  "version": "0.1.0",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/y2kfund/app-thesis.git"
+  },
+  "homepage": "https://github.com/y2kfund/app-thesis#readme",
+  "bugs": {
+    "url": "https://github.com/y2kfund/app-thesis/issues"
+  },
+  "main": "./dist/index.es.js",
+  "module": "./dist/index.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.es.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./dist/style.css": "./dist/style.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "vue": "^3.4.0"
+  },
+  "peerDependencies": {
+    "@y2kfund/core": "^0.1.0",
+    "vue": "^3.4.0"
+  },
+  "devDependencies": {
+    "@tanstack/vue-query": "^5.0.0",
+    "@types/node": "^24.4.0",
+    "@vitejs/plugin-vue": "^5.0.0",
+    "@y2kfund/core": "git+https://github.com/y2kfund/app-core.git",
+    "rollup": "^4.0.0",
+    "typescript": "^5.4.0",
+    "vite": "^5.0.0",
+    "vite-plugin-dts": "^4.5.4",
+    "vue-tsc": "^2.0.0"
+  },
+  "scripts": {
+    "_devComment": "Command '>npm run dev' for development with hot reload.",
+    "dev": "vite",
+    "_buildComment": "Builds standalone app for deployment. The command is >npm run build",
+    "build": "vite build",
+    "_buildLibComment": "Builds library for consumption by other packages (use before git commit)",
+    "build:lib": "vite build --mode lib",
+    "_previewComment": "Serves locally built files from dist/ folder. it doesn't build, just serves what's already in dist/",
+    "preview": "vite preview"
+  }
+}
