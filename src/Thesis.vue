@@ -377,7 +377,7 @@ async function saveEditThesis() {
 }
 
 async function deleteThesis(id: string, title: string) {
-  if (!confirm(`Are you sure you want to delete thesis "${title}"?\n\nNote: This will also delete all instruments associated with this thesis.`)) return
+  if (!confirm(`Are you sure you want to archive thesis "${title}"?\n\nNote: This will also archive all instruments associated with this thesis.`)) return
   
   try {
     // Delete associated stocks first
@@ -403,7 +403,7 @@ async function deleteThesis(id: string, title: string) {
     showToast('success', 'Thesis Deleted', 'Thesis and associated instruments have been deleted successfully')
   } catch (error: any) {
     console.error('Error deleting thesis:', error)
-    showToast('error', 'Error', `Failed to delete thesis: ${error.message}`)
+    showToast('error', 'Error', `Failed to archive thesis: ${error.message}`)
   }
 }
 </script>
@@ -487,9 +487,9 @@ async function deleteThesis(id: string, title: string) {
                 <button 
                   class="btn btn-danger btn-sm" 
                   @click="deleteThesis(thesis.id, thesis.title)"
-                  title="Delete thesis"
+                  title="Archive thesis"
                 >
-                  🗑️ Delete
+                  🗑️ Archive
                 </button>
               </div>
             </div>
