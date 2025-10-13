@@ -5,11 +5,13 @@ import { useQueryClient } from '@tanstack/vue-query'
 import type { ThesisProps } from './index'
 
 const props = withDefaults(defineProps<ThesisProps>(), {
-  userId: null
+  userId: null,
+  showHeaderLink: false
 })
 
 const emit = defineEmits<{ 
   'minimize': []
+  'navigate': []
 }>()
 
 // Query thesis data
@@ -391,7 +393,12 @@ async function deleteThesis(id: string, title: string) {
     <!-- Success state -->
     <div v-else-if="thesisQuery.isSuccess.value" class="thesis-container">
       <div class="thesis-header">
-        <h2>Thesis Management</h2>
+        <h2 
+          :class="{ 'thesis-header-clickable': props.showHeaderLink }"
+          @click="props.showHeaderLink && emit('navigate')"
+        >
+          Thesis Management
+        </h2>
         <div class="thesis-header-actions">
           <button class="btn btn-primary" @click="showThesisModalForAdd">
             <span class="icon">➕</span> Add New Thesis
@@ -768,9 +775,30 @@ async function deleteThesis(id: string, title: string) {
 
 .thesis-header h2 {
   margin: 0;
-  font-size: 1.4rem;
+  font-size: 1.35rem;
   font-weight: 600;
   color: #333;
+}
+
+.thesis-header-clickable {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.2s ease;
+}
+
+.thesis-header-clickable:hover {
+  color: #007bff;
+}
+
+.header-link-icon {
+  font-size: 1.25rem;
+  transition: transform 0.2s ease;
+}
+
+.thesis-header-clickable:hover .header-link-icon {
+  transform: translateX(4px);
 }
 
 .thesis-header-actions {
@@ -1289,6 +1317,12 @@ async function deleteThesis(id: string, title: string) {
 .stocks-table td button {
   padding: 0.25rem 0.5rem;
   font-size: 0.75rem;
+  width: auto;
+}
+
+.thesis-card button {
+    width: auto;
+    padding: 0.4rem 0.75rem !important;
 }
 
 /* Center align all cells except Symbol */
