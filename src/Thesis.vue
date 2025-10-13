@@ -153,7 +153,7 @@ async function addStockToThesis() {
     showToast('success', 'Instrument Added', `${newStockSymbol.value} has been added to the thesis`)
   } catch (error: any) {
     console.error('Error adding stock:', error)
-    showToast('error', 'Error', `Failed to add stock: ${error.message}`)
+    showToast('error', 'Error', `Failed to add instrument: ${error.message}`)
   }
 }
 
@@ -489,7 +489,7 @@ async function deleteThesis(id: string, title: string) {
                   @click="deleteThesis(thesis.id, thesis.title)"
                   title="Archive thesis"
                 >
-                  🗑️ Archive
+                  🗑️
                 </button>
               </div>
             </div>
@@ -604,7 +604,7 @@ async function deleteThesis(id: string, title: string) {
                         <button 
                           class="btn btn-danger btn-xs" 
                           @click="deleteStock(thesis.id, stock.id, stock.symbol)"
-                          title="Remove stock"
+                          title="Remove instrument"
                         >
                           🗑️
                         </button>

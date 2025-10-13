@@ -1,4 +1,4 @@
-import { defineComponent as ye, ref as v, watch as be, computed as ie, createElementBlock as l, openBlock as n, createCommentVNode as $, createElementVNode as s, unref as T, createTextVNode as oe, toDisplayString as r, normalizeClass as le, Fragment as R, renderList as H, withDirectives as E, withKeys as g, vModelText as K, vModelCheckbox as ne, withModifiers as G, createVNode as ke, TransitionGroup as ge, withCtx as we } from "vue";
+import { defineComponent as ye, ref as v, watch as be, computed as ie, createElementBlock as n, openBlock as l, createCommentVNode as $, createElementVNode as s, unref as T, createTextVNode as oe, toDisplayString as r, normalizeClass as ne, Fragment as R, renderList as H, withDirectives as E, withKeys as g, vModelText as K, vModelCheckbox as le, withModifiers as G, createVNode as ke, TransitionGroup as ge, withCtx as we } from "vue";
 import { useThesisQuery as Ce, useSupabase as $e } from "@y2kfund/core";
 import { useQueryClient as Te } from "@tanstack/vue-query";
 const Ee = { class: "thesis-card" }, Se = {
@@ -31,7 +31,7 @@ const Ee = { class: "thesis-card" }, Se = {
 }, Xe = {
   key: 1,
   class: "stocks-table-wrapper"
-}, Ye = { class: "stocks-table" }, Ze = { class: "stock-symbol" }, et = ["title", "onDblclick"], tt = ["onBlur", "onKeyup"], st = { key: 1 }, it = ["title", "onDblclick"], ot = ["onBlur", "onKeyup"], lt = { key: 1 }, nt = ["title", "onDblclick"], at = ["onBlur", "onKeyup"], dt = { key: 1 }, rt = ["title", "onDblclick"], ut = ["onBlur", "onKeyup"], ct = { key: 1 }, vt = { class: "stock-actions" }, ht = ["onClick"], pt = { class: "modal-header" }, mt = { class: "modal-body" }, _t = { class: "form-group" }, ft = ["for"], yt = ["id"], bt = { class: "form-group" }, kt = ["for"], gt = ["id"], wt = { class: "modal-footer" }, Ct = ["disabled"], $t = { class: "modal-header" }, Tt = { class: "modal-body" }, Et = { class: "form-group" }, St = { class: "modal-footer" }, xt = ["disabled"], It = { class: "toast-container" }, At = ["onClick"], Dt = { class: "toast-icon" }, Ut = { key: 0 }, Mt = { key: 1 }, Kt = { key: 2 }, Nt = { key: 3 }, Bt = { class: "toast-content" }, Vt = { class: "toast-title" }, Ft = {
+}, Ye = { class: "stocks-table" }, Ze = { class: "stock-symbol" }, et = ["title", "onDblclick"], tt = ["onBlur", "onKeyup"], st = { key: 1 }, it = ["title", "onDblclick"], ot = ["onBlur", "onKeyup"], nt = { key: 1 }, lt = ["title", "onDblclick"], at = ["onBlur", "onKeyup"], dt = { key: 1 }, rt = ["title", "onDblclick"], ut = ["onBlur", "onKeyup"], ct = { key: 1 }, vt = { class: "stock-actions" }, ht = ["onClick"], pt = { class: "modal-header" }, mt = { class: "modal-body" }, _t = { class: "form-group" }, ft = ["for"], yt = ["id"], bt = { class: "form-group" }, kt = ["for"], gt = ["id"], wt = { class: "modal-footer" }, Ct = ["disabled"], $t = { class: "modal-header" }, Tt = { class: "modal-body" }, Et = { class: "form-group" }, St = { class: "modal-footer" }, xt = ["disabled"], It = { class: "toast-container" }, At = ["onClick"], Dt = { class: "toast-icon" }, Ut = { key: 0 }, Mt = { key: 1 }, Kt = { key: 2 }, Nt = { key: 3 }, Bt = { class: "toast-content" }, Vt = { class: "toast-title" }, Ft = {
   key: 0,
   class: "toast-message"
 }, qt = ["onClick"], Lt = /* @__PURE__ */ ye({
@@ -89,7 +89,7 @@ const Ee = { class: "thesis-card" }, Se = {
           if (e) throw e;
           await M(), w.value = "", I.value = !1, c("success", "Instrument Added", `${w.value} has been added to the thesis`);
         } catch (i) {
-          console.error("Error adding stock:", i), c("error", "Error", `Failed to add stock: ${i.message}`);
+          console.error("Error adding stock:", i), c("error", "Error", `Failed to add instrument: ${i.message}`);
         }
     }
     async function ue(i, e, t) {
@@ -210,17 +210,17 @@ Note: This will also archive all instruments associated with this thesis.`))
           console.error("Error deleting thesis:", t), c("error", "Error", `Failed to archive thesis: ${t.message}`);
         }
     }
-    return (i, e) => (n(), l("div", Ee, [
-      T(_).isLoading.value ? (n(), l("div", Se, [...e[18] || (e[18] = [
+    return (i, e) => (l(), n("div", Ee, [
+      T(_).isLoading.value ? (l(), n("div", Se, [...e[18] || (e[18] = [
         s("div", { class: "loading-spinner" }, null, -1),
         oe(" Loading thesis... ", -1)
-      ])])) : T(_).isError.value ? (n(), l("div", xe, [
+      ])])) : T(_).isError.value ? (l(), n("div", xe, [
         e[19] || (e[19] = s("h3", null, "Error loading thesis", -1)),
         s("p", null, r(T(_).error.value), 1)
-      ])) : T(_).isSuccess.value ? (n(), l("div", Ie, [
+      ])) : T(_).isSuccess.value ? (l(), n("div", Ie, [
         s("div", Ae, [
           s("h2", {
-            class: le({ "thesis-header-clickable": f.showHeaderLink }),
+            class: ne({ "thesis-header-clickable": f.showHeaderLink }),
             onClick: e[0] || (e[0] = (t) => f.showHeaderLink && N("navigate"))
           }, " Thesis Management ", 2),
           s("div", De, [
@@ -239,12 +239,12 @@ Note: This will also archive all instruments associated with this thesis.`))
           ])
         ]),
         s("div", Ue, [
-          !T(_).data.value || T(_).data.value.length === 0 ? (n(), l("div", Me, [...e[21] || (e[21] = [
+          !T(_).data.value || T(_).data.value.length === 0 ? (l(), n("div", Me, [...e[21] || (e[21] = [
             s("p", null, 'No thesis found. Click "Add New Thesis" to create one.', -1)
-          ])])) : (n(), l("div", Ke, [
-            (n(!0), l(R, null, H(T(_).data.value, (t) => {
+          ])])) : (l(), n("div", Ke, [
+            (l(!0), n(R, null, H(T(_).data.value, (t) => {
               var a;
-              return n(), l("div", {
+              return l(), n("div", {
                 key: t.id,
                 class: "thesis-item-wrapper"
               }, [
@@ -256,9 +256,9 @@ Note: This will also archive all instruments associated with this thesis.`))
                     s("div", Ve, r(U.value.has(t.id) ? "▼" : "▶"), 1),
                     s("div", Fe, [
                       s("div", qe, r(t.title), 1),
-                      t.description ? (n(), l("div", Le, r(t.description), 1)) : $("", !0),
+                      t.description ? (l(), n("div", Le, r(t.description), 1)) : $("", !0),
                       s("div", Qe, [
-                        t.created_at ? (n(), l("span", ze, " Created: " + r(new Date(t.created_at).toLocaleDateString()), 1)) : $("", !0),
+                        t.created_at ? (l(), n("span", ze, " Created: " + r(new Date(t.created_at).toLocaleDateString()), 1)) : $("", !0),
                         s("span", Pe, r(((a = D.value[t.id]) == null ? void 0 : a.length) || 0) + " instruments ", 1)
                       ])
                     ])
@@ -273,10 +273,10 @@ Note: This will also archive all instruments associated with this thesis.`))
                       class: "btn btn-danger btn-sm",
                       onClick: (o) => fe(t.id, t.title),
                       title: "Archive thesis"
-                    }, " 🗑️ Archive ", 8, Ge)
+                    }, " 🗑️ ", 8, Ge)
                   ])
                 ]),
-                U.value.has(t.id) ? (n(), l("div", Oe, [
+                U.value.has(t.id) ? (l(), n("div", Oe, [
                   s("div", je, [
                     e[22] || (e[22] = s("h4", null, "Instruments", -1)),
                     s("button", {
@@ -284,7 +284,7 @@ Note: This will also archive all instruments associated with this thesis.`))
                       onClick: (o) => re(t.id)
                     }, " ➕ Add Instrument ", 8, Je)
                   ]),
-                  !D.value[t.id] || D.value[t.id].length === 0 ? (n(), l("div", We, ' No instruments added yet. Click "Add Instrument" to add one. ')) : (n(), l("div", Xe, [
+                  !D.value[t.id] || D.value[t.id].length === 0 ? (l(), n("div", We, ' No instruments added yet. Click "Add Instrument" to add one. ')) : (l(), n("div", Xe, [
                     s("table", Ye, [
                       e[23] || (e[23] = s("thead", null, [
                         s("tr", null, [
@@ -297,9 +297,9 @@ Note: This will also archive all instruments associated with this thesis.`))
                         ])
                       ], -1)),
                       s("tbody", null, [
-                        (n(!0), l(R, null, H(D.value[t.id], (o) => {
+                        (l(!0), n(R, null, H(D.value[t.id], (o) => {
                           var J, W, X, Y, Z, ee, te, se;
-                          return n(), l("tr", {
+                          return l(), n("tr", {
                             key: o.id
                           }, [
                             s("td", Ze, r(o.symbol), 1),
@@ -308,7 +308,7 @@ Note: This will also archive all instruments associated with this thesis.`))
                               title: V(o, "pe_ratio"),
                               onDblclick: (d) => B(t.id, o, "pe_ratio")
                             }, [
-                              ((J = h.value) == null ? void 0 : J.stockId) === o.id && ((W = h.value) == null ? void 0 : W.field) === "pe_ratio" ? E((n(), l("input", {
+                              ((J = h.value) == null ? void 0 : J.stockId) === o.id && ((W = h.value) == null ? void 0 : W.field) === "pe_ratio" ? E((l(), n("input", {
                                 key: 0,
                                 "onUpdate:modelValue": e[2] || (e[2] = (d) => p.value = d),
                                 type: "number",
@@ -326,14 +326,14 @@ Note: This will also archive all instruments associated with this thesis.`))
                                   void 0,
                                   { number: !0 }
                                 ]
-                              ]) : (n(), l("span", st, r(o.pe_ratio ?? "-"), 1))
+                              ]) : (l(), n("span", st, r(o.pe_ratio ?? "-"), 1))
                             ], 40, et),
                             s("td", {
                               class: "editable-cell",
                               title: V(o, "peg_ratio"),
                               onDblclick: (d) => B(t.id, o, "peg_ratio")
                             }, [
-                              ((X = h.value) == null ? void 0 : X.stockId) === o.id && ((Y = h.value) == null ? void 0 : Y.field) === "peg_ratio" ? E((n(), l("input", {
+                              ((X = h.value) == null ? void 0 : X.stockId) === o.id && ((Y = h.value) == null ? void 0 : Y.field) === "peg_ratio" ? E((l(), n("input", {
                                 key: 0,
                                 "onUpdate:modelValue": e[3] || (e[3] = (d) => p.value = d),
                                 type: "number",
@@ -351,14 +351,14 @@ Note: This will also archive all instruments associated with this thesis.`))
                                   void 0,
                                   { number: !0 }
                                 ]
-                              ]) : (n(), l("span", lt, r(o.peg_ratio ?? "-"), 1))
+                              ]) : (l(), n("span", nt, r(o.peg_ratio ?? "-"), 1))
                             ], 40, it),
                             s("td", {
                               class: "editable-cell checkbox-cell",
                               title: V(o, "passed_checks"),
                               onDblclick: (d) => B(t.id, o, "passed_checks")
                             }, [
-                              ((Z = h.value) == null ? void 0 : Z.stockId) === o.id && ((ee = h.value) == null ? void 0 : ee.field) === "passed_checks" ? E((n(), l("input", {
+                              ((Z = h.value) == null ? void 0 : Z.stockId) === o.id && ((ee = h.value) == null ? void 0 : ee.field) === "passed_checks" ? E((l(), n("input", {
                                 key: 0,
                                 "onUpdate:modelValue": e[4] || (e[4] = (d) => p.value = d),
                                 type: "checkbox",
@@ -369,15 +369,15 @@ Note: This will also archive all instruments associated with this thesis.`))
                                 ],
                                 autofocus: ""
                               }, null, 40, at)), [
-                                [ne, p.value]
-                              ]) : (n(), l("span", dt, r(o.passed_checks ? "✅" : "❌"), 1))
-                            ], 40, nt),
+                                [le, p.value]
+                              ]) : (l(), n("span", dt, r(o.passed_checks ? "✅" : "❌"), 1))
+                            ], 40, lt),
                             s("td", {
                               class: "editable-cell checkbox-cell",
                               title: V(o, "currently_held"),
                               onDblclick: (d) => B(t.id, o, "currently_held")
                             }, [
-                              ((te = h.value) == null ? void 0 : te.stockId) === o.id && ((se = h.value) == null ? void 0 : se.field) === "currently_held" ? E((n(), l("input", {
+                              ((te = h.value) == null ? void 0 : te.stockId) === o.id && ((se = h.value) == null ? void 0 : se.field) === "currently_held" ? E((l(), n("input", {
                                 key: 0,
                                 "onUpdate:modelValue": e[5] || (e[5] = (d) => p.value = d),
                                 type: "checkbox",
@@ -388,14 +388,14 @@ Note: This will also archive all instruments associated with this thesis.`))
                                 ],
                                 autofocus: ""
                               }, null, 40, ut)), [
-                                [ne, p.value]
-                              ]) : (n(), l("span", ct, r(o.currently_held ? "✅" : "❌"), 1))
+                                [le, p.value]
+                              ]) : (l(), n("span", ct, r(o.currently_held ? "✅" : "❌"), 1))
                             ], 40, rt),
                             s("td", vt, [
                               s("button", {
                                 class: "btn btn-danger btn-xs",
                                 onClick: (d) => ue(t.id, o.id, o.symbol),
-                                title: "Remove stock"
+                                title: "Remove instrument"
                               }, " 🗑️ ", 8, ht)
                             ])
                           ]);
@@ -409,7 +409,7 @@ Note: This will also archive all instruments associated with this thesis.`))
           ]))
         ])
       ])) : $("", !0),
-      b.value ? (n(), l("div", {
+      b.value ? (l(), n("div", {
         key: 3,
         class: "modal-overlay",
         onClick: e[12] || (e[12] = (t) => b.value = !1)
@@ -470,7 +470,7 @@ Note: This will also archive all instruments associated with this thesis.`))
           ])
         ])
       ])) : $("", !0),
-      I.value ? (n(), l("div", {
+      I.value ? (l(), n("div", {
         key: 4,
         class: "modal-overlay",
         onClick: e[17] || (e[17] = (t) => I.value = !1)
@@ -522,17 +522,17 @@ Note: This will also archive all instruments associated with this thesis.`))
           tag: "div"
         }, {
           default: we(() => [
-            (n(!0), l(R, null, H(F.value, (t) => (n(), l("div", {
+            (l(!0), n(R, null, H(F.value, (t) => (l(), n("div", {
               key: t.id,
-              class: le(["toast", `toast-${t.type}`]),
+              class: ne(["toast", `toast-${t.type}`]),
               onClick: (a) => P(t.id)
             }, [
               s("div", Dt, [
-                t.type === "success" ? (n(), l("span", Ut, "✅")) : t.type === "error" ? (n(), l("span", Mt, "❌")) : t.type === "warning" ? (n(), l("span", Kt, "⚠️")) : t.type === "info" ? (n(), l("span", Nt, "ℹ️")) : $("", !0)
+                t.type === "success" ? (l(), n("span", Ut, "✅")) : t.type === "error" ? (l(), n("span", Mt, "❌")) : t.type === "warning" ? (l(), n("span", Kt, "⚠️")) : t.type === "info" ? (l(), n("span", Nt, "ℹ️")) : $("", !0)
               ]),
               s("div", Bt, [
                 s("div", Vt, r(t.title), 1),
-                t.message ? (n(), l("div", Ft, r(t.message), 1)) : $("", !0)
+                t.message ? (l(), n("div", Ft, r(t.message), 1)) : $("", !0)
               ]),
               s("button", {
                 class: "toast-close",
@@ -551,7 +551,7 @@ Note: This will also archive all instruments associated with this thesis.`))
   for (const [N, _] of q)
     f[N] = _;
   return f;
-}, zt = /* @__PURE__ */ Qt(Lt, [["__scopeId", "data-v-aad6fe34"]]), Gt = {
+}, zt = /* @__PURE__ */ Qt(Lt, [["__scopeId", "data-v-c343ec05"]]), Gt = {
   install(S) {
     S.component("Thesis", zt);
   }
