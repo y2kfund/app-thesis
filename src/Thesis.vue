@@ -3,6 +3,7 @@ import { ref, computed, watch } from 'vue'
 import { useThesisQuery, type Thesis, useSupabase } from '@y2kfund/core'
 import { useQueryClient } from '@tanstack/vue-query'
 import type { ThesisProps } from './index'
+import ThesisItem from './components/ThesisItem.vue'
 
 const props = withDefaults(defineProps<ThesisProps>(), {
   userId: null,
@@ -242,8 +243,8 @@ function getCellMetadata(stock: ThesisStock, field: string): string {
 // Modal state
 const showThesisModal = ref(false)
 const thesisModalMode = ref<'add' | 'edit'>('add')
-const newThesis = ref({ title: '', description: '' })
-const editThesisForm = ref({ id: '', title: '', description: '' })
+const newThesis = ref({ title: '', description: '', parent_thesis_id: null as string | null })
+const editThesisForm = ref({ id: '', title: '', description: '', parent_thesis_id: null as string | null })
 
 // Computed properties for form bindings
 const modalTitle = computed({
@@ -264,6 +265,18 @@ const modalDescription = computed({
       newThesis.value.description = value
     } else {
       editThesisForm.value.description = value
+    }
+  }
+})
+
+// Update parent thesis ID computed property
+const modalParentThesisId = computed({
+  get: () => thesisModalMode.value === 'add' ? newThesis.value.parent_thesis_id : editThesisForm.value.parent_thesis_id,
+  set: (value) => {
+    if (thesisModalMode.value === 'add') {
+      newThesis.value.parent_thesis_id = value
+    } else {
+      editThesisForm.value.parent_thesis_id = value
     }
   }
 })
@@ -299,7 +312,7 @@ function removeToast(id: number) {
 // Thesis management functions
 function showThesisModalForAdd() {
   thesisModalMode.value = 'add'
-  newThesis.value = { title: '', description: '' }
+  newThesis.value = { title: '', description: '', parent_thesis_id: null }
   showThesisModal.value = true
 }
 
@@ -312,7 +325,8 @@ async function addNewThesis() {
       .from('thesisMaster')
       .insert([{
         title: newThesis.value.title.trim(),
-        description: newThesis.value.description.trim() || null
+        description: newThesis.value.description.trim() || null,
+        parent_thesis_id: newThesis.value.parent_thesis_id || null
       }])
       .select()
     
@@ -322,7 +336,7 @@ async function addNewThesis() {
     queryClient.invalidateQueries({ queryKey: ['thesis'] })
     
     // Reset form and close modal
-    newThesis.value = { title: '', description: '' }
+    newThesis.value = { title: '', description: '', parent_thesis_id: null }
     showThesisModal.value = false
     
     showToast('success', 'Thesis Added', 'New thesis has been created successfully')
@@ -336,14 +350,15 @@ function startEditThesis(thesis: Thesis) {
   editThesisForm.value = {
     id: thesis.id,
     title: thesis.title,
-    description: thesis.description || ''
+    description: thesis.description || '',
+    parent_thesis_id: thesis.parent_thesis_id || null
   }
   thesisModalMode.value = 'edit'
   showThesisModal.value = true
 }
 
 function cancelThesisEdit() {
-  editThesisForm.value = { id: '', title: '', description: '' }
+  editThesisForm.value = { id: '', title: '', description: '', parent_thesis_id: null }
   showThesisModal.value = false
 }
 
@@ -356,7 +371,8 @@ async function saveEditThesis() {
       .from('thesisMaster')
       .update({
         title: editThesisForm.value.title.trim(),
-        description: editThesisForm.value.description.trim() || null
+        description: editThesisForm.value.description.trim() || null,
+        parent_thesis_id: editThesisForm.value.parent_thesis_id || null
       })
       .eq('id', editThesisForm.value.id)
     
@@ -366,7 +382,7 @@ async function saveEditThesis() {
     queryClient.invalidateQueries({ queryKey: ['thesis'] })
     
     // Reset form and close modal
-    editThesisForm.value = { id: '', title: '', description: '' }
+    editThesisForm.value = { id: '', title: '', description: '', parent_thesis_id: null }
     showThesisModal.value = false
     
     showToast('success', 'Thesis Updated', 'Thesis has been updated successfully')
@@ -405,6 +421,72 @@ async function deleteThesis(id: string, title: string) {
     console.error('Error deleting thesis:', error)
     showToast('error', 'Error', `Failed to archive thesis: ${error.message}`)
   }
+}
+
+// Helper function to get thesis hierarchy depth
+function getThesisDepth(thesisId: string, depth = 0): number {
+  if (depth > 10) return depth // Prevent infinite loops
+  const thesis = thesisQuery.data.value?.find(t => t.id === thesisId)
+  if (!thesis || !thesis.parent_thesis_id) return depth
+  return getThesisDepth(thesis.parent_thesis_id, depth + 1)
+}
+
+// Helper function to check if thesis can be a parent (prevent circular references)
+function canBeParent(potentialParentId: string, childId: string): boolean {
+  if (potentialParentId === childId) return false
+  const thesis = thesisQuery.data.value?.find(t => t.id === potentialParentId)
+  if (!thesis) return true
+  if (thesis.parent_thesis_id === childId) return false
+  if (thesis.parent_thesis_id) {
+    return canBeParent(thesis.parent_thesis_id, childId)
+  }
+  return true
+}
+
+// Get available parent thesis options (excluding self and descendants)
+const availableParentThesis = computed(() => {
+  if (!thesisQuery.data.value) return []
+  
+  const currentThesisId = thesisModalMode.value === 'edit' ? editThesisForm.value.id : null
+  
+  return thesisQuery.data.value.filter(t => {
+    if (currentThesisId && !canBeParent(t.id, currentThesisId)) return false
+    return true
+  })
+})
+
+// Group thesis by parent/child hierarchy
+const thesisHierarchy = computed(() => {
+  if (!thesisQuery.data.value) return []
+  
+  // Get root thesis (no parent)
+  const roots = thesisQuery.data.value.filter(t => !t.parent_thesis_id)
+  
+  function getChildren(parentId: string): Thesis[] {
+    return thesisQuery.data.value?.filter(t => t.parent_thesis_id === parentId) || []
+  }
+  
+  function buildTree(thesis: Thesis): any {
+    const children = getChildren(thesis.id)
+    return {
+      ...thesis,
+      children: children.map(child => buildTree(child))
+    }
+  }
+  
+  return roots.map(root => buildTree(root))
+})
+
+// Get parent thesis name
+function getParentThesisName(parentId: string | null | undefined): string {
+  if (!parentId) return 'None'
+  const parent = thesisQuery.data.value?.find(t => t.id === parentId)
+  return parent?.title || 'Unknown'
+}
+
+// Add handler for updating editing value
+function updateEditingValue(value: any) {
+  editingValue.value = value
 }
 </script>
 
@@ -451,170 +533,27 @@ async function deleteThesis(id: string, title: string) {
         </div>
         
         <div v-else class="thesis-items">
-          <div 
-            v-for="thesis in thesisQuery.data.value" 
-            :key="thesis.id" 
-            class="thesis-item-wrapper"
-          >
-            <div class="thesis-item">
-              <div class="thesis-content" @click="toggleThesis(thesis.id)">
-                <div class="thesis-expand-icon">
-                  {{ expandedThesis.has(thesis.id) ? '▼' : '▶' }}
-                </div>
-                <div class="thesis-info">
-                  <div class="thesis-title">{{ thesis.title }}</div>
-                  <div v-if="thesis.description" class="thesis-description">
-                    {{ thesis.description }}
-                  </div>
-                  <div class="thesis-meta">
-                    <span v-if="thesis.created_at" class="thesis-date">
-                      Created: {{ new Date(thesis.created_at).toLocaleDateString() }}
-                    </span>
-                    <span class="thesis-stock-count">
-                      {{ thesisStocks[thesis.id]?.length || 0 }} instruments
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div class="thesis-actions">
-                <button 
-                  class="btn btn-secondary btn-sm" 
-                  @click="startEditThesis(thesis)"
-                  title="Edit thesis"
-                >
-                  ✏️ Edit
-                </button>
-                <button 
-                  class="btn btn-danger btn-sm" 
-                  @click="deleteThesis(thesis.id, thesis.title)"
-                  title="Archive thesis"
-                >
-                  🗑️
-                </button>
-              </div>
-            </div>
-
-            <!-- Stock table for expanded thesis -->
-            <div v-if="expandedThesis.has(thesis.id)" class="stocks-section">
-              <div class="stocks-header">
-                <h4>Instruments</h4>
-                <button 
-                  class="btn btn-primary btn-sm" 
-                  @click="showAddStockModalForThesis(thesis.id)"
-                >
-                  ➕ Add Instrument
-                </button>
-              </div>
-
-              <div v-if="!thesisStocks[thesis.id] || thesisStocks[thesis.id].length === 0" class="stocks-empty">
-                No instruments added yet. Click "Add Instrument" to add one.
-              </div>
-
-              <div v-else class="stocks-table-wrapper">
-                <table class="stocks-table">
-                  <thead>
-                    <tr>
-                      <th>Symbol</th>
-                      <th>PE Ratio</th>
-                      <th>PEG Ratio</th>
-                      <th>Passed checks to hold in portfolio</th>
-                      <th>Currently held in portfolio</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="stock in thesisStocks[thesis.id]" :key="stock.id">
-                      <td class="stock-symbol">{{ stock.symbol }}</td>
-                      
-                      <!-- PE Ratio Cell -->
-                      <td 
-                        class="editable-cell"
-                        :title="getCellMetadata(stock, 'pe_ratio')"
-                        @dblclick="startEditCell(thesis.id, stock, 'pe_ratio')"
-                      >
-                        <input
-                          v-if="editingCell?.stockId === stock.id && editingCell?.field === 'pe_ratio'"
-                          v-model.number="editingValue"
-                          type="number"
-                          step="0.01"
-                          @blur="saveEdit(stock, 'pe_ratio')"
-                          @keyup.enter="saveEdit(stock, 'pe_ratio')"
-                          @keyup.escape="cancelEdit"
-                          autofocus
-                        />
-                        <span v-else>{{ stock.pe_ratio ?? '-' }}</span>
-                      </td>
-                      
-                      <!-- PEG Ratio Cell -->
-                      <td 
-                        class="editable-cell"
-                        :title="getCellMetadata(stock, 'peg_ratio')"
-                        @dblclick="startEditCell(thesis.id, stock, 'peg_ratio')"
-                      >
-                        <input
-                          v-if="editingCell?.stockId === stock.id && editingCell?.field === 'peg_ratio'"
-                          v-model.number="editingValue"
-                          type="number"
-                          step="0.01"
-                          @blur="saveEdit(stock, 'peg_ratio')"
-                          @keyup.enter="saveEdit(stock, 'peg_ratio')"
-                          @keyup.escape="cancelEdit"
-                          autofocus
-                        />
-                        <span v-else>{{ stock.peg_ratio ?? '-' }}</span>
-                      </td>
-                      
-                      <!-- Passed Checks Cell -->
-                      <td 
-                        class="editable-cell checkbox-cell"
-                        :title="getCellMetadata(stock, 'passed_checks')"
-                        @dblclick="startEditCell(thesis.id, stock, 'passed_checks')"
-                      >
-                        <input
-                          v-if="editingCell?.stockId === stock.id && editingCell?.field === 'passed_checks'"
-                          v-model="editingValue"
-                          type="checkbox"
-                          @blur="saveEdit(stock, 'passed_checks')"
-                          @keyup.enter="saveEdit(stock, 'passed_checks')"
-                          @keyup.escape="cancelEdit"
-                          autofocus
-                        />
-                        <span v-else>{{ stock.passed_checks ? '✅' : '❌' }}</span>
-                      </td>
-                      
-                      <!-- Currently Held Cell -->
-                      <td 
-                        class="editable-cell checkbox-cell"
-                        :title="getCellMetadata(stock, 'currently_held')"
-                        @dblclick="startEditCell(thesis.id, stock, 'currently_held')"
-                      >
-                        <input
-                          v-if="editingCell?.stockId === stock.id && editingCell?.field === 'currently_held'"
-                          v-model="editingValue"
-                          type="checkbox"
-                          @blur="saveEdit(stock, 'currently_held')"
-                          @keyup.enter="saveEdit(stock, 'currently_held')"
-                          @keyup.escape="cancelEdit"
-                          autofocus
-                        />
-                        <span v-else>{{ stock.currently_held ? '✅' : '❌' }}</span>
-                      </td>
-                      
-                      <td class="stock-actions">
-                        <button 
-                          class="btn btn-danger btn-xs" 
-                          @click="deleteStock(thesis.id, stock.id, stock.symbol)"
-                          title="Remove instrument"
-                        >
-                          🗑️
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+          <!-- Render hierarchical thesis -->
+          <template v-for="rootThesis in thesisHierarchy" :key="rootThesis.id">
+            <ThesisItem 
+              :thesis="rootThesis"
+              :level="0"
+              :thesis-stocks="thesisStocks"
+              :expanded-thesis="expandedThesis"
+              :editing-cell="editingCell"
+              :editing-value="editingValue"
+              @toggle="toggleThesis"
+              @edit="startEditThesis"
+              @delete="deleteThesis"
+              @add-stock="showAddStockModalForThesis"
+              @delete-stock="deleteStock"
+              @start-edit-cell="startEditCell"
+              @save-edit="saveEdit"
+              @cancel-edit="cancelEdit"
+              @get-cell-metadata="getCellMetadata"
+              @update-editing-value="updateEditingValue"
+            />
+          </template>
         </div>
       </div>
     </div>
@@ -641,6 +580,7 @@ async function deleteThesis(id: string, title: string) {
               autofocus
             />
           </div>
+          
           <div class="form-group">
             <label :for="thesisModalMode === 'add' ? 'thesis-description' : 'edit-thesis-description'">
               Description
@@ -652,6 +592,26 @@ async function deleteThesis(id: string, title: string) {
               rows="4"
               maxlength="500"
             ></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label :for="thesisModalMode === 'add' ? 'thesis-parent' : 'edit-thesis-parent'">
+              Parent Thesis
+            </label>
+            <select 
+              :id="thesisModalMode === 'add' ? 'thesis-parent' : 'edit-thesis-parent'"
+              v-model="modalParentThesisId"
+            >
+              <option :value="null">None (Root Thesis)</option>
+              <option 
+                v-for="thesis in availableParentThesis" 
+                :key="thesis.id" 
+                :value="thesis.id"
+              >
+                {{ thesis.title }}
+              </option>
+            </select>
+            <small class="form-hint">Select a parent thesis to create a hierarchical structure</small>
           </div>
         </div>
         
@@ -869,7 +829,6 @@ async function deleteThesis(id: string, title: string) {
 .thesis-items {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
 }
 
 /*.thesis-item-wrapper {
@@ -1404,269 +1363,46 @@ async function deleteThesis(id: string, title: string) {
   width: 80px;
 }
 
-/* Modal styles */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
+/* Hierarchy indentation */
+.thesis-item-level-0 { margin-left: 0; }
+.thesis-item-level-1 { margin-left: 2rem; }
+.thesis-item-level-2 { margin-left: 4rem; }
+.thesis-item-level-3 { margin-left: 6rem; }
+
+.thesis-parent-badge {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.modal-content {
-  background: white;
-  border-radius: 8px;
-  width: 90%;
-  max-width: 600px;
-  max-height: 90vh;
-  overflow: auto;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-}
-
-.modal-header {
-  padding: 1.25rem;
-  border-bottom: 1px solid #dee2e6;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.modal-header h3 {
-  margin: 0;
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #333;
-}
-
-.modal-close {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
+  gap: 0.25rem;
+  padding: 0.125rem 0.5rem;
+  background: #e9ecef;
+  border-radius: 12px;
+  font-size: 0.75rem;
   color: #6c757d;
-  padding: 0;
-  width: 2rem;
-  height: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  transition: all 0.2s ease;
+  margin-left: 0.5rem;
 }
 
-.modal-close:hover {
-  background: #f8f9fa;
-  color: #333;
-}
-
-.modal-body {
-  padding: 1.25rem;
-}
-
-.form-group {
-  margin-bottom: 1.25rem;
-}
-
-.form-group:last-child {
-  margin-bottom: 0;
-}
-
-.form-group label {
+.form-hint {
   display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  font-size: 0.875rem;
-  color: #333;
+  margin-top: 0.375rem;
+  font-size: 0.8125rem;
+  color: #6c757d;
+  font-style: italic;
 }
 
-.form-group input,
-.form-group textarea {
+.form-group select {
   width: 100%;
   padding: 0.625rem 0.875rem;
   border: 1px solid #dee2e6;
   border-radius: 6px;
   font-size: 0.9375rem;
+  background: white;
+  cursor: pointer;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.form-group input:focus,
-.form-group textarea:focus {
+.form-group select:focus {
   outline: none;
   border-color: #007bff;
   box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
-}
-
-.form-group textarea {
-  resize: vertical;
-  font-family: inherit;
-}
-
-.modal-footer {
-  padding: 1.25rem;
-  border-top: 1px solid #dee2e6;
-  display: flex;
-  gap: 0.75rem;
-  justify-content: flex-end;
-}
-
-/* Toast notification styles */
-.toast-container {
-  position: fixed;
-  top: 1.25rem;
-  right: 1.25rem;
-  z-index: 10000;
-  pointer-events: none;
-  max-width: 400px;
-}
-
-.toast {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  padding: 1rem;
-  margin-bottom: 0.75rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  cursor: pointer;
-  pointer-events: auto;
-  min-width: 300px;
-  position: relative;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.toast-success {
-  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
-  color: #155724;
-  border-left: 4px solid #28a745;
-}
-
-.toast-error {
-  background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
-  color: #721c24;
-  border-left: 4px solid #dc3545;
-}
-
-.toast-warning {
-  background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
-  color: #856404;
-  border-left: 4px solid #ffc107;
-}
-
-.toast-info {
-  background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
-  color: #0c5460;
-  border-left: 4px solid #17a2b8;
-}
-
-.toast-icon {
-  font-size: 1.25rem;
-  flex-shrink: 0;
-  line-height: 1;
-}
-
-.toast-content {
-  flex: 1;
-  min-width: 0;
-}
-
-.toast-title {
-  font-weight: 600;
-  font-size: 0.875rem;
-  line-height: 1.3;
-  margin-bottom: 0.25rem;
-}
-
-.toast-message {
-  font-size: 0.8125rem;
-  line-height: 1.4;
-  opacity: 0.9;
-}
-
-.toast-close {
-  background: none;
-  border: none;
-  font-size: 1.25rem;
-  cursor: pointer;
-  color: inherit;
-  opacity: 0.6;
-  padding: 0;
-  width: 1.5rem;
-  height: 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  transition: all 0.2s ease;
-  flex-shrink: 0;
-}
-
-.toast-close:hover {
-  opacity: 1;
-  background: rgba(0, 0, 0, 0.1);
-}
-
-/* Toast animations */
-.toast-enter-active {
-  transition: all 0.3s ease-out;
-}
-
-.toast-leave-active {
-  transition: all 0.3s ease-in;
-}
-
-.toast-enter-from {
-  transform: translateX(100%);
-  opacity: 0;
-}
-
-.toast-leave-to {
-  transform: translateX(100%);
-  opacity: 0;
-}
-
-.toast-move {
-  transition: transform 0.3s ease;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .thesis-card {
-    padding: 0.5rem;
-  }
-  
-  .thesis-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-  
-  .thesis-item {
-    flex-direction: column;
-  }
-  
-  .thesis-actions {
-    margin-left: 0;
-    margin-top: 1rem;
-    width: 100%;
-  }
-}
-
-@media (max-width: 480px) {
-  .toast-container {
-    left: 0.625rem;
-    right: 0.625rem;
-    top: 0.625rem;
-    max-width: none;
-  }
-  
-  .toast {
-    min-width: auto;
-  }
 }
 </style>

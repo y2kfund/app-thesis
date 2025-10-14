@@ -1,562 +1,664 @@
-import { defineComponent as ye, ref as v, watch as be, computed as ie, createElementBlock as n, openBlock as l, createCommentVNode as $, createElementVNode as s, unref as T, createTextVNode as oe, toDisplayString as r, normalizeClass as ne, Fragment as R, renderList as H, withDirectives as E, withKeys as g, vModelText as K, vModelCheckbox as le, withModifiers as G, createVNode as ke, TransitionGroup as ge, withCtx as we } from "vue";
-import { useThesisQuery as Ce, useSupabase as $e } from "@y2kfund/core";
-import { useQueryClient as Te } from "@tanstack/vue-query";
-const Ee = { class: "thesis-card" }, Se = {
+import { defineComponent as ee, resolveComponent as pe, createElementBlock as o, openBlock as d, normalizeClass as j, createElementVNode as t, createCommentVNode as T, toDisplayString as y, createTextVNode as J, withModifiers as D, Fragment as K, renderList as F, withKeys as S, createBlock as te, ref as b, watch as ge, computed as B, unref as M, withDirectives as Q, vModelText as O, vModelSelect as ke, createVNode as be, TransitionGroup as $e, withCtx as Ce } from "vue";
+import { useThesisQuery as Te, useSupabase as _e } from "@y2kfund/core";
+import { useQueryClient as we } from "@tanstack/vue-query";
+const Ee = { class: "thesis-item" }, Se = { class: "thesis-expand-icon" }, xe = { class: "thesis-info" }, Ie = { class: "thesis-title" }, Ae = {
   key: 0,
-  class: "loading"
-}, xe = {
-  key: 1,
-  class: "error"
-}, Ie = {
-  key: 2,
-  class: "thesis-container"
-}, Ae = { class: "thesis-header" }, De = { class: "thesis-header-actions" }, Ue = { class: "thesis-list" }, Me = {
-  key: 0,
-  class: "thesis-empty"
-}, Ke = {
-  key: 1,
-  class: "thesis-items"
-}, Ne = { class: "thesis-item" }, Be = ["onClick"], Ve = { class: "thesis-expand-icon" }, Fe = { class: "thesis-info" }, qe = { class: "thesis-title" }, Le = {
+  class: "thesis-parent-badge"
+}, De = {
   key: 0,
   class: "thesis-description"
-}, Qe = { class: "thesis-meta" }, ze = {
+}, Ve = { class: "thesis-meta" }, Me = {
   key: 0,
   class: "thesis-date"
-}, Pe = { class: "thesis-stock-count" }, Re = { class: "thesis-actions" }, He = ["onClick"], Ge = ["onClick"], Oe = {
+}, Ne = { class: "thesis-stock-count" }, Ue = {
+  key: 1,
+  class: "thesis-children-count"
+}, Be = { class: "thesis-actions" }, Ke = {
   key: 0,
   class: "stocks-section"
-}, je = { class: "stocks-header" }, Je = ["onClick"], We = {
+}, Fe = { class: "stocks-header" }, qe = {
   key: 0,
   class: "stocks-empty"
-}, Xe = {
+}, Le = {
   key: 1,
   class: "stocks-table-wrapper"
-}, Ye = { class: "stocks-table" }, Ze = { class: "stock-symbol" }, et = ["title", "onDblclick"], tt = ["onBlur", "onKeyup"], st = { key: 1 }, it = ["title", "onDblclick"], ot = ["onBlur", "onKeyup"], nt = { key: 1 }, lt = ["title", "onDblclick"], at = ["onBlur", "onKeyup"], dt = { key: 1 }, rt = ["title", "onDblclick"], ut = ["onBlur", "onKeyup"], ct = { key: 1 }, vt = { class: "stock-actions" }, ht = ["onClick"], pt = { class: "modal-header" }, mt = { class: "modal-body" }, _t = { class: "form-group" }, ft = ["for"], yt = ["id"], bt = { class: "form-group" }, kt = ["for"], gt = ["id"], wt = { class: "modal-footer" }, Ct = ["disabled"], $t = { class: "modal-header" }, Tt = { class: "modal-body" }, Et = { class: "form-group" }, St = { class: "modal-footer" }, xt = ["disabled"], It = { class: "toast-container" }, At = ["onClick"], Dt = { class: "toast-icon" }, Ut = { key: 0 }, Mt = { key: 1 }, Kt = { key: 2 }, Nt = { key: 3 }, Bt = { class: "toast-content" }, Vt = { class: "toast-title" }, Ft = {
+}, Pe = { class: "stocks-table" }, Qe = { class: "stock-symbol" }, ze = ["onDblclick"], He = ["value", "onBlur", "onKeyup"], Re = { key: 1 }, Ge = ["onDblclick"], Oe = ["value", "onBlur", "onKeyup"], je = { key: 1 }, Je = ["onDblclick"], We = ["checked", "onBlur", "onKeyup"], Xe = { key: 1 }, Ye = ["onDblclick"], Ze = ["checked", "onBlur", "onKeyup"], et = { key: 1 }, tt = { class: "stock-actions" }, st = ["onClick"], it = /* @__PURE__ */ ee({
+  __name: "ThesisItem",
+  props: {
+    thesis: {},
+    level: {},
+    thesisStocks: {},
+    expandedThesis: {},
+    editingCell: {},
+    editingValue: {}
+  },
+  emits: ["toggle", "edit", "delete", "add-stock", "delete-stock", "start-edit-cell", "save-edit", "cancel-edit", "get-cell-metadata", "update-editing-value"],
+  setup(n, { emit: N }) {
+    const a = N;
+    function _(m) {
+      a("update-editing-value", m);
+    }
+    return (m, l) => {
+      var w, q;
+      const U = pe("ThesisItem", !0);
+      return d(), o("div", {
+        class: j(["thesis-item-wrapper", `thesis-item-level-${n.level}`])
+      }, [
+        t("div", Ee, [
+          t("div", {
+            class: "thesis-content",
+            onClick: l[0] || (l[0] = (r) => a("toggle", n.thesis.id))
+          }, [
+            t("div", Se, y(n.expandedThesis.has(n.thesis.id) ? "▼" : "▶"), 1),
+            t("div", xe, [
+              t("div", Ie, [
+                J(y(n.thesis.title) + " ", 1),
+                n.thesis.parent_thesis_id ? (d(), o("span", Ae, " ↳ Child ")) : T("", !0)
+              ]),
+              n.thesis.description ? (d(), o("div", De, y(n.thesis.description), 1)) : T("", !0),
+              t("div", Ve, [
+                n.thesis.created_at ? (d(), o("span", Me, " Created: " + y(new Date(n.thesis.created_at).toLocaleDateString()), 1)) : T("", !0),
+                t("span", Ne, y(((w = n.thesisStocks[n.thesis.id]) == null ? void 0 : w.length) || 0) + " instruments ", 1),
+                ((q = n.thesis.children) == null ? void 0 : q.length) > 0 ? (d(), o("span", Ue, y(n.thesis.children.length) + " child thesis ", 1)) : T("", !0)
+              ])
+            ])
+          ]),
+          t("div", Be, [
+            t("button", {
+              class: "btn btn-secondary btn-sm",
+              onClick: l[1] || (l[1] = D((r) => a("edit", n.thesis), ["stop"])),
+              title: "Edit thesis"
+            }, " ✏️ Edit "),
+            t("button", {
+              class: "btn btn-danger btn-sm",
+              onClick: l[2] || (l[2] = D((r) => a("delete", n.thesis.id, n.thesis.title), ["stop"])),
+              title: "Archive thesis"
+            }, " 🗑️ ")
+          ])
+        ]),
+        n.expandedThesis.has(n.thesis.id) ? (d(), o("div", Ke, [
+          t("div", Fe, [
+            l[22] || (l[22] = t("h4", null, "Instruments", -1)),
+            t("button", {
+              class: "btn btn-primary btn-sm",
+              onClick: l[3] || (l[3] = D((r) => a("add-stock", n.thesis.id), ["stop"]))
+            }, " ➕ Add Instrument ")
+          ]),
+          !n.thesisStocks[n.thesis.id] || n.thesisStocks[n.thesis.id].length === 0 ? (d(), o("div", qe, ' No instruments added yet. Click "Add Instrument" to add one. ')) : (d(), o("div", Le, [
+            t("table", Pe, [
+              l[23] || (l[23] = t("thead", null, [
+                t("tr", null, [
+                  t("th", null, "Symbol"),
+                  t("th", null, "PE Ratio"),
+                  t("th", null, "PEG Ratio"),
+                  t("th", null, "Passed Checks"),
+                  t("th", null, "Currently Held"),
+                  t("th", null, "Actions")
+                ])
+              ], -1)),
+              t("tbody", null, [
+                (d(!0), o(K, null, F(n.thesisStocks[n.thesis.id], (r) => {
+                  var h, f, k, V, C, A, x, L;
+                  return d(), o("tr", {
+                    key: r.id
+                  }, [
+                    t("td", Qe, y(r.symbol), 1),
+                    t("td", {
+                      class: "editable-cell",
+                      onDblclick: (c) => a("start-edit-cell", n.thesis.id, r, "pe_ratio")
+                    }, [
+                      ((h = n.editingCell) == null ? void 0 : h.stockId) === r.id && ((f = n.editingCell) == null ? void 0 : f.field) === "pe_ratio" ? (d(), o("input", {
+                        key: 0,
+                        value: n.editingValue,
+                        type: "number",
+                        step: "0.01",
+                        onInput: l[4] || (l[4] = (c) => _(c.target.valueAsNumber)),
+                        onBlur: (c) => a("save-edit", r, "pe_ratio"),
+                        onKeyup: [
+                          S((c) => a("save-edit", r, "pe_ratio"), ["enter"]),
+                          l[5] || (l[5] = S((c) => a("cancel-edit"), ["escape"]))
+                        ],
+                        autofocus: ""
+                      }, null, 40, He)) : (d(), o("span", Re, y(r.pe_ratio ?? "-"), 1))
+                    ], 40, ze),
+                    t("td", {
+                      class: "editable-cell",
+                      onDblclick: (c) => a("start-edit-cell", n.thesis.id, r, "peg_ratio")
+                    }, [
+                      ((k = n.editingCell) == null ? void 0 : k.stockId) === r.id && ((V = n.editingCell) == null ? void 0 : V.field) === "peg_ratio" ? (d(), o("input", {
+                        key: 0,
+                        value: n.editingValue,
+                        type: "number",
+                        step: "0.01",
+                        onInput: l[6] || (l[6] = (c) => _(c.target.valueAsNumber)),
+                        onBlur: (c) => a("save-edit", r, "peg_ratio"),
+                        onKeyup: [
+                          S((c) => a("save-edit", r, "peg_ratio"), ["enter"]),
+                          l[7] || (l[7] = S((c) => a("cancel-edit"), ["escape"]))
+                        ],
+                        autofocus: ""
+                      }, null, 40, Oe)) : (d(), o("span", je, y(r.peg_ratio ?? "-"), 1))
+                    ], 40, Ge),
+                    t("td", {
+                      class: "editable-cell checkbox-cell",
+                      onDblclick: (c) => a("start-edit-cell", n.thesis.id, r, "passed_checks")
+                    }, [
+                      ((C = n.editingCell) == null ? void 0 : C.stockId) === r.id && ((A = n.editingCell) == null ? void 0 : A.field) === "passed_checks" ? (d(), o("input", {
+                        key: 0,
+                        checked: n.editingValue,
+                        type: "checkbox",
+                        onChange: l[8] || (l[8] = (c) => _(c.target.checked)),
+                        onBlur: (c) => a("save-edit", r, "passed_checks"),
+                        onKeyup: [
+                          S((c) => a("save-edit", r, "passed_checks"), ["enter"]),
+                          l[9] || (l[9] = S((c) => a("cancel-edit"), ["escape"]))
+                        ],
+                        autofocus: ""
+                      }, null, 40, We)) : (d(), o("span", Xe, y(r.passed_checks ? "✅" : "❌"), 1))
+                    ], 40, Je),
+                    t("td", {
+                      class: "editable-cell checkbox-cell",
+                      onDblclick: (c) => a("start-edit-cell", n.thesis.id, r, "currently_held")
+                    }, [
+                      ((x = n.editingCell) == null ? void 0 : x.stockId) === r.id && ((L = n.editingCell) == null ? void 0 : L.field) === "currently_held" ? (d(), o("input", {
+                        key: 0,
+                        checked: n.editingValue,
+                        type: "checkbox",
+                        onChange: l[10] || (l[10] = (c) => _(c.target.checked)),
+                        onBlur: (c) => a("save-edit", r, "currently_held"),
+                        onKeyup: [
+                          S((c) => a("save-edit", r, "currently_held"), ["enter"]),
+                          l[11] || (l[11] = S((c) => a("cancel-edit"), ["escape"]))
+                        ],
+                        autofocus: ""
+                      }, null, 40, Ze)) : (d(), o("span", et, y(r.currently_held ? "✅" : "❌"), 1))
+                    ], 40, Ye),
+                    t("td", tt, [
+                      t("button", {
+                        class: "btn btn-danger btn-sm",
+                        onClick: D((c) => a("delete-stock", n.thesis.id, r.id, r.symbol), ["stop"]),
+                        title: "Remove instrument"
+                      }, " 🗑️ ", 8, st)
+                    ])
+                  ]);
+                }), 128))
+              ])
+            ])
+          ]))
+        ])) : T("", !0),
+        n.thesis.children && n.thesis.children.length > 0 ? (d(!0), o(K, { key: 1 }, F(n.thesis.children, (r) => (d(), te(U, {
+          key: r.id,
+          thesis: r,
+          level: n.level + 1,
+          "thesis-stocks": n.thesisStocks,
+          "expanded-thesis": n.expandedThesis,
+          "editing-cell": n.editingCell,
+          "editing-value": n.editingValue,
+          onToggle: l[12] || (l[12] = (h) => a("toggle", h)),
+          onEdit: l[13] || (l[13] = (h) => a("edit", h)),
+          onDelete: l[14] || (l[14] = (h, f) => a("delete", h, f)),
+          onAddStock: l[15] || (l[15] = (h) => a("add-stock", h)),
+          onDeleteStock: l[16] || (l[16] = (h, f, k) => a("delete-stock", h, f, k)),
+          onStartEditCell: l[17] || (l[17] = (h, f, k) => a("start-edit-cell", h, f, k)),
+          onSaveEdit: l[18] || (l[18] = (h, f) => a("save-edit", h, f)),
+          onCancelEdit: l[19] || (l[19] = () => a("cancel-edit")),
+          onGetCellMetadata: l[20] || (l[20] = (h, f) => a("get-cell-metadata", h, f)),
+          onUpdateEditingValue: l[21] || (l[21] = (h) => a("update-editing-value", h))
+        }, null, 8, ["thesis", "level", "thesis-stocks", "expanded-thesis", "editing-cell", "editing-value"]))), 128)) : T("", !0)
+      ], 2);
+    };
+  }
+}), se = (n, N) => {
+  const a = n.__vccOpts || n;
+  for (const [_, m] of N)
+    a[_] = m;
+  return a;
+}, nt = /* @__PURE__ */ se(it, [["__scopeId", "data-v-cfc365bc"]]), lt = { class: "thesis-card" }, at = {
+  key: 0,
+  class: "loading"
+}, dt = {
+  key: 1,
+  class: "error"
+}, ot = {
+  key: 2,
+  class: "thesis-container"
+}, rt = { class: "thesis-header" }, ut = { class: "thesis-header-actions" }, ct = { class: "thesis-list" }, ht = {
+  key: 0,
+  class: "thesis-empty"
+}, vt = {
+  key: 1,
+  class: "thesis-items"
+}, mt = { class: "modal-header" }, ft = { class: "modal-body" }, yt = { class: "form-group" }, pt = ["for"], gt = ["id"], kt = { class: "form-group" }, bt = ["for"], $t = ["id"], Ct = { class: "form-group" }, Tt = ["for"], _t = ["id"], wt = ["value"], Et = { class: "modal-footer" }, St = ["disabled"], xt = { class: "modal-header" }, It = { class: "modal-body" }, At = { class: "form-group" }, Dt = { class: "modal-footer" }, Vt = ["disabled"], Mt = { class: "toast-container" }, Nt = ["onClick"], Ut = { class: "toast-icon" }, Bt = { key: 0 }, Kt = { key: 1 }, Ft = { key: 2 }, qt = { key: 3 }, Lt = { class: "toast-content" }, Pt = { class: "toast-title" }, Qt = {
   key: 0,
   class: "toast-message"
-}, qt = ["onClick"], Lt = /* @__PURE__ */ ye({
+}, zt = ["onClick"], Ht = /* @__PURE__ */ ee({
   __name: "Thesis",
   props: {
     userId: { default: null },
     showHeaderLink: { type: Boolean, default: !1 }
   },
   emits: ["minimize", "navigate"],
-  setup(S, { emit: q }) {
-    const f = S, N = q, _ = Ce(), y = $e(), L = Te(), x = v("");
-    async function ae() {
-      var i;
+  setup(n, { emit: N }) {
+    const a = n, _ = N, m = Te(), l = _e(), U = we(), w = b("");
+    async function q() {
+      var s;
       try {
-        const { data: { user: e } } = await y.auth.getUser();
-        e != null && e.email ? x.value = e.email : (i = e == null ? void 0 : e.user_metadata) != null && i.name ? x.value = e.user_metadata.name : f.userId && (x.value = f.userId);
+        const { data: { user: e } } = await l.auth.getUser();
+        e != null && e.email ? w.value = e.email : (s = e == null ? void 0 : e.user_metadata) != null && s.name ? w.value = e.user_metadata.name : a.userId && (w.value = a.userId);
       } catch (e) {
-        console.error("Error fetching current user:", e), f.userId && (x.value = f.userId);
+        console.error("Error fetching current user:", e), a.userId && (w.value = a.userId);
       }
     }
-    ae();
-    const D = v({}), h = v(null), p = v(null), I = v(!1), Q = v(""), w = v(""), U = v(/* @__PURE__ */ new Set());
-    async function M() {
+    q();
+    const r = b({}), h = b(null), f = b(null), k = b(!1), V = b(""), C = b(""), A = b(/* @__PURE__ */ new Set());
+    async function x() {
       try {
-        const { data: i, error: e } = await y.schema("hf").from("thesisStocks").select("*").order("symbol");
+        const { data: s, error: e } = await l.schema("hf").from("thesisStocks").select("*").order("symbol");
         if (e) throw e;
-        const t = {};
-        i == null || i.forEach((a) => {
-          t[a.thesis_id] || (t[a.thesis_id] = []), t[a.thesis_id].push(a);
-        }), D.value = t;
-      } catch (i) {
-        console.error("Error loading thesis stocks:", i), c("error", "Error", `Failed to load instruments: ${i.message}`);
+        const i = {};
+        s == null || s.forEach((u) => {
+          i[u.thesis_id] || (i[u.thesis_id] = []), i[u.thesis_id].push(u);
+        }), r.value = i;
+      } catch (s) {
+        console.error("Error loading thesis stocks:", s), g("error", "Error", `Failed to load instruments: ${s.message}`);
       }
     }
-    be(() => _.data.value, (i) => {
-      i && i.length > 0 && M();
+    ge(() => m.data.value, (s) => {
+      s && s.length > 0 && x();
     }, { immediate: !0 });
-    function de(i) {
-      U.value.has(i) ? U.value.delete(i) : U.value.add(i);
+    function L(s) {
+      A.value.has(s) ? A.value.delete(s) : A.value.add(s);
     }
-    function re(i) {
-      Q.value = i, w.value = "", I.value = !0;
+    function c(s) {
+      V.value = s, C.value = "", k.value = !0;
     }
-    async function O() {
-      if (!(!w.value.trim() || !Q.value))
+    async function W() {
+      if (!(!C.value.trim() || !V.value))
         try {
-          const { data: i, error: e } = await y.schema("hf").from("thesisStocks").insert([{
-            thesis_id: Q.value,
-            symbol: w.value.trim().toUpperCase(),
+          const { data: s, error: e } = await l.schema("hf").from("thesisStocks").insert([{
+            thesis_id: V.value,
+            symbol: C.value.trim().toUpperCase(),
             pe_ratio: null,
             peg_ratio: null,
             passed_checks: !1,
             currently_held: !1
           }]).select();
           if (e) throw e;
-          await M(), w.value = "", I.value = !1, c("success", "Instrument Added", `${w.value} has been added to the thesis`);
-        } catch (i) {
-          console.error("Error adding stock:", i), c("error", "Error", `Failed to add instrument: ${i.message}`);
+          await x(), C.value = "", k.value = !1, g("success", "Instrument Added", `${C.value} has been added to the thesis`);
+        } catch (s) {
+          console.error("Error adding stock:", s), g("error", "Error", `Failed to add instrument: ${s.message}`);
         }
     }
-    async function ue(i, e, t) {
-      if (confirm(`Are you sure you want to remove ${t} from this thesis?`))
+    async function ie(s, e, i) {
+      if (confirm(`Are you sure you want to remove ${i} from this thesis?`))
         try {
-          const { error: a } = await y.schema("hf").from("thesisStocks").delete().eq("id", e);
-          if (a) throw a;
-          await M(), c("success", "Instrument Removed", `${t} has been removed from the thesis`);
-        } catch (a) {
-          console.error("Error deleting stock:", a), c("error", "Error", `Failed to remove stock: ${a.message}`);
+          const { error: u } = await l.schema("hf").from("thesisStocks").delete().eq("id", e);
+          if (u) throw u;
+          await x(), g("success", "Instrument Removed", `${i} has been removed from the thesis`);
+        } catch (u) {
+          console.error("Error deleting stock:", u), g("error", "Error", `Failed to remove stock: ${u.message}`);
         }
     }
-    function B(i, e, t) {
-      h.value = { thesisId: i, stockId: e.id, field: t }, p.value = e[t];
+    function ne(s, e, i) {
+      h.value = { thesisId: s, stockId: e.id, field: i }, f.value = e[i];
     }
-    function A() {
-      h.value = null, p.value = null;
+    function z() {
+      h.value = null, f.value = null;
     }
-    async function C(i, e) {
+    async function le(s, e) {
       if (h.value) {
-        if (!x.value) {
-          c("error", "Error", "User information not available"), A();
+        if (!w.value) {
+          g("error", "Error", "User information not available"), z();
           return;
         }
         try {
-          const t = {
-            [e]: p.value,
-            [`${e}_updated_by`]: x.value,
+          const i = {
+            [e]: f.value,
+            [`${e}_updated_by`]: w.value,
             [`${e}_updated_at`]: (/* @__PURE__ */ new Date()).toISOString()
-          }, { error: a } = await y.schema("hf").from("thesisStocks").update(t).eq("id", i.id);
-          if (a) throw a;
-          await M(), A(), c("success", "Updated", `${e.replace("_", " ")} has been updated`);
-        } catch (t) {
-          console.error("Error updating stock:", t), c("error", "Error", `Failed to update: ${t.message}`);
+          }, { error: u } = await l.schema("hf").from("thesisStocks").update(i).eq("id", s.id);
+          if (u) throw u;
+          await x(), z(), g("success", "Updated", `${e.replace("_", " ")} has been updated`);
+        } catch (i) {
+          console.error("Error updating stock:", i), g("error", "Error", `Failed to update: ${i.message}`);
         }
       }
     }
-    function V(i, e) {
-      const t = i[`${e}_updated_by`], a = i[`${e}_updated_at`];
-      if (t && a) {
-        const o = new Date(a).toLocaleString();
-        return `Updated by: ${t}
-Updated at: ${o}`;
+    function ae(s, e) {
+      const i = s[`${e}_updated_by`], u = s[`${e}_updated_at`];
+      if (i && u) {
+        const I = new Date(u).toLocaleString();
+        return `Updated by: ${i}
+Updated at: ${I}`;
       }
       return "No updates yet";
     }
-    const b = v(!1), u = v("add"), k = v({ title: "", description: "" }), m = v({ id: "", title: "", description: "" }), z = ie({
-      get: () => u.value === "add" ? k.value.title : m.value.title,
-      set: (i) => {
-        u.value === "add" ? k.value.title = i : m.value.title = i;
+    const E = b(!1), v = b("add"), $ = b({ title: "", description: "", parent_thesis_id: null }), p = b({ id: "", title: "", description: "", parent_thesis_id: null }), H = B({
+      get: () => v.value === "add" ? $.value.title : p.value.title,
+      set: (s) => {
+        v.value === "add" ? $.value.title = s : p.value.title = s;
       }
-    }), j = ie({
-      get: () => u.value === "add" ? k.value.description : m.value.description,
-      set: (i) => {
-        u.value === "add" ? k.value.description = i : m.value.description = i;
+    }), X = B({
+      get: () => v.value === "add" ? $.value.description : p.value.description,
+      set: (s) => {
+        v.value === "add" ? $.value.description = s : p.value.description = s;
       }
-    }), F = v([]);
-    let ce = 0;
-    function c(i, e, t) {
-      const a = ce++;
-      F.value.push({ id: a, type: i, title: e, message: t }), setTimeout(() => {
-        P(a);
+    }), Y = B({
+      get: () => v.value === "add" ? $.value.parent_thesis_id : p.value.parent_thesis_id,
+      set: (s) => {
+        v.value === "add" ? $.value.parent_thesis_id = s : p.value.parent_thesis_id = s;
+      }
+    }), P = b([]);
+    let de = 0;
+    function g(s, e, i) {
+      const u = de++;
+      P.value.push({ id: u, type: s, title: e, message: i }), setTimeout(() => {
+        R(u);
       }, 5e3);
     }
-    function P(i) {
-      const e = F.value.findIndex((t) => t.id === i);
-      e !== -1 && F.value.splice(e, 1);
+    function R(s) {
+      const e = P.value.findIndex((i) => i.id === s);
+      e !== -1 && P.value.splice(e, 1);
     }
-    function ve() {
-      u.value = "add", k.value = { title: "", description: "" }, b.value = !0;
+    function oe() {
+      v.value = "add", $.value = { title: "", description: "", parent_thesis_id: null }, E.value = !0;
     }
-    async function he() {
-      if (k.value.title.trim())
+    async function re() {
+      if ($.value.title.trim())
         try {
-          const { data: i, error: e } = await y.schema("hf").from("thesisMaster").insert([{
-            title: k.value.title.trim(),
-            description: k.value.description.trim() || null
+          const { data: s, error: e } = await l.schema("hf").from("thesisMaster").insert([{
+            title: $.value.title.trim(),
+            description: $.value.description.trim() || null,
+            parent_thesis_id: $.value.parent_thesis_id || null
           }]).select();
           if (e) throw e;
-          L.invalidateQueries({ queryKey: ["thesis"] }), k.value = { title: "", description: "" }, b.value = !1, c("success", "Thesis Added", "New thesis has been created successfully");
-        } catch (i) {
-          console.error("Error adding thesis:", i), c("error", "Error", `Failed to add thesis: ${i.message}`);
+          U.invalidateQueries({ queryKey: ["thesis"] }), $.value = { title: "", description: "", parent_thesis_id: null }, E.value = !1, g("success", "Thesis Added", "New thesis has been created successfully");
+        } catch (s) {
+          console.error("Error adding thesis:", s), g("error", "Error", `Failed to add thesis: ${s.message}`);
         }
     }
-    function pe(i) {
-      m.value = {
-        id: i.id,
-        title: i.title,
-        description: i.description || ""
-      }, u.value = "edit", b.value = !0;
+    function ue(s) {
+      p.value = {
+        id: s.id,
+        title: s.title,
+        description: s.description || "",
+        parent_thesis_id: s.parent_thesis_id || null
+      }, v.value = "edit", E.value = !0;
     }
-    function me() {
-      m.value = { id: "", title: "", description: "" }, b.value = !1;
+    function ce() {
+      p.value = { id: "", title: "", description: "", parent_thesis_id: null }, E.value = !1;
     }
-    async function _e() {
-      if (m.value.title.trim())
+    async function he() {
+      if (p.value.title.trim())
         try {
-          const { error: i } = await y.schema("hf").from("thesisMaster").update({
-            title: m.value.title.trim(),
-            description: m.value.description.trim() || null
-          }).eq("id", m.value.id);
-          if (i) throw i;
-          L.invalidateQueries({ queryKey: ["thesis"] }), m.value = { id: "", title: "", description: "" }, b.value = !1, c("success", "Thesis Updated", "Thesis has been updated successfully");
-        } catch (i) {
-          console.error("Error updating thesis:", i), c("error", "Error", `Failed to update thesis: ${i.message}`);
+          const { error: s } = await l.schema("hf").from("thesisMaster").update({
+            title: p.value.title.trim(),
+            description: p.value.description.trim() || null,
+            parent_thesis_id: p.value.parent_thesis_id || null
+          }).eq("id", p.value.id);
+          if (s) throw s;
+          U.invalidateQueries({ queryKey: ["thesis"] }), p.value = { id: "", title: "", description: "", parent_thesis_id: null }, E.value = !1, g("success", "Thesis Updated", "Thesis has been updated successfully");
+        } catch (s) {
+          console.error("Error updating thesis:", s), g("error", "Error", `Failed to update thesis: ${s.message}`);
         }
     }
-    async function fe(i, e) {
+    async function ve(s, e) {
       if (confirm(`Are you sure you want to archive thesis "${e}"?
 
 Note: This will also archive all instruments associated with this thesis.`))
         try {
-          await y.schema("hf").from("thesisStocks").delete().eq("thesis_id", i);
-          const { error: t } = await y.schema("hf").from("thesisMaster").delete().eq("id", i);
-          if (t) throw t;
-          L.invalidateQueries({ queryKey: ["thesis"] }), await M(), c("success", "Thesis Deleted", "Thesis and associated instruments have been deleted successfully");
-        } catch (t) {
-          console.error("Error deleting thesis:", t), c("error", "Error", `Failed to archive thesis: ${t.message}`);
+          await l.schema("hf").from("thesisStocks").delete().eq("thesis_id", s);
+          const { error: i } = await l.schema("hf").from("thesisMaster").delete().eq("id", s);
+          if (i) throw i;
+          U.invalidateQueries({ queryKey: ["thesis"] }), await x(), g("success", "Thesis Deleted", "Thesis and associated instruments have been deleted successfully");
+        } catch (i) {
+          console.error("Error deleting thesis:", i), g("error", "Error", `Failed to archive thesis: ${i.message}`);
         }
     }
-    return (i, e) => (l(), n("div", Ee, [
-      T(_).isLoading.value ? (l(), n("div", Se, [...e[18] || (e[18] = [
-        s("div", { class: "loading-spinner" }, null, -1),
-        oe(" Loading thesis... ", -1)
-      ])])) : T(_).isError.value ? (l(), n("div", xe, [
-        e[19] || (e[19] = s("h3", null, "Error loading thesis", -1)),
-        s("p", null, r(T(_).error.value), 1)
-      ])) : T(_).isSuccess.value ? (l(), n("div", Ie, [
-        s("div", Ae, [
-          s("h2", {
-            class: ne({ "thesis-header-clickable": f.showHeaderLink }),
-            onClick: e[0] || (e[0] = (t) => f.showHeaderLink && N("navigate"))
+    function Z(s, e) {
+      var u;
+      if (s === e) return !1;
+      const i = (u = m.data.value) == null ? void 0 : u.find((I) => I.id === s);
+      return i ? i.parent_thesis_id === e ? !1 : i.parent_thesis_id ? Z(i.parent_thesis_id, e) : !0 : !0;
+    }
+    const me = B(() => {
+      if (!m.data.value) return [];
+      const s = v.value === "edit" ? p.value.id : null;
+      return m.data.value.filter((e) => !(s && !Z(e.id, s)));
+    }), fe = B(() => {
+      if (!m.data.value) return [];
+      const s = m.data.value.filter((u) => !u.parent_thesis_id);
+      function e(u) {
+        var I;
+        return ((I = m.data.value) == null ? void 0 : I.filter((G) => G.parent_thesis_id === u)) || [];
+      }
+      function i(u) {
+        const I = e(u.id);
+        return {
+          ...u,
+          children: I.map((G) => i(G))
+        };
+      }
+      return s.map((u) => i(u));
+    });
+    function ye(s) {
+      f.value = s;
+    }
+    return (s, e) => (d(), o("div", lt, [
+      M(m).isLoading.value ? (d(), o("div", at, [...e[15] || (e[15] = [
+        t("div", { class: "loading-spinner" }, null, -1),
+        J(" Loading thesis... ", -1)
+      ])])) : M(m).isError.value ? (d(), o("div", dt, [
+        e[16] || (e[16] = t("h3", null, "Error loading thesis", -1)),
+        t("p", null, y(M(m).error.value), 1)
+      ])) : M(m).isSuccess.value ? (d(), o("div", ot, [
+        t("div", rt, [
+          t("h2", {
+            class: j({ "thesis-header-clickable": a.showHeaderLink }),
+            onClick: e[0] || (e[0] = (i) => a.showHeaderLink && _("navigate"))
           }, " Thesis Management ", 2),
-          s("div", De, [
-            s("button", {
+          t("div", ut, [
+            t("button", {
               class: "btn btn-primary",
-              onClick: ve
-            }, [...e[20] || (e[20] = [
-              s("span", { class: "icon" }, "➕", -1),
-              oe(" Add New Thesis ", -1)
+              onClick: oe
+            }, [...e[17] || (e[17] = [
+              t("span", { class: "icon" }, "➕", -1),
+              J(" Add New Thesis ", -1)
             ])]),
-            s("button", {
+            t("button", {
               class: "btn btn-minimize",
-              onClick: e[1] || (e[1] = (t) => N("minimize")),
+              onClick: e[1] || (e[1] = (i) => _("minimize")),
               title: "Minimize"
             }, " ➖ ")
           ])
         ]),
-        s("div", Ue, [
-          !T(_).data.value || T(_).data.value.length === 0 ? (l(), n("div", Me, [...e[21] || (e[21] = [
-            s("p", null, 'No thesis found. Click "Add New Thesis" to create one.', -1)
-          ])])) : (l(), n("div", Ke, [
-            (l(!0), n(R, null, H(T(_).data.value, (t) => {
-              var a;
-              return l(), n("div", {
-                key: t.id,
-                class: "thesis-item-wrapper"
-              }, [
-                s("div", Ne, [
-                  s("div", {
-                    class: "thesis-content",
-                    onClick: (o) => de(t.id)
-                  }, [
-                    s("div", Ve, r(U.value.has(t.id) ? "▼" : "▶"), 1),
-                    s("div", Fe, [
-                      s("div", qe, r(t.title), 1),
-                      t.description ? (l(), n("div", Le, r(t.description), 1)) : $("", !0),
-                      s("div", Qe, [
-                        t.created_at ? (l(), n("span", ze, " Created: " + r(new Date(t.created_at).toLocaleDateString()), 1)) : $("", !0),
-                        s("span", Pe, r(((a = D.value[t.id]) == null ? void 0 : a.length) || 0) + " instruments ", 1)
-                      ])
-                    ])
-                  ], 8, Be),
-                  s("div", Re, [
-                    s("button", {
-                      class: "btn btn-secondary btn-sm",
-                      onClick: (o) => pe(t),
-                      title: "Edit thesis"
-                    }, " ✏️ Edit ", 8, He),
-                    s("button", {
-                      class: "btn btn-danger btn-sm",
-                      onClick: (o) => fe(t.id, t.title),
-                      title: "Archive thesis"
-                    }, " 🗑️ ", 8, Ge)
-                  ])
-                ]),
-                U.value.has(t.id) ? (l(), n("div", Oe, [
-                  s("div", je, [
-                    e[22] || (e[22] = s("h4", null, "Instruments", -1)),
-                    s("button", {
-                      class: "btn btn-primary btn-sm",
-                      onClick: (o) => re(t.id)
-                    }, " ➕ Add Instrument ", 8, Je)
-                  ]),
-                  !D.value[t.id] || D.value[t.id].length === 0 ? (l(), n("div", We, ' No instruments added yet. Click "Add Instrument" to add one. ')) : (l(), n("div", Xe, [
-                    s("table", Ye, [
-                      e[23] || (e[23] = s("thead", null, [
-                        s("tr", null, [
-                          s("th", null, "Symbol"),
-                          s("th", null, "PE Ratio"),
-                          s("th", null, "PEG Ratio"),
-                          s("th", null, "Passed checks to hold in portfolio"),
-                          s("th", null, "Currently held in portfolio"),
-                          s("th", null, "Actions")
-                        ])
-                      ], -1)),
-                      s("tbody", null, [
-                        (l(!0), n(R, null, H(D.value[t.id], (o) => {
-                          var J, W, X, Y, Z, ee, te, se;
-                          return l(), n("tr", {
-                            key: o.id
-                          }, [
-                            s("td", Ze, r(o.symbol), 1),
-                            s("td", {
-                              class: "editable-cell",
-                              title: V(o, "pe_ratio"),
-                              onDblclick: (d) => B(t.id, o, "pe_ratio")
-                            }, [
-                              ((J = h.value) == null ? void 0 : J.stockId) === o.id && ((W = h.value) == null ? void 0 : W.field) === "pe_ratio" ? E((l(), n("input", {
-                                key: 0,
-                                "onUpdate:modelValue": e[2] || (e[2] = (d) => p.value = d),
-                                type: "number",
-                                step: "0.01",
-                                onBlur: (d) => C(o, "pe_ratio"),
-                                onKeyup: [
-                                  g((d) => C(o, "pe_ratio"), ["enter"]),
-                                  g(A, ["escape"])
-                                ],
-                                autofocus: ""
-                              }, null, 40, tt)), [
-                                [
-                                  K,
-                                  p.value,
-                                  void 0,
-                                  { number: !0 }
-                                ]
-                              ]) : (l(), n("span", st, r(o.pe_ratio ?? "-"), 1))
-                            ], 40, et),
-                            s("td", {
-                              class: "editable-cell",
-                              title: V(o, "peg_ratio"),
-                              onDblclick: (d) => B(t.id, o, "peg_ratio")
-                            }, [
-                              ((X = h.value) == null ? void 0 : X.stockId) === o.id && ((Y = h.value) == null ? void 0 : Y.field) === "peg_ratio" ? E((l(), n("input", {
-                                key: 0,
-                                "onUpdate:modelValue": e[3] || (e[3] = (d) => p.value = d),
-                                type: "number",
-                                step: "0.01",
-                                onBlur: (d) => C(o, "peg_ratio"),
-                                onKeyup: [
-                                  g((d) => C(o, "peg_ratio"), ["enter"]),
-                                  g(A, ["escape"])
-                                ],
-                                autofocus: ""
-                              }, null, 40, ot)), [
-                                [
-                                  K,
-                                  p.value,
-                                  void 0,
-                                  { number: !0 }
-                                ]
-                              ]) : (l(), n("span", nt, r(o.peg_ratio ?? "-"), 1))
-                            ], 40, it),
-                            s("td", {
-                              class: "editable-cell checkbox-cell",
-                              title: V(o, "passed_checks"),
-                              onDblclick: (d) => B(t.id, o, "passed_checks")
-                            }, [
-                              ((Z = h.value) == null ? void 0 : Z.stockId) === o.id && ((ee = h.value) == null ? void 0 : ee.field) === "passed_checks" ? E((l(), n("input", {
-                                key: 0,
-                                "onUpdate:modelValue": e[4] || (e[4] = (d) => p.value = d),
-                                type: "checkbox",
-                                onBlur: (d) => C(o, "passed_checks"),
-                                onKeyup: [
-                                  g((d) => C(o, "passed_checks"), ["enter"]),
-                                  g(A, ["escape"])
-                                ],
-                                autofocus: ""
-                              }, null, 40, at)), [
-                                [le, p.value]
-                              ]) : (l(), n("span", dt, r(o.passed_checks ? "✅" : "❌"), 1))
-                            ], 40, lt),
-                            s("td", {
-                              class: "editable-cell checkbox-cell",
-                              title: V(o, "currently_held"),
-                              onDblclick: (d) => B(t.id, o, "currently_held")
-                            }, [
-                              ((te = h.value) == null ? void 0 : te.stockId) === o.id && ((se = h.value) == null ? void 0 : se.field) === "currently_held" ? E((l(), n("input", {
-                                key: 0,
-                                "onUpdate:modelValue": e[5] || (e[5] = (d) => p.value = d),
-                                type: "checkbox",
-                                onBlur: (d) => C(o, "currently_held"),
-                                onKeyup: [
-                                  g((d) => C(o, "currently_held"), ["enter"]),
-                                  g(A, ["escape"])
-                                ],
-                                autofocus: ""
-                              }, null, 40, ut)), [
-                                [le, p.value]
-                              ]) : (l(), n("span", ct, r(o.currently_held ? "✅" : "❌"), 1))
-                            ], 40, rt),
-                            s("td", vt, [
-                              s("button", {
-                                class: "btn btn-danger btn-xs",
-                                onClick: (d) => ue(t.id, o.id, o.symbol),
-                                title: "Remove instrument"
-                              }, " 🗑️ ", 8, ht)
-                            ])
-                          ]);
-                        }), 128))
-                      ])
-                    ])
-                  ]))
-                ])) : $("", !0)
-              ]);
-            }), 128))
+        t("div", ct, [
+          !M(m).data.value || M(m).data.value.length === 0 ? (d(), o("div", ht, [...e[18] || (e[18] = [
+            t("p", null, 'No thesis found. Click "Add New Thesis" to create one.', -1)
+          ])])) : (d(), o("div", vt, [
+            (d(!0), o(K, null, F(fe.value, (i) => (d(), te(nt, {
+              key: i.id,
+              thesis: i,
+              level: 0,
+              "thesis-stocks": r.value,
+              "expanded-thesis": A.value,
+              "editing-cell": h.value,
+              "editing-value": f.value,
+              onToggle: L,
+              onEdit: ue,
+              onDelete: ve,
+              onAddStock: c,
+              onDeleteStock: ie,
+              onStartEditCell: ne,
+              onSaveEdit: le,
+              onCancelEdit: z,
+              onGetCellMetadata: ae,
+              onUpdateEditingValue: ye
+            }, null, 8, ["thesis", "thesis-stocks", "expanded-thesis", "editing-cell", "editing-value"]))), 128))
           ]))
         ])
-      ])) : $("", !0),
-      b.value ? (l(), n("div", {
+      ])) : T("", !0),
+      E.value ? (d(), o("div", {
         key: 3,
         class: "modal-overlay",
-        onClick: e[12] || (e[12] = (t) => b.value = !1)
+        onClick: e[9] || (e[9] = (i) => E.value = !1)
       }, [
-        s("div", {
+        t("div", {
           class: "modal-content",
-          onClick: e[11] || (e[11] = G(() => {
+          onClick: e[8] || (e[8] = D(() => {
           }, ["stop"]))
         }, [
-          s("div", pt, [
-            s("h3", null, r(u.value === "add" ? "Add New Thesis" : "Edit Thesis"), 1),
-            s("button", {
+          t("div", mt, [
+            t("h3", null, y(v.value === "add" ? "Add New Thesis" : "Edit Thesis"), 1),
+            t("button", {
               class: "modal-close",
-              onClick: e[6] || (e[6] = (t) => b.value = !1)
+              onClick: e[2] || (e[2] = (i) => E.value = !1)
             }, "×")
           ]),
-          s("div", mt, [
-            s("div", _t, [
-              s("label", {
-                for: u.value === "add" ? "thesis-title" : "edit-thesis-title"
-              }, " Title * ", 8, ft),
-              E(s("input", {
-                id: u.value === "add" ? "thesis-title" : "edit-thesis-title",
-                "onUpdate:modelValue": e[7] || (e[7] = (t) => z.value = t),
+          t("div", ft, [
+            t("div", yt, [
+              t("label", {
+                for: v.value === "add" ? "thesis-title" : "edit-thesis-title"
+              }, " Title * ", 8, pt),
+              Q(t("input", {
+                id: v.value === "add" ? "thesis-title" : "edit-thesis-title",
+                "onUpdate:modelValue": e[3] || (e[3] = (i) => H.value = i),
                 type: "text",
                 placeholder: "Enter thesis title",
                 maxlength: "100",
                 autofocus: ""
-              }, null, 8, yt), [
-                [K, z.value]
+              }, null, 8, gt), [
+                [O, H.value]
               ])
             ]),
-            s("div", bt, [
-              s("label", {
-                for: u.value === "add" ? "thesis-description" : "edit-thesis-description"
-              }, " Description ", 8, kt),
-              E(s("textarea", {
-                id: u.value === "add" ? "thesis-description" : "edit-thesis-description",
-                "onUpdate:modelValue": e[8] || (e[8] = (t) => j.value = t),
+            t("div", kt, [
+              t("label", {
+                for: v.value === "add" ? "thesis-description" : "edit-thesis-description"
+              }, " Description ", 8, bt),
+              Q(t("textarea", {
+                id: v.value === "add" ? "thesis-description" : "edit-thesis-description",
+                "onUpdate:modelValue": e[4] || (e[4] = (i) => X.value = i),
                 placeholder: "Enter thesis description (optional)",
                 rows: "4",
                 maxlength: "500"
-              }, null, 8, gt), [
-                [K, j.value]
+              }, null, 8, $t), [
+                [O, X.value]
               ])
+            ]),
+            t("div", Ct, [
+              t("label", {
+                for: v.value === "add" ? "thesis-parent" : "edit-thesis-parent"
+              }, " Parent Thesis ", 8, Tt),
+              Q(t("select", {
+                id: v.value === "add" ? "thesis-parent" : "edit-thesis-parent",
+                "onUpdate:modelValue": e[5] || (e[5] = (i) => Y.value = i)
+              }, [
+                e[19] || (e[19] = t("option", { value: null }, "None (Root Thesis)", -1)),
+                (d(!0), o(K, null, F(me.value, (i) => (d(), o("option", {
+                  key: i.id,
+                  value: i.id
+                }, y(i.title), 9, wt))), 128))
+              ], 8, _t), [
+                [ke, Y.value]
+              ]),
+              e[20] || (e[20] = t("small", { class: "form-hint" }, "Select a parent thesis to create a hierarchical structure", -1))
             ])
           ]),
-          s("div", wt, [
-            s("button", {
+          t("div", Et, [
+            t("button", {
               class: "btn btn-cancel",
-              onClick: e[9] || (e[9] = (t) => u.value === "edit" ? me() : b.value = !1)
+              onClick: e[6] || (e[6] = (i) => v.value === "edit" ? ce() : E.value = !1)
             }, " Cancel "),
-            s("button", {
+            t("button", {
               class: "btn btn-primary",
-              onClick: e[10] || (e[10] = (t) => u.value === "add" ? he() : _e()),
-              disabled: !z.value.trim()
-            }, r(u.value === "add" ? "Add Thesis" : "Save Changes"), 9, Ct)
+              onClick: e[7] || (e[7] = (i) => v.value === "add" ? re() : he()),
+              disabled: !H.value.trim()
+            }, y(v.value === "add" ? "Add Thesis" : "Save Changes"), 9, St)
           ])
         ])
-      ])) : $("", !0),
-      I.value ? (l(), n("div", {
+      ])) : T("", !0),
+      k.value ? (d(), o("div", {
         key: 4,
         class: "modal-overlay",
-        onClick: e[17] || (e[17] = (t) => I.value = !1)
+        onClick: e[14] || (e[14] = (i) => k.value = !1)
       }, [
-        s("div", {
+        t("div", {
           class: "modal-content",
-          onClick: e[16] || (e[16] = G(() => {
+          onClick: e[13] || (e[13] = D(() => {
           }, ["stop"]))
         }, [
-          s("div", $t, [
-            e[24] || (e[24] = s("h3", null, "Add Instrument to Thesis", -1)),
-            s("button", {
+          t("div", xt, [
+            e[21] || (e[21] = t("h3", null, "Add Instrument to Thesis", -1)),
+            t("button", {
               class: "modal-close",
-              onClick: e[13] || (e[13] = (t) => I.value = !1)
+              onClick: e[10] || (e[10] = (i) => k.value = !1)
             }, "×")
           ]),
-          s("div", Tt, [
-            s("div", Et, [
-              e[25] || (e[25] = s("label", { for: "stock-symbol" }, "Instrument Symbol *", -1)),
-              E(s("input", {
+          t("div", It, [
+            t("div", At, [
+              e[22] || (e[22] = t("label", { for: "stock-symbol" }, "Instrument Symbol *", -1)),
+              Q(t("input", {
                 id: "stock-symbol",
-                "onUpdate:modelValue": e[14] || (e[14] = (t) => w.value = t),
+                "onUpdate:modelValue": e[11] || (e[11] = (i) => C.value = i),
                 type: "text",
                 placeholder: "Enter instrument symbol (e.g., AAPL)",
                 maxlength: "10",
                 autofocus: "",
-                onKeyup: g(O, ["enter"])
+                onKeyup: S(W, ["enter"])
               }, null, 544), [
-                [K, w.value]
+                [O, C.value]
               ])
             ])
           ]),
-          s("div", St, [
-            s("button", {
+          t("div", Dt, [
+            t("button", {
               class: "btn btn-cancel",
-              onClick: e[15] || (e[15] = (t) => I.value = !1)
+              onClick: e[12] || (e[12] = (i) => k.value = !1)
             }, " Cancel "),
-            s("button", {
+            t("button", {
               class: "btn btn-primary",
-              onClick: O,
-              disabled: !w.value.trim()
-            }, " Add Instrument ", 8, xt)
+              onClick: W,
+              disabled: !C.value.trim()
+            }, " Add Instrument ", 8, Vt)
           ])
         ])
-      ])) : $("", !0),
-      s("div", It, [
-        ke(ge, {
+      ])) : T("", !0),
+      t("div", Mt, [
+        be($e, {
           name: "toast",
           tag: "div"
         }, {
-          default: we(() => [
-            (l(!0), n(R, null, H(F.value, (t) => (l(), n("div", {
-              key: t.id,
-              class: ne(["toast", `toast-${t.type}`]),
-              onClick: (a) => P(t.id)
+          default: Ce(() => [
+            (d(!0), o(K, null, F(P.value, (i) => (d(), o("div", {
+              key: i.id,
+              class: j(["toast", `toast-${i.type}`]),
+              onClick: (u) => R(i.id)
             }, [
-              s("div", Dt, [
-                t.type === "success" ? (l(), n("span", Ut, "✅")) : t.type === "error" ? (l(), n("span", Mt, "❌")) : t.type === "warning" ? (l(), n("span", Kt, "⚠️")) : t.type === "info" ? (l(), n("span", Nt, "ℹ️")) : $("", !0)
+              t("div", Ut, [
+                i.type === "success" ? (d(), o("span", Bt, "✅")) : i.type === "error" ? (d(), o("span", Kt, "❌")) : i.type === "warning" ? (d(), o("span", Ft, "⚠️")) : i.type === "info" ? (d(), o("span", qt, "ℹ️")) : T("", !0)
               ]),
-              s("div", Bt, [
-                s("div", Vt, r(t.title), 1),
-                t.message ? (l(), n("div", Ft, r(t.message), 1)) : $("", !0)
+              t("div", Lt, [
+                t("div", Pt, y(i.title), 1),
+                i.message ? (d(), o("div", Qt, y(i.message), 1)) : T("", !0)
               ]),
-              s("button", {
+              t("button", {
                 class: "toast-close",
-                onClick: G((a) => P(t.id), ["stop"]),
+                onClick: D((u) => R(i.id), ["stop"]),
                 "aria-label": "Close notification"
-              }, " × ", 8, qt)
-            ], 10, At))), 128))
+              }, " × ", 8, zt)
+            ], 10, Nt))), 128))
           ]),
           _: 1
         })
       ])
     ]));
   }
-}), Qt = (S, q) => {
-  const f = S.__vccOpts || S;
-  for (const [N, _] of q)
-    f[N] = _;
-  return f;
-}, zt = /* @__PURE__ */ Qt(Lt, [["__scopeId", "data-v-c343ec05"]]), Gt = {
-  install(S) {
-    S.component("Thesis", zt);
+}), Rt = /* @__PURE__ */ se(Ht, [["__scopeId", "data-v-9a2a978b"]]), Jt = {
+  install(n) {
+    n.component("Thesis", Rt);
   }
 };
 export {
-  zt as Thesis,
-  Gt as default
+  Rt as Thesis,
+  Jt as default
 };
