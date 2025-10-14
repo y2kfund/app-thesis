@@ -653,7 +653,7 @@ Note: This will also archive all instruments associated with this thesis.`))
       ])
     ]));
   }
-}), Rt = /* @__PURE__ */ se(Ht, [["__scopeId", "data-v-9a2a978b"]]), Jt = {
+}), Rt = /* @__PURE__ */ se(Ht, [["__scopeId", "data-v-10ba14fe"]]), Jt = {
   install(n) {
     n.component("Thesis", Rt);
   }
