@@ -47,29 +47,18 @@ function updateValue(value: any) {
           <div v-if="thesis.description" class="thesis-description">
             {{ thesis.description }}
           </div>
-          <div class="thesis-meta">
-            <span v-if="thesis.created_at" class="thesis-date">
-              Created: {{ new Date(thesis.created_at).toLocaleDateString() }}
-            </span>
-            <span class="thesis-stock-count">
-              {{ thesisStocks[thesis.id]?.length || 0 }} instruments
-            </span>
-            <span v-if="thesis.children?.length > 0" class="thesis-children-count">
-              {{ thesis.children.length }} child thesis
-            </span>
-          </div>
         </div>
       </div>
       <div class="thesis-actions">
         <button 
-          class="btn btn-secondary btn-sm" 
+          class="btn btn-secondary btn-sm btn-icon" 
           @click.stop="emit('edit', thesis)"
           title="Edit thesis"
         >
-          ✏️ Edit
+          ✏️
         </button>
         <button 
-          class="btn btn-danger btn-sm" 
+          class="btn btn-danger btn-sm btn-icon" 
           @click.stop="emit('delete', thesis.id, thesis.title)"
           title="Archive thesis"
         >
@@ -81,20 +70,21 @@ function updateValue(value: any) {
     <!-- Stock table for expanded thesis -->
     <div v-if="expandedThesis.has(thesis.id)" class="stocks-section">
       <div class="stocks-header">
-        <h4>Instruments</h4>
+        <h4>Instruments ({{ thesisStocks[thesis.id]?.length || 0 }})</h4>
         <button 
-          class="btn btn-primary btn-sm" 
+          class="btn btn-primary btn-sm btn-icon" 
           @click.stop="emit('add-stock', thesis.id)"
+          title="Add Instrument"
         >
-          ➕ Add Instrument
+          ➕
         </button>
       </div>
 
-      <div v-if="!thesisStocks[thesis.id] || thesisStocks[thesis.id].length === 0" class="stocks-empty">
-        No instruments added yet. Click "Add Instrument" to add one.
-      </div>
+      <!--div v-if="!thesisStocks[thesis.id] || thesisStocks[thesis.id].length === 0" class="stocks-empty">
+        No instruments added yet.
+      </div-->
 
-      <div v-else class="stocks-table-wrapper">
+      <div class="stocks-table-wrapper">
         <table class="stocks-table">
           <thead>
             <tr>
@@ -182,7 +172,7 @@ function updateValue(value: any) {
               
               <td class="stock-actions">
                 <button 
-                  class="btn btn-danger btn-sm" 
+                  class="btn btn-danger btn-sm btn-icon" 
                   @click.stop="emit('delete-stock', thesis.id, stock.id, stock.symbol)"
                   title="Remove instrument"
                 >
@@ -223,14 +213,14 @@ function updateValue(value: any) {
 
 <style scoped>
 .thesis-item-wrapper {
-  margin-top: 1rem;
+  margin-top: 0.25rem;
 }
 
 .thesis-item {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 0.75rem;
+  padding: 0.2rem 0.5rem 0rem 0.5rem;
   border: 1px solid #dee2e6;
   border-radius: 8px;
   background: #f8f9fa;
@@ -285,35 +275,13 @@ function updateValue(value: any) {
 
 .thesis-description {
   color: #6c757d;
-  font-size: 0.9375rem;
-  line-height: 1.5;
-  margin-bottom: 0.75rem;
-}
-
-.thesis-meta {
-  display: flex;
-  gap: 1rem;
-  font-size: 0.8125rem;
-  color: #868e96;
-}
-
-.thesis-date {
-  color: #868e96;
-}
-
-.thesis-stock-count {
-  color: #007bff;
-  font-weight: 500;
-}
-
-.thesis-children-count {
-  color: #6c757d;
-  font-style: italic;
+  font-size: 0.875rem;
+  line-height: 1.4;
 }
 
 .thesis-actions {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.25rem;
   margin-left: 1rem;
   flex-shrink: 0;
 }
@@ -321,6 +289,7 @@ function updateValue(value: any) {
 .btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.375rem;
   padding: 0.375rem 0.75rem;
   border: 1px solid #dee2e6;
@@ -330,6 +299,14 @@ function updateValue(value: any) {
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
+}
+
+.btn-icon {
+  padding: 0 !important;
+    min-width: 32px;
+    background: none !important;
+    border: none;
+    width: auto;
 }
 
 .btn-primary {
@@ -378,8 +355,8 @@ function updateValue(value: any) {
 
 /* Stocks section */
 .stocks-section {
-  margin-top: 1rem;
-  padding: 0.75rem 1rem;
+  margin-top: 0.25rem;
+  padding: 0.2rem 0.5rem 0rem 0.5rem;;
   background: white;
   border: 1px solid #dee2e6;
   border-radius: 6px;
@@ -390,18 +367,18 @@ function updateValue(value: any) {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.25rem;
 }
 
 .stocks-header h4 {
   margin: 0;
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 600;
   color: #333;
 }
 
 .stocks-empty {
-  padding: 2rem;
+  padding: 0.75rem;
   text-align: center;
   color: #6c757d;
   font-size: 0.875rem;
@@ -423,7 +400,7 @@ function updateValue(value: any) {
 }
 
 .stocks-table th {
-  padding: 0.5rem;
+  padding: 0.25rem 0.5rem;
   text-align: left;
   font-weight: 600;
   color: #495057;
@@ -435,7 +412,7 @@ function updateValue(value: any) {
 }
 
 .stocks-table td {
-  padding: 0.5rem;
+  padding: 0.25rem 0.5rem;
   border-bottom: 1px solid #e9ecef;
 }
 
@@ -481,7 +458,7 @@ function updateValue(value: any) {
 
 .stock-actions {
   text-align: center;
-  width: 80px;
+  width: 60px;
 }
 
 @media (max-width: 768px) {
@@ -491,7 +468,7 @@ function updateValue(value: any) {
   
   .thesis-actions {
     margin-left: 0;
-    margin-top: 0.75rem;
+    margin-top: 0.5rem;
     width: 100%;
   }
   
