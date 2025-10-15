@@ -514,8 +514,8 @@ function updateEditingValue(value: any) {
           Thesis Management
         </h2>
         <div class="thesis-header-actions">
-          <button class="btn btn-primary" @click="showThesisModalForAdd">
-            <span class="icon">➕</span> Add New Thesis
+          <button class="btn btn-add" @click="showThesisModalForAdd">
+            <span class="icon">➕</span>
           </button>
           <button 
             class="btn btn-minimize" 
@@ -760,8 +760,8 @@ function updateEditingValue(value: any) {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.75rem;
-  padding-bottom: 0.75rem;
+  margin-bottom: 0.25rem;
+  padding-bottom: 0.25rem;
   border-bottom: 1px solid #dee2e6;
 }
 
@@ -1313,7 +1313,7 @@ function updateEditingValue(value: any) {
 
 .thesis-card button {
     width: auto;
-    padding: 0.4rem 0.75rem !important;
+    padding: 0.2rem 0.4rem !important;
 }
 
 /* Center align all cells except Symbol */
