@@ -6,7 +6,8 @@ import type { ThesisProps } from './index'
 import ThesisItem from './components/ThesisItem.vue'
 
 const props = withDefaults(defineProps<ThesisProps>(), {
-  userId: null,
+  //userId: null,
+  userId: '67e578fd-2cf7-48a4-b028-a11a3f89bb9b',
   showHeaderLink: false
 })
 
@@ -64,6 +65,15 @@ interface ThesisStock {
   currently_held_updated_at?: string
   created_at?: string
   updated_at?: string
+  analyst_ratings?: string        
+  founder_led?: boolean    
+  next_earnings_date?: string
+  analyst_ratings_updated_by?: string
+  analyst_ratings_updated_at?: string
+  founder_led_updated_by?: string
+  founder_led_updated_at?: string
+  next_earnings_date_updated_by?: string
+  next_earnings_date_updated_at?: string
 }
 
 // Stock management state
@@ -138,7 +148,10 @@ async function addStockToThesis() {
         pe_ratio: null,
         peg_ratio: null,
         passed_checks: false,
-        currently_held: false
+        currently_held: false,
+        analyst_ratings: '',          
+        founder_led: false,
+        next_earnings_date: null
       }])
       .select()
     
@@ -181,7 +194,11 @@ async function deleteStock(thesisId: string, stockId: string, symbol: string) {
 }
 
 // Cell editing
-function startEditCell(thesisId: string, stock: ThesisStock, field: 'pe_ratio' | 'peg_ratio' | 'passed_checks' | 'currently_held') {
+function startEditCell(
+  thesisId: string,
+  stock: ThesisStock,
+  field: 'pe_ratio' | 'peg_ratio' | 'passed_checks' | 'currently_held' | 'analyst_ratings' | 'founder_led' | 'next_earnings_date' // <-- add new fields
+) {
   editingCell.value = { thesisId, stockId: stock.id, field }
   editingValue.value = stock[field]
 }
@@ -191,7 +208,10 @@ function cancelEdit() {
   editingValue.value = null
 }
 
-async function saveEdit(stock: ThesisStock, field: 'pe_ratio' | 'peg_ratio' | 'passed_checks' | 'currently_held') {
+async function saveEdit(
+  stock: ThesisStock,
+  field: 'pe_ratio' | 'peg_ratio' | 'passed_checks' | 'currently_held' | 'analyst_ratings' | 'founder_led' | 'next_earnings_date' // <-- add new fields
+) {
   if (!editingCell.value) return
   
   // Check if we have user email

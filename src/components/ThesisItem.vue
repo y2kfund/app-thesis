@@ -80,10 +80,6 @@ function updateValue(value: any) {
         </button>
       </div>
 
-      <!--div v-if="!thesisStocks[thesis.id] || thesisStocks[thesis.id].length === 0" class="stocks-empty">
-        No instruments added yet.
-      </div-->
-
       <div class="stocks-table-wrapper">
         <table class="stocks-table">
           <thead>
@@ -91,6 +87,9 @@ function updateValue(value: any) {
               <th>Symbol</th>
               <th>PE Ratio</th>
               <th>PEG Ratio</th>
+              <th>Analyst Ratings</th>
+              <th>Founder Led</th>
+              <th>Next Earnings Date</th>
               <th>Passed Checks</th>
               <th>Currently Held</th>
               <th>Actions</th>
@@ -135,7 +134,62 @@ function updateValue(value: any) {
                 />
                 <span v-else>{{ stock.peg_ratio ?? '-' }}</span>
               </td>
-              
+
+              <!-- Analyst Ratings -->
+              <td 
+                class="editable-cell"
+                @dblclick="emit('start-edit-cell', thesis.id, stock, 'analyst_ratings')"
+              >
+                <input
+                  v-if="editingCell?.stockId === stock.id && editingCell?.field === 'analyst_ratings'"
+                  :value="editingValue"
+                  type="text"
+                  @input="updateValue(($event.target as HTMLInputElement).value)"
+                  @blur="emit('save-edit', stock, 'analyst_ratings')"
+                  @keyup.enter="emit('save-edit', stock, 'analyst_ratings')"
+                  @keyup.escape="emit('cancel-edit')"
+                  autofocus
+                />
+                <span v-else>{{ stock.analyst_ratings || '-' }}</span>
+              </td>
+
+              <!-- Founder Led -->
+              <td 
+                class="editable-cell checkbox-cell"
+                @dblclick="emit('start-edit-cell', thesis.id, stock, 'founder_led')"
+              >
+                <input
+                  v-if="editingCell?.stockId === stock.id && editingCell?.field === 'founder_led'"
+                  :checked="!!editingValue"
+                  type="checkbox"
+                  @change="updateValue(($event.target as HTMLInputElement).checked)"
+                  @blur="emit('save-edit', stock, 'founder_led')"
+                  @keyup.enter="emit('save-edit', stock, 'founder_led')"
+                  @keyup.escape="emit('cancel-edit')"
+                  autofocus
+                />
+                <span v-else>{{ stock.founder_led ? '✅' : '❌' }}</span>
+              </td>
+
+              <!-- Next Earnings Date -->
+              <td 
+                class="editable-cell"
+                @dblclick="emit('start-edit-cell', thesis.id, stock, 'next_earnings_date')"
+              >
+                <input
+                  v-if="editingCell?.stockId === stock.id && editingCell?.field === 'next_earnings_date'"
+                  :value="editingValue"
+                  type="date"
+                  @input="updateValue(($event.target as HTMLInputElement).value)"
+                  @blur="emit('save-edit', stock, 'next_earnings_date')"
+                  @keyup.enter="emit('save-edit', stock, 'next_earnings_date')"
+                  @keyup.escape="emit('cancel-edit')"
+                  autofocus
+                />
+                <span v-else>{{ stock.next_earnings_date || '-' }}</span>
+              </td>
+
+              <!-- Passed Checks -->
               <td 
                 class="editable-cell checkbox-cell"
                 @dblclick="emit('start-edit-cell', thesis.id, stock, 'passed_checks')"
@@ -153,6 +207,7 @@ function updateValue(value: any) {
                 <span v-else>{{ stock.passed_checks ? '✅' : '❌' }}</span>
               </td>
               
+              <!-- Currently Held -->
               <td 
                 class="editable-cell checkbox-cell"
                 @dblclick="emit('start-edit-cell', thesis.id, stock, 'currently_held')"
@@ -170,6 +225,7 @@ function updateValue(value: any) {
                 <span v-else>{{ stock.currently_held ? '✅' : '❌' }}</span>
               </td>
               
+              <!-- Actions -->
               <td class="stock-actions">
                 <button 
                   class="btn btn-danger btn-sm btn-icon" 
