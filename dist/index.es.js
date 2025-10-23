@@ -10,7 +10,7 @@ const Ee = { class: "thesis-item" }, xe = { class: "thesis-expand-icon" }, Se = 
 }, Ve = { class: "thesis-actions" }, Be = {
   key: 0,
   class: "stocks-section"
-}, Ke = { class: "stocks-header" }, Me = { class: "stocks-table-wrapper" }, Ne = { class: "stocks-table" }, Ue = { class: "stock-symbol" }, Fe = ["onDblclick"], qe = ["value", "onBlur", "onKeyup"], Le = { key: 1 }, Pe = ["onDblclick"], Qe = ["value", "onBlur", "onKeyup"], Re = { key: 1 }, ze = ["onDblclick"], He = ["value", "onBlur", "onKeyup"], Ge = { key: 1 }, Oe = ["onDblclick"], je = ["checked", "onBlur", "onKeyup"], Je = { key: 1 }, We = ["onDblclick"], Xe = ["value", "onBlur", "onKeyup"], Ye = { key: 1 }, Ze = ["onDblclick"], et = ["checked", "onBlur", "onKeyup"], tt = { key: 1 }, st = ["onDblclick"], it = ["checked", "onBlur", "onKeyup"], nt = { key: 1 }, lt = { class: "stock-actions" }, at = ["onClick"], dt = /* @__PURE__ */ se({
+}, Ke = { class: "stocks-header" }, Me = { class: "stocks-table-wrapper" }, Ne = { class: "stocks-table" }, Ue = { class: "stock-symbol" }, Fe = ["onDblclick"], qe = ["value", "onBlur", "onKeyup"], Le = { key: 1 }, Pe = ["onDblclick"], Qe = ["value", "onBlur", "onKeyup"], Re = { key: 1 }, ze = ["onDblclick"], He = ["value", "onBlur", "onKeyup"], Ge = { key: 1 }, Oe = ["onDblclick"], je = ["checked", "onBlur", "onKeyup"], Je = { key: 1 }, We = ["onDblclick"], Xe = ["value", "onBlur", "onKeyup"], Ye = { key: 1 }, Ze = ["onDblclick"], et = ["checked", "onBlur", "onKeyup"], tt = { key: 1 }, st = ["onDblclick"], it = ["checked", "onBlur", "onKeyup"], nt = { key: 1 }, lt = { class: "stock-actions" }, dt = ["onClick"], at = /* @__PURE__ */ se({
   __name: "ThesisItem",
   props: {
     thesis: {},
@@ -22,9 +22,9 @@ const Ee = { class: "thesis-item" }, xe = { class: "thesis-expand-icon" }, Se = 
   },
   emits: ["toggle", "edit", "delete", "add-stock", "delete-stock", "start-edit-cell", "save-edit", "cancel-edit", "get-cell-metadata", "update-editing-value"],
   setup(l, { emit: N }) {
-    const a = N;
+    const d = N;
     function $(m) {
-      a("update-editing-value", m);
+      d("update-editing-value", m);
     }
     return (m, n) => {
       var w;
@@ -35,7 +35,7 @@ const Ee = { class: "thesis-item" }, xe = { class: "thesis-expand-icon" }, Se = 
         t("div", Ee, [
           t("div", {
             class: "thesis-content",
-            onClick: n[0] || (n[0] = (d) => a("toggle", l.thesis.id))
+            onClick: n[0] || (n[0] = (a) => d("toggle", l.thesis.id))
           }, [
             t("div", xe, f(l.expandedThesis.has(l.thesis.id) ? "▼" : "▶"), 1),
             t("div", Se, [
@@ -49,12 +49,12 @@ const Ee = { class: "thesis-item" }, xe = { class: "thesis-expand-icon" }, Se = 
           t("div", Ve, [
             t("button", {
               class: "btn btn-secondary btn-sm btn-icon",
-              onClick: n[1] || (n[1] = V((d) => a("edit", l.thesis), ["stop"])),
+              onClick: n[1] || (n[1] = V((a) => d("edit", l.thesis), ["stop"])),
               title: "Edit thesis"
             }, " ✏️ "),
             t("button", {
               class: "btn btn-danger btn-sm btn-icon",
-              onClick: n[2] || (n[2] = V((d) => a("delete", l.thesis.id, l.thesis.title), ["stop"])),
+              onClick: n[2] || (n[2] = V((a) => d("delete", l.thesis.id, l.thesis.title), ["stop"])),
               title: "Archive thesis"
             }, " 🗑️ ")
           ])
@@ -64,7 +64,7 @@ const Ee = { class: "thesis-item" }, xe = { class: "thesis-expand-icon" }, Se = 
             t("h4", null, "Instruments (" + f(((w = l.thesisStocks[l.thesis.id]) == null ? void 0 : w.length) || 0) + ")", 1),
             t("button", {
               class: "btn btn-primary btn-sm btn-icon",
-              onClick: n[3] || (n[3] = V((d) => a("add-stock", l.thesis.id), ["stop"])),
+              onClick: n[3] || (n[3] = V((a) => d("add-stock", l.thesis.id), ["stop"])),
               title: "Add Instrument"
             }, " ➕ ")
           ]),
@@ -84,139 +84,139 @@ const Ee = { class: "thesis-item" }, xe = { class: "thesis-expand-icon" }, Se = 
                 ])
               ], -1)),
               t("tbody", null, [
-                (r(!0), u(L, null, P(l.thesisStocks[l.thesis.id], (d) => {
+                (r(!0), u(L, null, P(l.thesisStocks[l.thesis.id], (a) => {
                   var h, g, C, E, B, T, A, I, Q, R, F, z, H, K;
                   return r(), u("tr", {
-                    key: d.id
+                    key: a.id
                   }, [
-                    t("td", Ue, f(d.symbol), 1),
+                    t("td", Ue, f(a.symbol), 1),
                     t("td", {
                       class: "editable-cell",
-                      onDblclick: (o) => a("start-edit-cell", l.thesis.id, d, "pe_ratio")
+                      onDblclick: (o) => d("start-edit-cell", l.thesis.id, a, "pe_ratio")
                     }, [
-                      ((h = l.editingCell) == null ? void 0 : h.stockId) === d.id && ((g = l.editingCell) == null ? void 0 : g.field) === "pe_ratio" ? (r(), u("input", {
+                      ((h = l.editingCell) == null ? void 0 : h.stockId) === a.id && ((g = l.editingCell) == null ? void 0 : g.field) === "pe_ratio" ? (r(), u("input", {
                         key: 0,
                         value: l.editingValue,
                         type: "number",
                         step: "0.01",
                         onInput: n[4] || (n[4] = (o) => $(o.target.valueAsNumber)),
-                        onBlur: (o) => a("save-edit", d, "pe_ratio"),
+                        onBlur: (o) => d("save-edit", a, "pe_ratio"),
                         onKeyup: [
-                          p((o) => a("save-edit", d, "pe_ratio"), ["enter"]),
-                          n[5] || (n[5] = p((o) => a("cancel-edit"), ["escape"]))
+                          p((o) => d("save-edit", a, "pe_ratio"), ["enter"]),
+                          n[5] || (n[5] = p((o) => d("cancel-edit"), ["escape"]))
                         ],
                         autofocus: ""
-                      }, null, 40, qe)) : (r(), u("span", Le, f(d.pe_ratio ?? "-"), 1))
+                      }, null, 40, qe)) : (r(), u("span", Le, f(a.pe_ratio ?? "-"), 1))
                     ], 40, Fe),
                     t("td", {
                       class: "editable-cell",
-                      onDblclick: (o) => a("start-edit-cell", l.thesis.id, d, "peg_ratio")
+                      onDblclick: (o) => d("start-edit-cell", l.thesis.id, a, "peg_ratio")
                     }, [
-                      ((C = l.editingCell) == null ? void 0 : C.stockId) === d.id && ((E = l.editingCell) == null ? void 0 : E.field) === "peg_ratio" ? (r(), u("input", {
+                      ((C = l.editingCell) == null ? void 0 : C.stockId) === a.id && ((E = l.editingCell) == null ? void 0 : E.field) === "peg_ratio" ? (r(), u("input", {
                         key: 0,
                         value: l.editingValue,
                         type: "number",
                         step: "0.01",
                         onInput: n[6] || (n[6] = (o) => $(o.target.valueAsNumber)),
-                        onBlur: (o) => a("save-edit", d, "peg_ratio"),
+                        onBlur: (o) => d("save-edit", a, "peg_ratio"),
                         onKeyup: [
-                          p((o) => a("save-edit", d, "peg_ratio"), ["enter"]),
-                          n[7] || (n[7] = p((o) => a("cancel-edit"), ["escape"]))
+                          p((o) => d("save-edit", a, "peg_ratio"), ["enter"]),
+                          n[7] || (n[7] = p((o) => d("cancel-edit"), ["escape"]))
                         ],
                         autofocus: ""
-                      }, null, 40, Qe)) : (r(), u("span", Re, f(d.peg_ratio ?? "-"), 1))
+                      }, null, 40, Qe)) : (r(), u("span", Re, f(a.peg_ratio ?? "-"), 1))
                     ], 40, Pe),
                     t("td", {
                       class: "editable-cell",
-                      onDblclick: (o) => a("start-edit-cell", l.thesis.id, d, "analyst_ratings")
+                      onDblclick: (o) => d("start-edit-cell", l.thesis.id, a, "analyst_ratings")
                     }, [
-                      ((B = l.editingCell) == null ? void 0 : B.stockId) === d.id && ((T = l.editingCell) == null ? void 0 : T.field) === "analyst_ratings" ? (r(), u("input", {
+                      ((B = l.editingCell) == null ? void 0 : B.stockId) === a.id && ((T = l.editingCell) == null ? void 0 : T.field) === "analyst_ratings" ? (r(), u("input", {
                         key: 0,
                         value: l.editingValue,
                         type: "text",
                         onInput: n[8] || (n[8] = (o) => $(o.target.value)),
-                        onBlur: (o) => a("save-edit", d, "analyst_ratings"),
+                        onBlur: (o) => d("save-edit", a, "analyst_ratings"),
                         onKeyup: [
-                          p((o) => a("save-edit", d, "analyst_ratings"), ["enter"]),
-                          n[9] || (n[9] = p((o) => a("cancel-edit"), ["escape"]))
+                          p((o) => d("save-edit", a, "analyst_ratings"), ["enter"]),
+                          n[9] || (n[9] = p((o) => d("cancel-edit"), ["escape"]))
                         ],
                         autofocus: ""
-                      }, null, 40, He)) : (r(), u("span", Ge, f(d.analyst_ratings || "-"), 1))
+                      }, null, 40, He)) : (r(), u("span", Ge, f(a.analyst_ratings || "-"), 1))
                     ], 40, ze),
                     t("td", {
                       class: "editable-cell checkbox-cell",
-                      onDblclick: (o) => a("start-edit-cell", l.thesis.id, d, "founder_led")
+                      onDblclick: (o) => d("start-edit-cell", l.thesis.id, a, "founder_led")
                     }, [
-                      ((A = l.editingCell) == null ? void 0 : A.stockId) === d.id && ((I = l.editingCell) == null ? void 0 : I.field) === "founder_led" ? (r(), u("input", {
+                      ((A = l.editingCell) == null ? void 0 : A.stockId) === a.id && ((I = l.editingCell) == null ? void 0 : I.field) === "founder_led" ? (r(), u("input", {
                         key: 0,
                         checked: !!l.editingValue,
                         type: "checkbox",
                         onChange: n[10] || (n[10] = (o) => $(o.target.checked)),
-                        onBlur: (o) => a("save-edit", d, "founder_led"),
+                        onBlur: (o) => d("save-edit", a, "founder_led"),
                         onKeyup: [
-                          p((o) => a("save-edit", d, "founder_led"), ["enter"]),
-                          n[11] || (n[11] = p((o) => a("cancel-edit"), ["escape"]))
+                          p((o) => d("save-edit", a, "founder_led"), ["enter"]),
+                          n[11] || (n[11] = p((o) => d("cancel-edit"), ["escape"]))
                         ],
                         autofocus: ""
-                      }, null, 40, je)) : (r(), u("span", Je, f(d.founder_led ? "✅" : "❌"), 1))
+                      }, null, 40, je)) : (r(), u("span", Je, f(a.founder_led ? "✅" : "❌"), 1))
                     ], 40, Oe),
                     t("td", {
                       class: "editable-cell",
-                      onDblclick: (o) => a("start-edit-cell", l.thesis.id, d, "next_earnings_date")
+                      onDblclick: (o) => d("start-edit-cell", l.thesis.id, a, "next_earnings_date")
                     }, [
-                      ((Q = l.editingCell) == null ? void 0 : Q.stockId) === d.id && ((R = l.editingCell) == null ? void 0 : R.field) === "next_earnings_date" ? (r(), u("input", {
+                      ((Q = l.editingCell) == null ? void 0 : Q.stockId) === a.id && ((R = l.editingCell) == null ? void 0 : R.field) === "next_earnings_date" ? (r(), u("input", {
                         key: 0,
                         value: l.editingValue,
                         type: "date",
                         onInput: n[12] || (n[12] = (o) => $(o.target.value)),
-                        onBlur: (o) => a("save-edit", d, "next_earnings_date"),
+                        onBlur: (o) => d("save-edit", a, "next_earnings_date"),
                         onKeyup: [
-                          p((o) => a("save-edit", d, "next_earnings_date"), ["enter"]),
-                          n[13] || (n[13] = p((o) => a("cancel-edit"), ["escape"]))
+                          p((o) => d("save-edit", a, "next_earnings_date"), ["enter"]),
+                          n[13] || (n[13] = p((o) => d("cancel-edit"), ["escape"]))
                         ],
                         autofocus: ""
-                      }, null, 40, Xe)) : (r(), u("span", Ye, f(d.next_earnings_date || "-"), 1))
+                      }, null, 40, Xe)) : (r(), u("span", Ye, f(a.next_earnings_date || "-"), 1))
                     ], 40, We),
                     t("td", {
                       class: "editable-cell checkbox-cell",
-                      onDblclick: (o) => a("start-edit-cell", l.thesis.id, d, "passed_checks")
+                      onDblclick: (o) => d("start-edit-cell", l.thesis.id, a, "passed_checks")
                     }, [
-                      ((F = l.editingCell) == null ? void 0 : F.stockId) === d.id && ((z = l.editingCell) == null ? void 0 : z.field) === "passed_checks" ? (r(), u("input", {
+                      ((F = l.editingCell) == null ? void 0 : F.stockId) === a.id && ((z = l.editingCell) == null ? void 0 : z.field) === "passed_checks" ? (r(), u("input", {
                         key: 0,
                         checked: l.editingValue,
                         type: "checkbox",
                         onChange: n[14] || (n[14] = (o) => $(o.target.checked)),
-                        onBlur: (o) => a("save-edit", d, "passed_checks"),
+                        onBlur: (o) => d("save-edit", a, "passed_checks"),
                         onKeyup: [
-                          p((o) => a("save-edit", d, "passed_checks"), ["enter"]),
-                          n[15] || (n[15] = p((o) => a("cancel-edit"), ["escape"]))
+                          p((o) => d("save-edit", a, "passed_checks"), ["enter"]),
+                          n[15] || (n[15] = p((o) => d("cancel-edit"), ["escape"]))
                         ],
                         autofocus: ""
-                      }, null, 40, et)) : (r(), u("span", tt, f(d.passed_checks ? "✅" : "❌"), 1))
+                      }, null, 40, et)) : (r(), u("span", tt, f(a.passed_checks ? "✅" : "❌"), 1))
                     ], 40, Ze),
                     t("td", {
                       class: "editable-cell checkbox-cell",
-                      onDblclick: (o) => a("start-edit-cell", l.thesis.id, d, "currently_held")
+                      onDblclick: (o) => d("start-edit-cell", l.thesis.id, a, "currently_held")
                     }, [
-                      ((H = l.editingCell) == null ? void 0 : H.stockId) === d.id && ((K = l.editingCell) == null ? void 0 : K.field) === "currently_held" ? (r(), u("input", {
+                      ((H = l.editingCell) == null ? void 0 : H.stockId) === a.id && ((K = l.editingCell) == null ? void 0 : K.field) === "currently_held" ? (r(), u("input", {
                         key: 0,
                         checked: l.editingValue,
                         type: "checkbox",
                         onChange: n[16] || (n[16] = (o) => $(o.target.checked)),
-                        onBlur: (o) => a("save-edit", d, "currently_held"),
+                        onBlur: (o) => d("save-edit", a, "currently_held"),
                         onKeyup: [
-                          p((o) => a("save-edit", d, "currently_held"), ["enter"]),
-                          n[17] || (n[17] = p((o) => a("cancel-edit"), ["escape"]))
+                          p((o) => d("save-edit", a, "currently_held"), ["enter"]),
+                          n[17] || (n[17] = p((o) => d("cancel-edit"), ["escape"]))
                         ],
                         autofocus: ""
-                      }, null, 40, it)) : (r(), u("span", nt, f(d.currently_held ? "✅" : "❌"), 1))
+                      }, null, 40, it)) : (r(), u("span", nt, f(a.currently_held ? "✅" : "❌"), 1))
                     ], 40, st),
                     t("td", lt, [
                       t("button", {
                         class: "btn btn-danger btn-sm btn-icon",
-                        onClick: V((o) => a("delete-stock", l.thesis.id, d.id, d.symbol), ["stop"]),
+                        onClick: V((o) => d("delete-stock", l.thesis.id, a.id, a.symbol), ["stop"]),
                         title: "Remove instrument"
-                      }, " 🗑️ ", 8, at)
+                      }, " 🗑️ ", 8, dt)
                     ])
                   ]);
                 }), 128))
@@ -224,34 +224,34 @@ const Ee = { class: "thesis-item" }, xe = { class: "thesis-expand-icon" }, Se = 
             ])
           ])
         ])) : S("", !0),
-        l.thesis.children && l.thesis.children.length > 0 ? (r(!0), u(L, { key: 1 }, P(l.thesis.children, (d) => (r(), ne(U, {
-          key: d.id,
-          thesis: d,
+        l.thesis.children && l.thesis.children.length > 0 ? (r(!0), u(L, { key: 1 }, P(l.thesis.children, (a) => (r(), ne(U, {
+          key: a.id,
+          thesis: a,
           level: l.level + 1,
           "thesis-stocks": l.thesisStocks,
           "expanded-thesis": l.expandedThesis,
           "editing-cell": l.editingCell,
           "editing-value": l.editingValue,
-          onToggle: n[18] || (n[18] = (h) => a("toggle", h)),
-          onEdit: n[19] || (n[19] = (h) => a("edit", h)),
-          onDelete: n[20] || (n[20] = (h, g) => a("delete", h, g)),
-          onAddStock: n[21] || (n[21] = (h) => a("add-stock", h)),
-          onDeleteStock: n[22] || (n[22] = (h, g, C) => a("delete-stock", h, g, C)),
-          onStartEditCell: n[23] || (n[23] = (h, g, C) => a("start-edit-cell", h, g, C)),
-          onSaveEdit: n[24] || (n[24] = (h, g) => a("save-edit", h, g)),
-          onCancelEdit: n[25] || (n[25] = () => a("cancel-edit")),
-          onGetCellMetadata: n[26] || (n[26] = (h, g) => a("get-cell-metadata", h, g)),
-          onUpdateEditingValue: n[27] || (n[27] = (h) => a("update-editing-value", h))
+          onToggle: n[18] || (n[18] = (h) => d("toggle", h)),
+          onEdit: n[19] || (n[19] = (h) => d("edit", h)),
+          onDelete: n[20] || (n[20] = (h, g) => d("delete", h, g)),
+          onAddStock: n[21] || (n[21] = (h) => d("add-stock", h)),
+          onDeleteStock: n[22] || (n[22] = (h, g, C) => d("delete-stock", h, g, C)),
+          onStartEditCell: n[23] || (n[23] = (h, g, C) => d("start-edit-cell", h, g, C)),
+          onSaveEdit: n[24] || (n[24] = (h, g) => d("save-edit", h, g)),
+          onCancelEdit: n[25] || (n[25] = () => d("cancel-edit")),
+          onGetCellMetadata: n[26] || (n[26] = (h, g) => d("get-cell-metadata", h, g)),
+          onUpdateEditingValue: n[27] || (n[27] = (h) => d("update-editing-value", h))
         }, null, 8, ["thesis", "level", "thesis-stocks", "expanded-thesis", "editing-cell", "editing-value"]))), 128)) : S("", !0)
       ], 2);
     };
   }
 }), le = (l, N) => {
-  const a = l.__vccOpts || l;
+  const d = l.__vccOpts || l;
   for (const [$, m] of N)
-    a[$] = m;
-  return a;
-}, ot = /* @__PURE__ */ le(dt, [["__scopeId", "data-v-99d2dbe1"]]), rt = { class: "thesis-card" }, ut = {
+    d[$] = m;
+  return d;
+}, ot = /* @__PURE__ */ le(at, [["__scopeId", "data-v-99d2dbe1"]]), rt = { class: "thesis-card" }, ut = {
   key: 0,
   class: "loading"
 }, ct = {
@@ -272,22 +272,22 @@ const Ee = { class: "thesis-item" }, xe = { class: "thesis-expand-icon" }, Se = 
 }, Ot = ["onClick"], jt = /* @__PURE__ */ se({
   __name: "Thesis",
   props: {
-    userId: { default: "67e578fd-2cf7-48a4-b028-a11a3f89bb9b" },
+    userId: { default: null },
     showHeaderLink: { type: Boolean, default: !1 }
   },
   emits: ["minimize", "navigate"],
   setup(l, { emit: N }) {
-    const a = l, $ = N, m = _e(), n = Te(), U = we(), w = k("");
-    async function d() {
+    const d = l, $ = N, m = _e(), n = Te(), U = we(), w = k("");
+    async function a() {
       var s;
       try {
         const { data: { user: e } } = await n.auth.getUser();
-        e != null && e.email ? w.value = e.email : (s = e == null ? void 0 : e.user_metadata) != null && s.name ? w.value = e.user_metadata.name : a.userId && (w.value = a.userId);
+        e != null && e.email ? w.value = e.email : (s = e == null ? void 0 : e.user_metadata) != null && s.name ? w.value = e.user_metadata.name : d.userId && (w.value = d.userId);
       } catch (e) {
-        console.error("Error fetching current user:", e), a.userId && (w.value = a.userId);
+        console.error("Error fetching current user:", e), d.userId && (w.value = d.userId);
       }
     }
-    d();
+    a();
     const h = k({}), g = k(null), C = k(null), E = k(!1), B = k(""), T = k(""), A = k(/* @__PURE__ */ new Set());
     async function I() {
       try {
@@ -365,7 +365,7 @@ const Ee = { class: "thesis-item" }, xe = { class: "thesis-expand-icon" }, Se = 
         }
       }
     }
-    function ae(s, e) {
+    function de(s, e) {
       const i = s[`${e}_updated_by`], c = s[`${e}_updated_at`];
       if (i && c) {
         const D = new Date(c).toLocaleString();
@@ -390,9 +390,9 @@ Updated at: ${D}`;
         v.value === "add" ? _.value.parent_thesis_id = s : y.value.parent_thesis_id = s;
       }
     }), G = k([]);
-    let de = 0;
+    let ae = 0;
     function b(s, e, i) {
-      const c = de++;
+      const c = ae++;
       G.value.push({ id: c, type: s, title: e, message: i }), setTimeout(() => {
         J(c);
       }, 5e3);
@@ -495,8 +495,8 @@ Note: This will also archive all instruments associated with this thesis.`))
       ])) : M(m).isSuccess.value ? (r(), u("div", ht, [
         t("div", vt, [
           t("h2", {
-            class: Y({ "thesis-header-clickable": a.showHeaderLink }),
-            onClick: e[0] || (e[0] = (i) => a.showHeaderLink && $("navigate"))
+            class: Y({ "thesis-header-clickable": d.showHeaderLink }),
+            onClick: e[0] || (e[0] = (i) => d.showHeaderLink && $("navigate"))
           }, " Thesis Management ", 2),
           t("div", mt, [
             t("button", {
@@ -532,7 +532,7 @@ Note: This will also archive all instruments associated with this thesis.`))
               onStartEditCell: H,
               onSaveEdit: o,
               onCancelEdit: K,
-              onGetCellMetadata: ae,
+              onGetCellMetadata: de,
               onUpdateEditingValue: ge
             }, null, 8, ["thesis", "thesis-stocks", "expanded-thesis", "editing-cell", "editing-value"]))), 128))
           ]))
@@ -693,7 +693,7 @@ Note: This will also archive all instruments associated with this thesis.`))
       ])
     ]));
   }
-}), Jt = /* @__PURE__ */ le(jt, [["__scopeId", "data-v-5114b8e6"]]), Zt = {
+}), Jt = /* @__PURE__ */ le(jt, [["__scopeId", "data-v-e6855fcc"]]), Zt = {
   install(l) {
     l.component("Thesis", Jt);
   }

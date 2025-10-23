@@ -6,8 +6,8 @@ import type { ThesisProps } from './index'
 import ThesisItem from './components/ThesisItem.vue'
 
 const props = withDefaults(defineProps<ThesisProps>(), {
-  //userId: null,
-  userId: '67e578fd-2cf7-48a4-b028-a11a3f89bb9b',
+  userId: null,
+  //userId: '67e578fd-2cf7-48a4-b028-a11a3f89bb9b',
   showHeaderLink: false
 })
 
