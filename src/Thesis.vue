@@ -581,7 +581,7 @@ function updateEditingValue(value: any) {
           <button 
             class="btn btn-minimize" 
             @click="emit('minimize')"
-            title="Minimize"
+            title="Close"
           >
             X
           </button>
