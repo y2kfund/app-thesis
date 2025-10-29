@@ -583,7 +583,7 @@ function updateEditingValue(value: any) {
             @click="emit('minimize')"
             title="Minimize"
           >
-            ➖
+            X
           </button>
         </div>
       </div>

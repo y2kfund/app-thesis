@@ -1,4 +1,4 @@
-import { defineComponent as ne, resolveComponent as we, createElementBlock as u, openBlock as r, normalizeClass as Z, createElementVNode as t, createCommentVNode as w, toDisplayString as m, createTextVNode as le, withModifiers as N, Fragment as R, renderList as q, withKeys as b, createBlock as ae, ref as g, onMounted as Te, watch as Ee, computed as L, unref as B, withDirectives as P, vModelText as j, vModelSelect as xe, createVNode as Se, TransitionGroup as Ie, withCtx as Ae } from "vue";
+import { defineComponent as ne, resolveComponent as we, createElementBlock as u, openBlock as r, normalizeClass as Z, createElementVNode as t, createCommentVNode as w, toDisplayString as m, createTextVNode as le, withModifiers as N, Fragment as R, renderList as q, withKeys as b, createBlock as ae, ref as g, onMounted as Te, watch as Ee, computed as L, unref as B, withDirectives as P, vModelText as X, vModelSelect as xe, createVNode as Se, TransitionGroup as Ie, withCtx as Ae } from "vue";
 import { useThesisQuery as De, useSupabase as Ve } from "@y2kfund/core";
 import { useQueryClient as Ne } from "@tanstack/vue-query";
 const Me = { class: "thesis-item" }, Be = { class: "thesis-expand-icon" }, Ue = { class: "thesis-info" }, Ke = { class: "thesis-title" }, Fe = {
@@ -10,7 +10,7 @@ const Me = { class: "thesis-item" }, Be = { class: "thesis-expand-icon" }, Ue = 
 }, Pe = { class: "thesis-actions" }, Re = {
   key: 0,
   class: "stocks-section"
-}, qe = { class: "stocks-header" }, ze = { class: "stocks-table-wrapper" }, Qe = { class: "stocks-table" }, He = { class: "stock-symbol" }, Ge = ["onDblclick"], Oe = ["value", "onBlur", "onKeyup"], je = { key: 1 }, Je = ["onDblclick"], We = ["value", "onBlur", "onKeyup"], Xe = { key: 1 }, Ye = ["onDblclick"], Ze = ["value", "onBlur", "onKeyup"], et = { key: 1 }, tt = ["onDblclick"], st = ["checked", "onBlur", "onKeyup"], it = { key: 1 }, nt = ["onDblclick"], lt = ["value", "onBlur", "onKeyup"], at = { key: 1 }, dt = ["onDblclick"], ot = ["checked", "onBlur", "onKeyup"], rt = { key: 1 }, ut = ["onDblclick"], ct = ["checked", "onBlur", "onKeyup"], vt = { key: 1 }, ht = { class: "stock-actions" }, mt = ["onClick"], pt = /* @__PURE__ */ ne({
+}, qe = { class: "stocks-header" }, ze = { class: "stocks-table-wrapper" }, Qe = { class: "stocks-table" }, He = { class: "stock-symbol" }, Ge = ["onDblclick"], Oe = ["value", "onBlur", "onKeyup"], Xe = { key: 1 }, je = ["onDblclick"], Je = ["value", "onBlur", "onKeyup"], We = { key: 1 }, Ye = ["onDblclick"], Ze = ["value", "onBlur", "onKeyup"], et = { key: 1 }, tt = ["onDblclick"], st = ["checked", "onBlur", "onKeyup"], it = { key: 1 }, nt = ["onDblclick"], lt = ["value", "onBlur", "onKeyup"], at = { key: 1 }, dt = ["onDblclick"], ot = ["checked", "onBlur", "onKeyup"], rt = { key: 1 }, ut = ["onDblclick"], ct = ["checked", "onBlur", "onKeyup"], vt = { key: 1 }, ht = { class: "stock-actions" }, mt = ["onClick"], pt = /* @__PURE__ */ ne({
   __name: "ThesisItem",
   props: {
     thesis: {},
@@ -106,7 +106,7 @@ const Me = { class: "thesis-item" }, Be = { class: "thesis-expand-icon" }, Ue = 
                           n[5] || (n[5] = b((o) => a("cancel-edit"), ["escape"]))
                         ],
                         autofocus: ""
-                      }, null, 40, Oe)) : (r(), u("span", je, m(d.pe_ratio ?? "-"), 1))
+                      }, null, 40, Oe)) : (r(), u("span", Xe, m(d.pe_ratio ?? "-"), 1))
                     ], 40, Ge),
                     t("td", {
                       class: "editable-cell",
@@ -124,8 +124,8 @@ const Me = { class: "thesis-item" }, Be = { class: "thesis-expand-icon" }, Ue = 
                           n[7] || (n[7] = b((o) => a("cancel-edit"), ["escape"]))
                         ],
                         autofocus: ""
-                      }, null, 40, We)) : (r(), u("span", Xe, m(d.peg_ratio ?? "-"), 1))
-                    ], 40, Je),
+                      }, null, 40, Je)) : (r(), u("span", We, m(d.peg_ratio ?? "-"), 1))
+                    ], 40, je),
                     t("td", {
                       class: "editable-cell",
                       onDblclick: (o) => a("start-edit-cell", l.thesis.id, d, "analyst_ratings")
@@ -266,7 +266,7 @@ const Me = { class: "thesis-item" }, Be = { class: "thesis-expand-icon" }, Ue = 
 }, Tt = {
   key: 1,
   class: "thesis-items"
-}, Et = { class: "modal-header" }, xt = { class: "modal-body" }, St = { class: "form-group" }, It = ["for"], At = ["id"], Dt = { class: "form-group" }, Vt = ["for"], Nt = ["id"], Mt = { class: "form-group" }, Bt = ["for"], Ut = ["id"], Kt = ["value"], Ft = { class: "modal-footer" }, Lt = ["disabled"], Pt = { class: "modal-header" }, Rt = { class: "modal-body" }, qt = { class: "form-group" }, zt = { class: "modal-footer" }, Qt = ["disabled"], Ht = { class: "toast-container" }, Gt = ["onClick"], Ot = { class: "toast-icon" }, jt = { key: 0 }, Jt = { key: 1 }, Wt = { key: 2 }, Xt = { key: 3 }, Yt = { class: "toast-content" }, Zt = { class: "toast-title" }, es = {
+}, Et = { class: "modal-header" }, xt = { class: "modal-body" }, St = { class: "form-group" }, It = ["for"], At = ["id"], Dt = { class: "form-group" }, Vt = ["for"], Nt = ["id"], Mt = { class: "form-group" }, Bt = ["for"], Ut = ["id"], Kt = ["value"], Ft = { class: "modal-footer" }, Lt = ["disabled"], Pt = { class: "modal-header" }, Rt = { class: "modal-body" }, qt = { class: "form-group" }, zt = { class: "modal-footer" }, Qt = ["disabled"], Ht = { class: "toast-container" }, Gt = ["onClick"], Ot = { class: "toast-icon" }, Xt = { key: 0 }, jt = { key: 1 }, Jt = { key: 2 }, Wt = { key: 3 }, Yt = { class: "toast-content" }, Zt = { class: "toast-title" }, es = {
   key: 0,
   class: "toast-message"
 }, ts = ["onClick"], ss = {
@@ -364,13 +364,13 @@ const Me = { class: "thesis-item" }, Be = { class: "thesis-expand-icon" }, Ue = 
     function ce(s, e, i) {
       D.value = { thesisId: s, stockId: e.id, field: i }, I.value = e[i];
     }
-    function J() {
+    function j() {
       D.value = null, I.value = null;
     }
     async function ve(s, e) {
       if (D.value) {
         if (!T.value) {
-          k("error", "Error", "User information not available"), J();
+          k("error", "Error", "User information not available"), j();
           return;
         }
         try {
@@ -380,7 +380,7 @@ const Me = { class: "thesis-item" }, Be = { class: "thesis-expand-icon" }, Ue = 
             [`${e}_updated_at`]: (/* @__PURE__ */ new Date()).toISOString()
           }, { error: c } = await n.schema("hf").from("thesisStocks").update(i).eq("id", s.id);
           if (c) throw c;
-          await o(), J(), k("success", "Updated", `${e.replace("_", " ")} has been updated`);
+          await o(), j(), k("success", "Updated", `${e.replace("_", " ")} has been updated`);
         } catch (i) {
           console.error("Error updating stock:", i), k("error", "Error", `Failed to update: ${i.message}`);
         }
@@ -395,7 +395,7 @@ Updated at: ${A}`;
       }
       return "No updates yet";
     }
-    const S = g(!1), h = g("add"), C = g({ title: "", description: "", parent_thesis_id: null }), y = g({ id: "", title: "", description: "", parent_thesis_id: null }), W = L({
+    const S = g(!1), h = g("add"), C = g({ title: "", description: "", parent_thesis_id: null }), y = g({ id: "", title: "", description: "", parent_thesis_id: null }), J = L({
       get: () => h.value === "add" ? C.value.title : y.value.title,
       set: (s) => {
         h.value === "add" ? C.value.title = s : y.value.title = s;
@@ -415,10 +415,10 @@ Updated at: ${A}`;
     function k(s, e, i) {
       const c = me++;
       O.value.push({ id: c, type: s, title: e, message: i }), setTimeout(() => {
-        X(c);
+        W(c);
       }, 5e3);
     }
-    function X(s) {
+    function W(s) {
       const e = O.value.findIndex((i) => i.id === s);
       e !== -1 && O.value.splice(e, 1);
     }
@@ -538,7 +538,7 @@ Note: This will also archive all instruments associated with this thesis.`))
               class: "btn btn-minimize",
               onClick: e[1] || (e[1] = (i) => $("minimize")),
               title: "Minimize"
-            }, " ➖ ")
+            }, " X ")
           ])
         ]),
         t("div", _t, [
@@ -560,7 +560,7 @@ Note: This will also archive all instruments associated with this thesis.`))
               onDeleteStock: ue,
               onStartEditCell: ce,
               onSaveEdit: ve,
-              onCancelEdit: J,
+              onCancelEdit: j,
               onGetCellMetadata: he,
               onUpdateEditingValue: _e
             }, null, 8, ["thesis", "thesis-stocks", "expanded-thesis", "editing-cell", "editing-value"]))), 128))
@@ -591,13 +591,13 @@ Note: This will also archive all instruments associated with this thesis.`))
               }, " Title * ", 8, It),
               P(t("input", {
                 id: h.value === "add" ? "thesis-title" : "edit-thesis-title",
-                "onUpdate:modelValue": e[3] || (e[3] = (i) => W.value = i),
+                "onUpdate:modelValue": e[3] || (e[3] = (i) => J.value = i),
                 type: "text",
                 placeholder: "Enter thesis title",
                 maxlength: "100",
                 autofocus: ""
               }, null, 8, At), [
-                [j, W.value]
+                [X, J.value]
               ])
             ]),
             t("div", Dt, [
@@ -611,7 +611,7 @@ Note: This will also archive all instruments associated with this thesis.`))
                 rows: "4",
                 maxlength: "500"
               }, null, 8, Nt), [
-                [j, te.value]
+                [X, te.value]
               ])
             ]),
             t("div", Mt, [
@@ -641,7 +641,7 @@ Note: This will also archive all instruments associated with this thesis.`))
             t("button", {
               class: "btn btn-primary",
               onClick: e[7] || (e[7] = (i) => h.value === "add" ? fe() : be()),
-              disabled: !W.value.trim()
+              disabled: !J.value.trim()
             }, m(h.value === "add" ? "Add Thesis" : "Save Changes"), 9, Lt)
           ])
         ])
@@ -675,7 +675,7 @@ Note: This will also archive all instruments associated with this thesis.`))
                 autofocus: "",
                 onKeyup: b(ee, ["enter"])
               }, null, 544), [
-                [j, _.value]
+                [X, _.value]
               ])
             ])
           ]),
@@ -701,10 +701,10 @@ Note: This will also archive all instruments associated with this thesis.`))
             (r(!0), u(R, null, q(O.value, (i) => (r(), u("div", {
               key: i.id,
               class: Z(["toast", `toast-${i.type}`]),
-              onClick: (c) => X(i.id)
+              onClick: (c) => W(i.id)
             }, [
               t("div", Ot, [
-                i.type === "success" ? (r(), u("span", jt, "✅")) : i.type === "error" ? (r(), u("span", Jt, "❌")) : i.type === "warning" ? (r(), u("span", Wt, "⚠️")) : i.type === "info" ? (r(), u("span", Xt, "ℹ️")) : w("", !0)
+                i.type === "success" ? (r(), u("span", Xt, "✅")) : i.type === "error" ? (r(), u("span", jt, "❌")) : i.type === "warning" ? (r(), u("span", Jt, "⚠️")) : i.type === "info" ? (r(), u("span", Wt, "ℹ️")) : w("", !0)
               ]),
               t("div", Yt, [
                 t("div", Zt, m(i.title), 1),
@@ -712,7 +712,7 @@ Note: This will also archive all instruments associated with this thesis.`))
               ]),
               t("button", {
                 class: "toast-close",
-                onClick: N((c) => X(i.id), ["stop"]),
+                onClick: N((c) => W(i.id), ["stop"]),
                 "aria-label": "Close notification"
               }, " × ", 8, ts)
             ], 10, Gt))), 128))
@@ -727,7 +727,7 @@ Note: This will also archive all instruments associated with this thesis.`))
             "onUpdate:modelValue": e[15] || (e[15] = (i) => f.value = i),
             placeholder: "App name"
           }, null, 512), [
-            [j, f.value]
+            [X, f.value]
           ]),
           t("div", ns, [
             t("button", { onClick: H }, "Save"),
@@ -739,7 +739,7 @@ Note: This will also archive all instruments associated with this thesis.`))
       ])) : w("", !0)
     ]));
   }
-}), as = /* @__PURE__ */ de(ls, [["__scopeId", "data-v-3e67b5bd"]]), us = {
+}), as = /* @__PURE__ */ de(ls, [["__scopeId", "data-v-224db8e9"]]), us = {
   install(l) {
     l.component("Thesis", as);
   }
