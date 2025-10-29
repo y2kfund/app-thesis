@@ -1,4 +1,4 @@
-import { defineComponent as le, resolveComponent as we, createElementBlock as u, openBlock as r, normalizeClass as Z, createElementVNode as t, createCommentVNode as w, toDisplayString as m, createTextVNode as ee, withModifiers as N, Fragment as R, renderList as q, withKeys as b, createBlock as ae, ref as g, onMounted as Te, watch as Ee, computed as L, unref as B, withDirectives as P, vModelText as j, vModelSelect as xe, createVNode as Se, TransitionGroup as Ie, withCtx as Ae } from "vue";
+import { defineComponent as ne, resolveComponent as we, createElementBlock as u, openBlock as r, normalizeClass as Z, createElementVNode as t, createCommentVNode as w, toDisplayString as m, createTextVNode as le, withModifiers as N, Fragment as R, renderList as q, withKeys as b, createBlock as ae, ref as g, onMounted as Te, watch as Ee, computed as L, unref as B, withDirectives as P, vModelText as j, vModelSelect as xe, createVNode as Se, TransitionGroup as Ie, withCtx as Ae } from "vue";
 import { useThesisQuery as De, useSupabase as Ve } from "@y2kfund/core";
 import { useQueryClient as Ne } from "@tanstack/vue-query";
 const Me = { class: "thesis-item" }, Be = { class: "thesis-expand-icon" }, Ue = { class: "thesis-info" }, Ke = { class: "thesis-title" }, Fe = {
@@ -10,7 +10,7 @@ const Me = { class: "thesis-item" }, Be = { class: "thesis-expand-icon" }, Ue = 
 }, Pe = { class: "thesis-actions" }, Re = {
   key: 0,
   class: "stocks-section"
-}, qe = { class: "stocks-header" }, ze = { class: "stocks-table-wrapper" }, Qe = { class: "stocks-table" }, He = { class: "stock-symbol" }, Ge = ["onDblclick"], Oe = ["value", "onBlur", "onKeyup"], je = { key: 1 }, Je = ["onDblclick"], We = ["value", "onBlur", "onKeyup"], Xe = { key: 1 }, Ye = ["onDblclick"], Ze = ["value", "onBlur", "onKeyup"], et = { key: 1 }, tt = ["onDblclick"], st = ["checked", "onBlur", "onKeyup"], it = { key: 1 }, nt = ["onDblclick"], lt = ["value", "onBlur", "onKeyup"], at = { key: 1 }, dt = ["onDblclick"], ot = ["checked", "onBlur", "onKeyup"], rt = { key: 1 }, ut = ["onDblclick"], ct = ["checked", "onBlur", "onKeyup"], vt = { key: 1 }, ht = { class: "stock-actions" }, mt = ["onClick"], pt = /* @__PURE__ */ le({
+}, qe = { class: "stocks-header" }, ze = { class: "stocks-table-wrapper" }, Qe = { class: "stocks-table" }, He = { class: "stock-symbol" }, Ge = ["onDblclick"], Oe = ["value", "onBlur", "onKeyup"], je = { key: 1 }, Je = ["onDblclick"], We = ["value", "onBlur", "onKeyup"], Xe = { key: 1 }, Ye = ["onDblclick"], Ze = ["value", "onBlur", "onKeyup"], et = { key: 1 }, tt = ["onDblclick"], st = ["checked", "onBlur", "onKeyup"], it = { key: 1 }, nt = ["onDblclick"], lt = ["value", "onBlur", "onKeyup"], at = { key: 1 }, dt = ["onDblclick"], ot = ["checked", "onBlur", "onKeyup"], rt = { key: 1 }, ut = ["onDblclick"], ct = ["checked", "onBlur", "onKeyup"], vt = { key: 1 }, ht = { class: "stock-actions" }, mt = ["onClick"], pt = /* @__PURE__ */ ne({
   __name: "ThesisItem",
   props: {
     thesis: {},
@@ -40,7 +40,7 @@ const Me = { class: "thesis-item" }, Be = { class: "thesis-expand-icon" }, Ue = 
             t("div", Be, m(l.expandedThesis.has(l.thesis.id) ? "▼" : "▶"), 1),
             t("div", Ue, [
               t("div", Ke, [
-                ee(m(l.thesis.title) + " ", 1),
+                le(m(l.thesis.title) + " ", 1),
                 l.thesis.parent_thesis_id ? (r(), u("span", Fe, " ↳ Child ")) : w("", !0)
               ]),
               l.thesis.description ? (r(), u("div", Le, m(l.thesis.description), 1)) : w("", !0)
@@ -272,7 +272,7 @@ const Me = { class: "thesis-item" }, Be = { class: "thesis-expand-icon" }, Ue = 
 }, ts = ["onClick"], ss = {
   key: 5,
   class: "rename-dialog-backdrop"
-}, is = { class: "rename-dialog" }, ns = { class: "dialog-actions" }, ls = /* @__PURE__ */ le({
+}, is = { class: "rename-dialog" }, ns = { class: "dialog-actions" }, ls = /* @__PURE__ */ ne({
   __name: "Thesis",
   props: {
     userId: { default: null },
@@ -331,7 +331,7 @@ const Me = { class: "thesis-item" }, Be = { class: "thesis-expand-icon" }, Ue = 
     function re(s) {
       M.value = s, _.value = "", x.value = !0;
     }
-    async function te() {
+    async function ee() {
       if (!(!_.value.trim() || !M.value))
         try {
           const { data: s, error: e } = await n.schema("hf").from("thesisStocks").insert([{
@@ -400,12 +400,12 @@ Updated at: ${A}`;
       set: (s) => {
         h.value === "add" ? C.value.title = s : y.value.title = s;
       }
-    }), se = L({
+    }), te = L({
       get: () => h.value === "add" ? C.value.description : y.value.description,
       set: (s) => {
         h.value === "add" ? C.value.description = s : y.value.description = s;
       }
-    }), ie = L({
+    }), se = L({
       get: () => h.value === "add" ? C.value.parent_thesis_id : y.value.parent_thesis_id,
       set: (s) => {
         h.value === "add" ? C.value.parent_thesis_id = s : y.value.parent_thesis_id = s;
@@ -477,16 +477,16 @@ Note: This will also archive all instruments associated with this thesis.`))
           console.error("Error deleting thesis:", i), k("error", "Error", `Failed to archive thesis: ${i.message}`);
         }
     }
-    function ne(s, e) {
+    function ie(s, e) {
       var c;
       if (s === e) return !1;
       const i = (c = p.data.value) == null ? void 0 : c.find((A) => A.id === s);
-      return i ? i.parent_thesis_id === e ? !1 : i.parent_thesis_id ? ne(i.parent_thesis_id, e) : !0 : !0;
+      return i ? i.parent_thesis_id === e ? !1 : i.parent_thesis_id ? ie(i.parent_thesis_id, e) : !0 : !0;
     }
     const $e = L(() => {
       if (!p.data.value) return [];
       const s = h.value === "edit" ? y.value.id : null;
-      return p.data.value.filter((e) => !(s && !ne(e.id, s)));
+      return p.data.value.filter((e) => !(s && !ie(e.id, s)));
     }), Ce = L(() => {
       if (!p.data.value) return [];
       const s = p.data.value.filter((c) => !c.parent_thesis_id);
@@ -509,24 +509,24 @@ Note: This will also archive all instruments associated with this thesis.`))
     return (s, e) => (r(), u("div", gt, [
       B(p).isLoading.value ? (r(), u("div", yt, [...e[17] || (e[17] = [
         t("div", { class: "loading-spinner" }, null, -1),
-        ee(" Loading thesis... ", -1)
+        le(" Loading thesis... ", -1)
       ])])) : B(p).isError.value ? (r(), u("div", bt, [
         e[18] || (e[18] = t("h3", null, "Error loading thesis", -1)),
         t("p", null, m(B(p).error.value), 1)
       ])) : B(p).isSuccess.value ? (r(), u("div", kt, [
         t("div", $t, [
-          t("h2", {
-            class: Z({ "thesis-header-clickable": a.showHeaderLink }),
-            onClick: e[0] || (e[0] = (i) => a.showHeaderLink && $("navigate"))
-          }, [
-            ee(m(d.value) + " ", 1),
+          t("h2", null, [
+            t("span", {
+              class: Z({ "thesis-header-clickable": a.showHeaderLink }),
+              onClick: e[0] || (e[0] = (i) => a.showHeaderLink && $("navigate"))
+            }, m(d.value), 3),
             t("button", {
               class: "appname-rename-btn",
               onClick: Q,
               title: "Rename app",
               style: { width: "auto", padding: "2px 7px", "font-size": "13px", background: "none", border: "none", color: "#888", cursor: "pointer" }
             }, "✎")
-          ], 2),
+          ]),
           t("div", Ct, [
             t("button", {
               class: "btn btn-add",
@@ -606,12 +606,12 @@ Note: This will also archive all instruments associated with this thesis.`))
               }, " Description ", 8, Vt),
               P(t("textarea", {
                 id: h.value === "add" ? "thesis-description" : "edit-thesis-description",
-                "onUpdate:modelValue": e[4] || (e[4] = (i) => se.value = i),
+                "onUpdate:modelValue": e[4] || (e[4] = (i) => te.value = i),
                 placeholder: "Enter thesis description (optional)",
                 rows: "4",
                 maxlength: "500"
               }, null, 8, Nt), [
-                [j, se.value]
+                [j, te.value]
               ])
             ]),
             t("div", Mt, [
@@ -620,7 +620,7 @@ Note: This will also archive all instruments associated with this thesis.`))
               }, " Parent Thesis ", 8, Bt),
               P(t("select", {
                 id: h.value === "add" ? "thesis-parent" : "edit-thesis-parent",
-                "onUpdate:modelValue": e[5] || (e[5] = (i) => ie.value = i)
+                "onUpdate:modelValue": e[5] || (e[5] = (i) => se.value = i)
               }, [
                 e[21] || (e[21] = t("option", { value: null }, "None (Root Thesis)", -1)),
                 (r(!0), u(R, null, q($e.value, (i) => (r(), u("option", {
@@ -628,7 +628,7 @@ Note: This will also archive all instruments associated with this thesis.`))
                   value: i.id
                 }, m(i.title), 9, Kt))), 128))
               ], 8, Ut), [
-                [xe, ie.value]
+                [xe, se.value]
               ]),
               e[22] || (e[22] = t("small", { class: "form-hint" }, "Select a parent thesis to create a hierarchical structure", -1))
             ])
@@ -673,7 +673,7 @@ Note: This will also archive all instruments associated with this thesis.`))
                 placeholder: "Enter instrument symbol (e.g., AAPL)",
                 maxlength: "10",
                 autofocus: "",
-                onKeyup: b(te, ["enter"])
+                onKeyup: b(ee, ["enter"])
               }, null, 544), [
                 [j, _.value]
               ])
@@ -686,7 +686,7 @@ Note: This will also archive all instruments associated with this thesis.`))
             }, " Cancel "),
             t("button", {
               class: "btn btn-primary",
-              onClick: te,
+              onClick: ee,
               disabled: !_.value.trim()
             }, " Add Instrument ", 8, Qt)
           ])
@@ -739,7 +739,7 @@ Note: This will also archive all instruments associated with this thesis.`))
       ])) : w("", !0)
     ]));
   }
-}), as = /* @__PURE__ */ de(ls, [["__scopeId", "data-v-ad077fb2"]]), us = {
+}), as = /* @__PURE__ */ de(ls, [["__scopeId", "data-v-3e67b5bd"]]), us = {
   install(l) {
     l.component("Thesis", as);
   }

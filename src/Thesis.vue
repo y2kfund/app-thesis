@@ -565,11 +565,8 @@ function updateEditingValue(value: any) {
     <!-- Success state -->
     <div v-else-if="thesisQuery.isSuccess.value" class="thesis-container">
       <div class="thesis-header">
-        <h2 
-          :class="{ 'thesis-header-clickable': props.showHeaderLink }"
-          @click="props.showHeaderLink && emit('navigate')"
-        >
-          {{ appName }}
+        <h2>
+          <span :class="{ 'thesis-header-clickable': props.showHeaderLink }" @click="props.showHeaderLink && emit('navigate')">{{ appName }}</span>
           <button
             class="appname-rename-btn"
             @click="openAppNameDialog"
