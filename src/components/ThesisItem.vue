@@ -7,7 +7,8 @@ interface Props {
   thesisStocks: Record<string, any[]>
   expandedThesis: Set<string>
   editingCell: any
-  editingValue: any
+  editingValue: any 
+  stockResources: Record<string, any[]>
 }
 
 const props = defineProps<Props>()
@@ -23,6 +24,7 @@ const emit = defineEmits<{
   'cancel-edit': []
   'get-cell-metadata': [stock: any, field: string]
   'update-editing-value': [value: any]
+  'add-resource': [thesisId: string, stockId: string]
 }>()
 
 function updateValue(value: any) {
@@ -228,6 +230,11 @@ function updateValue(value: any) {
               <!-- Actions -->
               <td class="stock-actions">
                 <button 
+                  class="btn btn-primary btn-sm btn-icon"
+                  @click.stop="emit('add-resource', thesis.id, stock.id)"
+                  title="Add PDF or Link"
+                >➕</button>
+                <button 
                   class="btn btn-danger btn-sm btn-icon" 
                   @click.stop="emit('delete-stock', thesis.id, stock.id, stock.symbol)"
                   title="Remove instrument"
@@ -235,6 +242,16 @@ function updateValue(value: any) {
                   🗑️
                 </button>
               </td>
+              <tr v-for="resource in stockResources?.[stock.id] || []" :key="resource.id" class="resource-row">
+                <td colspan="9" style="padding-left:2rem;">
+                  <span v-if="resource.type === 'pdf'">
+                    📄 <a :href="getPdfUrl(resource.url)" target="_blank">{{ resource.file_name }}</a>
+                  </span>
+                  <span v-else>
+                    🔗 <a :href="resource.url" target="_blank">{{ resource.url }}</a>
+                  </span>
+                </td>
+              </tr>
             </tr>
           </tbody>
         </table>
@@ -251,7 +268,8 @@ function updateValue(value: any) {
         :thesis-stocks="thesisStocks"
         :expanded-thesis="expandedThesis"
         :editing-cell="editingCell"
-        :editing-value="editingValue"
+        :editing-value="editingValue" 
+        :stock-resources="stockResources"
         @toggle="(id) => emit('toggle', id)"
         @edit="(t) => emit('edit', t)"
         @delete="(id, title) => emit('delete', id, title)"
@@ -261,7 +279,8 @@ function updateValue(value: any) {
         @save-edit="(s, f) => emit('save-edit', s, f)"
         @cancel-edit="() => emit('cancel-edit')"
         @get-cell-metadata="(s, f) => emit('get-cell-metadata', s, f)"
-        @update-editing-value="(v) => emit('update-editing-value', v)"
+        @update-editing-value="(v) => emit('update-editing-value', v)" 
+        @add-resource="(tid, sid) => emit('add-resource', tid, sid)"
       />
     </template>
   </div>

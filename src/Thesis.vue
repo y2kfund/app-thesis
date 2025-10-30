@@ -30,6 +30,14 @@ const appName = ref('Thesis Management')
 const showAppNameDialog = ref(false)
 const appNameInput = ref('')
 
+const showResourceModal = ref(false)
+const resourceModalStockId = ref('')
+const resourceType = ref<'pdf' | 'link'>('pdf')
+const resourceUrl = ref('')
+const resourceFile = ref<File | null>(null)
+const resourceUploading = ref(false)
+const stockResources = ref<Record<string, any[]>>({})
+
 function parseAppNameFromUrl(): string {
   const url = new URL(window.location.href)
   return url.searchParams.get(`${props.window}_thesis_app_name`) || 'Thesis Management'
@@ -50,6 +58,72 @@ function openAppNameDialog() {
   showAppNameDialog.value = true
 }
 
+async function loadStockResources() {
+  const { data, error } = await supabase
+    .schema('hf')
+    .from('thesisStockResources')
+    .select('*')
+  if (error) return
+  const grouped: Record<string, any[]> = {}
+  data.forEach((r: any) => {
+    if (!grouped[r.stock_id]) grouped[r.stock_id] = []
+    grouped[r.stock_id].push(r)
+  })
+  stockResources.value = grouped
+}
+
+async function saveResource() {
+  resourceUploading.value = true
+  try {
+    let url = ''
+    let fileName = ''
+    let fileContent = null
+
+    if (resourceType.value === 'pdf' && resourceFile.value) {
+      // Upload PDF to Supabase Storage or save content
+      // Example: upload to storage and get public URL
+      const { data, error } = await supabase.storage
+        .from('resources')
+        .upload(`pdfs/${Date.now()}_${resourceFile.value.name}`, resourceFile.value)
+      if (error) throw error
+      url = data.path
+      fileName = resourceFile.value.name
+      // Optionally, read file content as ArrayBuffer or text
+    } else if (resourceType.value === 'link') {
+      url = resourceUrl.value.trim()
+    }
+
+    // Insert into DB
+    await supabase
+      .schema('hf')
+      .from('thesisStockResources')
+      .insert([{
+        stock_id: resourceModalStockId.value,
+        type: resourceType.value,
+        url,
+        file_name: fileName || null,
+        file_content: fileContent,
+        created_by: currentUserEmail.value
+      }])
+
+    showResourceModal.value = false
+    await loadStockResources() // see below
+    showToast('success', 'Resource Added')
+  } catch (e: any) {
+    showToast('error', 'Error', e.message)
+  } finally {
+    resourceUploading.value = false
+  }
+}
+
+function openResourceModal(thesisId: string, stockId: string) {
+  resourceModalStockId.value = stockId
+  resourceType.value = 'pdf'
+  resourceUrl.value = ''
+  resourceFile.value = null
+  showResourceModal.value = true
+}
+
 function saveAppName() {
   appName.value = appNameInput.value.trim() || 'Thesis Management'
   writeAppNameToUrl(appName.value)
@@ -59,6 +133,7 @@ function saveAppName() {
 onMounted(() => {
   appName.value = parseAppNameFromUrl()
   expandedThesis.value = parseExpandedThesisFromUrl()
+  loadStockResources()
 
   window.addEventListener('popstate', () => {
     appName.value = parseAppNameFromUrl()
@@ -627,7 +702,8 @@ function writeExpandedThesisToUrl(expanded: Set<string>) {
               :thesis-stocks="thesisStocks"
               :expanded-thesis="expandedThesis"
               :editing-cell="editingCell"
-              :editing-value="editingValue"
+              :editing-value="editingValue" 
+              :stock-resources="stockResources"
               @toggle="toggleThesis"
               @edit="startEditThesis"
               @delete="deleteThesis"
@@ -637,7 +713,8 @@ function writeExpandedThesisToUrl(expanded: Set<string>) {
               @save-edit="saveEdit"
               @cancel-edit="cancelEdit"
               @get-cell-metadata="getCellMetadata"
-              @update-editing-value="updateEditingValue"
+              @update-editing-value="updateEditingValue" 
+              @add-resource="openResourceModal"  
             />
           </template>
         </div>
@@ -787,6 +864,38 @@ function writeExpandedThesisToUrl(expanded: Set<string>) {
         <div class="dialog-actions">
           <button @click="saveAppName">Save</button>
           <button @click="showAppNameDialog = false">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="showResourceModal" class="modal-overlay" @click="showResourceModal = false">
+      <div class="modal-content" @click.stop>
+        <div class="modal-header">
+          <h3>Add Resource</h3>
+          <button class="modal-close" @click="showResourceModal = false">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Type</label>
+            <select v-model="resourceType">
+              <option value="pdf">PDF</option>
+              <option value="link">Webpage/YouTube Link</option>
+            </select>
+          </div>
+          <div v-if="resourceType === 'pdf'" class="form-group">
+            <label>PDF File</label>
+            <input type="file" accept="application/pdf" @change="e => resourceFile = e.target.files[0]" />
+          </div>
+          <div v-else class="form-group">
+            <label>URL</label>
+            <input type="url" v-model="resourceUrl" placeholder="https://..." />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-cancel" @click="showResourceModal = false">Cancel</button>
+          <button class="btn btn-primary" :disabled="resourceUploading" @click="saveResource">
+            Save
+          </button>
         </div>
       </div>
     </div>
