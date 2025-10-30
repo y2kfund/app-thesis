@@ -11215,6 +11215,7 @@ const sr = { class: "thesis-item" }, nr = { class: "thesis-expand-icon" }, rr = 
           responsiveLayout: "collapse",
           height: "auto",
           dataTree: !0,
+          placeholder: "No instruments found.",
           dataTreeStartExpanded: function(d) {
             return !d.getData().isResource;
           },
@@ -11345,7 +11346,7 @@ const sr = { class: "thesis-item" }, nr = { class: "thesis-expand-icon" }, rr = 
   for (const [i, s] of e)
     t[i] = s;
   return t;
-}, fr = /* @__PURE__ */ li(cr, [["__scopeId", "data-v-edbb6f6f"]]), pr = { class: "thesis-card" }, mr = {
+}, fr = /* @__PURE__ */ li(cr, [["__scopeId", "data-v-24cc2e65"]]), pr = { class: "thesis-card" }, mr = {
   key: 0,
   class: "loading"
 }, gr = {

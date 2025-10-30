@@ -205,6 +205,7 @@ function initTabulator() {
     responsiveLayout: "collapse",
     height: "auto",
     dataTree: true,
+    placeholder: "No instruments found.",
     dataTreeStartExpanded: function(row) {
       // Only expand parent rows (not resource rows)
       return !row.getData().isResource
@@ -651,5 +652,10 @@ function updateValue(value: any) {
 <style>
 .tabulator-row.tabulator-tree-level-1 {
     padding-left: 28px;
+}
+.tabulator-placeholder-contents {
+  font-size: 1rem !important;
+  padding: 0.25rem !important;
+  color: #fff !important;
 }
 </style>
