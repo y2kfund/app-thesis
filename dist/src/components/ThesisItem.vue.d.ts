@@ -6,6 +6,7 @@ interface Props {
     expandedThesis: Set<string>;
     editingCell: any;
     editingValue: any;
+    stockResources: Record<string, any[]>;
 }
 declare const _default: import('vue').DefineComponent<Props, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
     toggle: (thesisId: string) => any;
@@ -18,6 +19,7 @@ declare const _default: import('vue').DefineComponent<Props, {}, {}, {}, {}, imp
     "cancel-edit": () => any;
     "get-cell-metadata": (stock: any, field: string) => any;
     "update-editing-value": (value: any) => any;
+    "add-resource": (thesisId: string, stockId: string) => any;
 }, string, import('vue').PublicProps, Readonly<Props> & Readonly<{
     onToggle?: ((thesisId: string) => any) | undefined;
     onEdit?: ((thesis: Thesis) => any) | undefined;
@@ -29,5 +31,8 @@ declare const _default: import('vue').DefineComponent<Props, {}, {}, {}, {}, imp
     "onCancel-edit"?: (() => any) | undefined;
     "onGet-cell-metadata"?: ((stock: any, field: string) => any) | undefined;
     "onUpdate-editing-value"?: ((value: any) => any) | undefined;
-}>, {}, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, HTMLDivElement>;
+    "onAdd-resource"?: ((thesisId: string, stockId: string) => any) | undefined;
+}>, {}, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {
+    tableRef: HTMLDivElement;
+}, HTMLDivElement>;
 export default _default;

@@ -183,7 +183,7 @@ function getTabulatorColumns() {
 function getResourceDisplay(cell) {
   const data = cell.getData()
   if (data.type === 'pdf') {
-    return `<span>📄 <a href="${data.url}" target="_blank">${data.file_name}</a></span>`
+    return `<span>📄 <a href="https://sb.y2k.fund/storage/v1/object/public/resources/${data.url}" target="_blank">${data.file_name}</a></span>`
   } else {
     return `<span>🔗 <a href="${data.url}" target="_blank">${data.url}</a></span>`
   }
@@ -645,5 +645,11 @@ function updateValue(value: any) {
     margin-left: 0;
     width: 100%;
   }
+}
+</style>
+
+<style>
+.tabulator-row.tabulator-tree-level-1 {
+    padding-left: 28px;
 }
 </style>
