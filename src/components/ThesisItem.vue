@@ -59,11 +59,10 @@ function getTabulatorData() {
 
 function getTabulatorColumns() {
   return [
-    { title: "Symbol", field: "symbol", width: 120, editable: false },
+    { title: "Symbol", field: "symbol", editable: false },
     { 
       title: "PE Ratio", 
       field: "pe_ratio", 
-      width: 90, 
       editor: "input",
       editable: true,
       cellEdited: async (cell: any) => {
@@ -77,7 +76,6 @@ function getTabulatorColumns() {
     { 
       title: "PEG Ratio", 
       field: "peg_ratio", 
-      width: 90, 
       editor: "input",
       editable: true,
       cellEdited: async (cell: any) => {
@@ -91,7 +89,6 @@ function getTabulatorColumns() {
     { 
       title: "Analyst Ratings", 
       field: "analyst_ratings", 
-      width: 120, 
       editor: "input",
       editable: true,
       cellEdited: async (cell: any) => {
@@ -105,7 +102,6 @@ function getTabulatorColumns() {
     {
       title: "Founder Led",
       field: "founder_led",
-      width: 90,
       editor: true,
       formatter: "tickCross", // shows check/cross icons
       cellEdited: async (cell: any) => {
@@ -119,7 +115,6 @@ function getTabulatorColumns() {
     { 
       title: "Next Earnings Date", 
       field: "next_earnings_date", 
-      width: 120, 
       editor: "input",
       editable: true,
       cellEdited: async (cell: any) => {
@@ -133,7 +128,6 @@ function getTabulatorColumns() {
     { 
       title: "Passed Checks", 
       field: "passed_checks", 
-      width: 100, 
       editor: true,
       editorParams: { values: { true: "Yes", false: "No" } },
       formatter: "tickCross",
@@ -148,7 +142,6 @@ function getTabulatorColumns() {
     { 
       title: "Currently Held", 
       field: "currently_held", 
-      width: 100, 
       editor: true,
       editorParams: { values: { true: "Yes", false: "No" } },
       formatter: "tickCross",
@@ -163,7 +156,6 @@ function getTabulatorColumns() {
     { 
       title: "Actions", 
       field: "actions", 
-      width: 100, 
       formatter: (cell) => {
         const data = cell.getData()
         if (data.isResource) {
@@ -209,13 +201,29 @@ function initTabulator() {
     layout: "fitColumns",
     movableColumns: false,
     resizableRows: false,
+    autoResize: true,
+    responsiveLayout: "collapse",
     height: "auto",
     dataTree: true,
-    dataTreeStartExpanded: false,
+    dataTreeStartExpanded: function(row) {
+      // Only expand parent rows (not resource rows)
+      return !row.getData().isResource
+    },
     rowFormatter: function(row) {
-      if (row.getData().isResource) {
-        row.getElement().style.background = "#f6f6f6"
-        row.getElement().style.fontStyle = "italic"
+      const data = row.getData()
+      if (data.isResource) {
+        // Get the number of columns in the table
+        const colCount = row.getTable().getColumns().length
+        // Clear the row
+        const rowEl = row.getElement()
+        rowEl.innerHTML = ""
+        // Create a single cell with colspan
+        const cell = document.createElement("td")
+        cell.colSpan = colCount
+        cell.style.background = "#f6f6f6"
+        cell.style.fontStyle = "italic"
+        cell.innerHTML = getResourceDisplay({ getData: () => data })
+        rowEl.appendChild(cell)
       }
     },
     cellDblClick: undefined, // not needed for built-in editing
@@ -333,7 +341,7 @@ function updateValue(value: any) {
         </button>
       </div>
 
-      <div ref="tableRef"></div>
+      <div ref="tableRef" style="width: 100%;"></div>
     </div>
 
     <!-- Render child thesis recursively -->
@@ -515,7 +523,9 @@ function updateValue(value: any) {
   border-radius: 6px;
   margin-left: 2rem;
 }
-
+.tabulator-row.tabulator-tree-level-1 {
+    padding-left: 28px;
+}
 .stocks-header {
   display: flex;
   justify-content: space-between;
