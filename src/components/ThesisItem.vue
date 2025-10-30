@@ -669,12 +669,16 @@ function updateValue(value: any) {
 .tabulator-placeholder-contents {
   font-size: 1rem !important;
   padding: 0.25rem !important;
-  color: #fff !important;
 }
 
 button.tab-btn-delete-resource {
     width: auto;
     border: none;
     padding: 0;
+}
+.tabulator-cell button {
+    width: auto;
+    padding: 2px 4px;
+    background: #fff;
 }
 </style>
