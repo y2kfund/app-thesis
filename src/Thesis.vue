@@ -8,7 +8,8 @@ import ThesisItem from './components/ThesisItem.vue'
 const props = withDefaults(defineProps<ThesisProps>(), {
   userId: null,
   //userId: '67e578fd-2cf7-48a4-b028-a11a3f89bb9b',
-  showHeaderLink: false
+  showHeaderLink: false,
+  window: null
 })
 
 const emit = defineEmits<{ 
@@ -23,6 +24,7 @@ const queryClient = useQueryClient()
 
 // Get current user email/name
 const currentUserEmail = ref<string>('')
+const expandedThesis = ref<Set<string>>(new Set())
 
 const appName = ref('Thesis Management')
 const showAppNameDialog = ref(false)
@@ -30,15 +32,15 @@ const appNameInput = ref('')
 
 function parseAppNameFromUrl(): string {
   const url = new URL(window.location.href)
-  return url.searchParams.get('thesis_app_name') || 'Thesis Management'
+  return url.searchParams.get(`${props.window}_thesis_app_name`) || 'Thesis Management'
 }
 
 function writeAppNameToUrl(name: string) {
   const url = new URL(window.location.href)
   if (name && name.trim() && name !== 'Thesis Management') {
-    url.searchParams.set('thesis_app_name', name.trim())
+    url.searchParams.set(`${props.window}_thesis_app_name`, name.trim())
   } else {
-    url.searchParams.delete('thesis_app_name')
+    url.searchParams.delete(`${props.window}_thesis_app_name`)
   }
   window.history.replaceState({}, '', url.toString())
 }
@@ -56,11 +58,17 @@ function saveAppName() {
 
 onMounted(() => {
   appName.value = parseAppNameFromUrl()
+  expandedThesis.value = parseExpandedThesisFromUrl()
 
   window.addEventListener('popstate', () => {
     appName.value = parseAppNameFromUrl()
+    expandedThesis.value = parseExpandedThesisFromUrl()
   })
 })
+
+watch(expandedThesis, (val) => {
+  writeExpandedThesisToUrl(val)
+}, { deep: true })
 
 // Fetch current user's email on mount
 async function fetchCurrentUser() {
@@ -121,7 +129,6 @@ const editingValue = ref<any>(null)
 const showAddStockModal = ref(false)
 const addStockThesisId = ref<string>('')
 const newStockSymbol = ref('')
-const expandedThesis = ref<Set<string>>(new Set())
 
 // Load stocks for all thesis
 async function loadThesisStocks() {
@@ -164,6 +171,7 @@ function toggleThesis(thesisId: string) {
   } else {
     expandedThesis.value.add(thesisId)
   }
+  writeExpandedThesisToUrl(expandedThesis.value)
 }
 
 // Add stock modal
@@ -545,6 +553,23 @@ function getParentThesisName(parentId: string | null | undefined): string {
 // Add handler for updating editing value
 function updateEditingValue(value: any) {
   editingValue.value = value
+}
+
+function parseExpandedThesisFromUrl(): Set<string> {
+  const url = new URL(window.location.href)
+  const param = url.searchParams.get(`${props.window}_expanded_thesis`)
+  if (!param) return new Set()
+  return new Set(param.split(',').filter(Boolean))
+}
+
+function writeExpandedThesisToUrl(expanded: Set<string>) {
+  const url = new URL(window.location.href)
+  if (expanded.size > 0) {
+    url.searchParams.set(`${props.window}_expanded_thesis`, Array.from(expanded).join(','))
+  } else {
+    url.searchParams.delete(`${props.window}_expanded_thesis`)
+  }
+  window.history.replaceState({}, '', url.toString())
 }
 </script>
 

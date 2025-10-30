@@ -3,7 +3,8 @@ import Thesis from './Thesis.vue'
 
 export interface ThesisProps {
   userId?: string | null
-  showHeaderLink?: boolean
+  showHeaderLink?: boolean,
+  window?: string | null
 }
 
 export default {

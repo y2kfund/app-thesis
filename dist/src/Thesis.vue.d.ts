@@ -8,5 +8,6 @@ declare const _default: import('vue').DefineComponent<ThesisProps, {}, {}, {}, {
 }>, {
     userId: string | null;
     showHeaderLink: boolean;
+    window: string | null;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, HTMLDivElement>;
 export default _default;
