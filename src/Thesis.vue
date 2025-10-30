@@ -6,8 +6,8 @@ import type { ThesisProps } from './index'
 import ThesisItem from './components/ThesisItem.vue'
 
 const props = withDefaults(defineProps<ThesisProps>(), {
-  userId: null,
-  //userId: '67e578fd-2cf7-48a4-b028-a11a3f89bb9b',
+  //userId: null,
+  userId: '67e578fd-2cf7-48a4-b028-a11a3f89bb9b',
   showHeaderLink: false,
   window: null
 })
@@ -331,35 +331,34 @@ function cancelEdit() {
 
 async function saveEdit(
   stock: ThesisStock,
-  field: 'pe_ratio' | 'peg_ratio' | 'passed_checks' | 'currently_held' | 'analyst_ratings' | 'founder_led' | 'next_earnings_date' // <-- add new fields
+  field: 'pe_ratio' | 'peg_ratio' | 'passed_checks' | 'currently_held' | 'analyst_ratings' | 'founder_led' | 'next_earnings_date',
+  value: any // <-- add this parameter
 ) {
-  if (!editingCell.value) return
-  
-  // Check if we have user email
+  //console.log('saveEdit called', stock, field, value, editingCell)
+  //if (!editingCell.value) return
+
   if (!currentUserEmail.value) {
     showToast('error', 'Error', 'User information not available')
     cancelEdit()
     return
   }
-  
+
   try {
     const updateData: any = {
-      [field]: editingValue.value,
+      [field]: value, // <-- use the value from Tabulator
       [`${field}_updated_by`]: currentUserEmail.value,
       [`${field}_updated_at`]: new Date().toISOString()
     }
-    
+
     const { error } = await supabase
       .schema('hf')
       .from('thesisStocks')
       .update(updateData)
       .eq('id', stock.id)
-    
+
     if (error) throw error
-    
-    // Reload stocks
+
     await loadThesisStocks()
-    
     cancelEdit()
     showToast('success', 'Updated', `${field.replace('_', ' ')} has been updated`)
   } catch (error: any) {

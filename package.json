@@ -25,6 +25,7 @@
     "dist"
   ],
   "dependencies": {
+    "tabulator-tables": "^6.3.1",
     "vue": "^3.4.0"
   },
   "peerDependencies": {

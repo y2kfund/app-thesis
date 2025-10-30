@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { onMounted, ref, watch, nextTick } from 'vue'
+import { TabulatorFull as Tabulator } from 'tabulator-tables'
+import 'tabulator-tables/dist/css/tabulator.min.css'
 import type { Thesis } from '@y2kfund/core'
 
 interface Props {
@@ -27,6 +30,254 @@ const emit = defineEmits<{
   'add-resource': [thesisId: string, stockId: string]
 }>()
 
+const tableRef = ref(null)
+let tabulatorInstance: any = null
+
+function getTabulatorData() {
+  // Build tree data: each stock is a parent, its resources are children
+  return (props.thesisStocks[props.thesis.id] || []).map(stock => ({
+    id: stock.id,
+    symbol: stock.symbol,
+    pe_ratio: stock.pe_ratio,
+    peg_ratio: stock.peg_ratio,
+    analyst_ratings: stock.analyst_ratings,
+    founder_led: stock.founder_led,
+    next_earnings_date: stock.next_earnings_date,
+    passed_checks: stock.passed_checks,
+    currently_held: stock.currently_held,
+    isResource: false,
+    _children: (props.stockResources?.[stock.id] || []).map(resource => ({
+      id: resource.id,
+      parent: stock.id,
+      isResource: true,
+      type: resource.type,
+      file_name: resource.file_name,
+      url: resource.url,
+    })),
+  }))
+}
+
+function getTabulatorColumns() {
+  return [
+    { title: "Symbol", field: "symbol", width: 120, editable: false },
+    { 
+      title: "PE Ratio", 
+      field: "pe_ratio", 
+      width: 90, 
+      editor: "input",
+      editable: true,
+      cellEdited: async (cell: any) => {
+        const data = cell.getData()
+        const stock = (props.thesisStocks[props.thesis.id] || []).find(s => s.id === data.id)
+        if (stock) {
+          emit('save-edit', stock, cell.getField(), cell.getValue())
+        }
+      }
+    },
+    { 
+      title: "PEG Ratio", 
+      field: "peg_ratio", 
+      width: 90, 
+      editor: "input",
+      editable: true,
+      cellEdited: async (cell: any) => {
+        const data = cell.getData()
+        const stock = (props.thesisStocks[props.thesis.id] || []).find(s => s.id === data.id)
+        if (stock) {
+          emit('save-edit', stock, cell.getField(), cell.getValue())
+        }
+      }
+    },
+    { 
+      title: "Analyst Ratings", 
+      field: "analyst_ratings", 
+      width: 120, 
+      editor: "input",
+      editable: true,
+      cellEdited: async (cell: any) => {
+        const data = cell.getData()
+        const stock = (props.thesisStocks[props.thesis.id] || []).find(s => s.id === data.id)
+        if (stock) {
+          emit('save-edit', stock, cell.getField(), cell.getValue())
+        }
+      }
+    },
+    {
+      title: "Founder Led",
+      field: "founder_led",
+      width: 90,
+      editor: true,
+      formatter: "tickCross", // shows check/cross icons
+      cellEdited: async (cell: any) => {
+        const data = cell.getData()
+        const stock = (props.thesisStocks[props.thesis.id] || []).find(s => s.id === data.id)
+        if (stock) {
+          emit('save-edit', stock, cell.getField(), cell.getValue())
+        }
+      }
+    },
+    { 
+      title: "Next Earnings Date", 
+      field: "next_earnings_date", 
+      width: 120, 
+      editor: "input",
+      editable: true,
+      cellEdited: async (cell: any) => {
+        const data = cell.getData()
+        const stock = (props.thesisStocks[props.thesis.id] || []).find(s => s.id === data.id)
+        if (stock) {
+          emit('save-edit', stock, cell.getField(), cell.getValue())
+        }
+      }
+    },
+    { 
+      title: "Passed Checks", 
+      field: "passed_checks", 
+      width: 100, 
+      editor: true,
+      editorParams: { values: { true: "Yes", false: "No" } },
+      formatter: "tickCross",
+      cellEdited: async (cell: any) => {
+        const data = cell.getData()
+        const stock = (props.thesisStocks[props.thesis.id] || []).find(s => s.id === data.id)
+        if (stock) {
+          emit('save-edit', stock, cell.getField(), cell.getValue())
+        }
+      }
+    },
+    { 
+      title: "Currently Held", 
+      field: "currently_held", 
+      width: 100, 
+      editor: true,
+      editorParams: { values: { true: "Yes", false: "No" } },
+      formatter: "tickCross",
+      cellEdited: async (cell: any) => {
+        const data = cell.getData()
+        const stock = (props.thesisStocks[props.thesis.id] || []).find(s => s.id === data.id)
+        if (stock) {
+          emit('save-edit', stock, cell.getField(), cell.getValue())
+        }
+      }
+    },
+    { 
+      title: "Actions", 
+      field: "actions", 
+      width: 100, 
+      formatter: (cell) => {
+        const data = cell.getData()
+        if (data.isResource) {
+          return getResourceDisplay(cell)
+        }
+        return `
+          <button class="tab-btn-add-resource" data-stock-id="${data.id}">➕</button>
+          <button class="tab-btn-delete-stock" data-stock-id="${data.id}">🗑️</button>
+        `
+      },
+      cellClick: (e, cell) => {
+        const data = cell.getData()
+        if (data.isResource) return
+        if (e.target.classList.contains('tab-btn-add-resource')) {
+          emit('add-resource', props.thesis.id, data.id)
+        }
+        if (e.target.classList.contains('tab-btn-delete-stock')) {
+          emit('delete-stock', props.thesis.id, data.id, data.symbol)
+        }
+      }
+    },
+  ]
+}
+
+function getResourceDisplay(cell) {
+  const data = cell.getData()
+  if (data.type === 'pdf') {
+    return `<span>📄 <a href="${data.url}" target="_blank">${data.file_name}</a></span>`
+  } else {
+    return `<span>🔗 <a href="${data.url}" target="_blank">${data.url}</a></span>`
+  }
+}
+
+function initTabulator() {
+  if (!tableRef.value) return
+  if (tabulatorInstance) {
+    try { tabulatorInstance.destroy() } catch {}
+    tabulatorInstance = null
+  }
+  tabulatorInstance = new Tabulator(tableRef.value, {
+    data: getTabulatorData(),
+    columns: getTabulatorColumns(),
+    layout: "fitColumns",
+    movableColumns: false,
+    resizableRows: false,
+    height: "auto",
+    dataTree: true,
+    dataTreeStartExpanded: false,
+    rowFormatter: function(row) {
+      if (row.getData().isResource) {
+        row.getElement().style.background = "#f6f6f6"
+        row.getElement().style.fontStyle = "italic"
+      }
+    },
+    cellDblClick: undefined, // not needed for built-in editing
+    cellEdited: async (cell: any) => {
+      const data = cell.getData()
+      console.log("Cell Edited:", data, data.isResource, cell.getField(), cell.getValue())
+      if (!data.isResource) {
+        // Find the real ThesisStock object
+        const stock = (props.thesisStocks[props.thesis.id] || []).find(s => s.id === data.id)
+        if (stock) {
+          emit('save-edit', stock, cell.getField(), cell.getValue())
+        }
+      }
+    }
+  })
+}
+
+// Only initialize Tabulator when the table is visible and DOM is ready
+watch(
+  () => props.expandedThesis.has(props.thesis.id),
+  async (expanded) => {
+    if (expanded) {
+      await nextTick()
+      initTabulator()
+    } else {
+      if (tabulatorInstance) {
+        try { tabulatorInstance.destroy() } catch {}
+        tabulatorInstance = null
+      }
+    }
+  },
+  { immediate: true }
+)
+
+// Update data when stocks/resources change
+watch(
+  () => [props.thesisStocks[props.thesis.id], props.stockResources],
+  () => {
+    if (tabulatorInstance) {
+      tabulatorInstance.replaceData(getTabulatorData())
+    }
+  },
+  { deep: true }
+)
+
+watch(
+  () => props.editingCell,
+  () => {
+    if (tabulatorInstance) {
+      tabulatorInstance.redraw(true)
+    }
+  }
+)
+
+onMounted(() => {
+  if (props.expandedThesis.has(props.thesis.id)) {
+    nextTick(() => {
+      initTabulator()
+    })
+  }
+})
+
 function updateValue(value: any) {
   emit('update-editing-value', value)
 }
@@ -35,19 +286,19 @@ function updateValue(value: any) {
 <template>
   <div :class="['thesis-item-wrapper', `thesis-item-level-${level}`]">
     <div class="thesis-item">
-      <div class="thesis-content" @click="emit('toggle', thesis.id)">
+      <div class="thesis-content" @click="emit('toggle', props.thesis.id)">
         <div class="thesis-expand-icon">
-          {{ expandedThesis.has(thesis.id) ? '▼' : '▶' }}
+          {{ props.expandedThesis.has(props.thesis.id) ? '▼' : '▶' }}
         </div>
         <div class="thesis-info">
           <div class="thesis-title">
-            {{ thesis.title }}
-            <span v-if="thesis.parent_thesis_id" class="thesis-parent-badge">
+            {{ props.thesis.title }}
+            <span v-if="props.thesis.parent_thesis_id" class="thesis-parent-badge">
               ↳ Child
             </span>
           </div>
-          <div v-if="thesis.description" class="thesis-description">
-            {{ thesis.description }}
+          <div v-if="props.thesis.description" class="thesis-description">
+            {{ props.thesis.description }}
           </div>
         </div>
       </div>
@@ -61,7 +312,7 @@ function updateValue(value: any) {
         </button>
         <button 
           class="btn btn-danger btn-sm btn-icon" 
-          @click.stop="emit('delete', thesis.id, thesis.title)"
+          @click.stop="emit('delete', props.thesis.id, props.thesis.title)"
           title="Archive thesis"
         >
           🗑️
@@ -70,203 +321,30 @@ function updateValue(value: any) {
     </div>
 
     <!-- Stock table for expanded thesis -->
-    <div v-if="expandedThesis.has(thesis.id)" class="stocks-section">
+    <div v-if="props.expandedThesis.has(props.thesis.id)" class="stocks-section">
       <div class="stocks-header">
-        <h4>Instruments ({{ thesisStocks[thesis.id]?.length || 0 }})</h4>
+        <h4>Instruments ({{ props.thesisStocks[props.thesis.id]?.length || 0 }})</h4>
         <button 
           class="btn btn-primary btn-sm btn-icon" 
-          @click.stop="emit('add-stock', thesis.id)"
+          @click.stop="emit('add-stock', props.thesis.id)"
           title="Add Instrument"
         >
           ➕
         </button>
       </div>
 
-      <div class="stocks-table-wrapper">
-        <table class="stocks-table">
-          <thead>
-            <tr>
-              <th>Symbol</th>
-              <th>PE Ratio</th>
-              <th>PEG Ratio</th>
-              <th>Analyst Ratings</th>
-              <th>Founder Led</th>
-              <th>Next Earnings Date</th>
-              <th>Passed Checks</th>
-              <th>Currently Held</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="stock in thesisStocks[thesis.id]" :key="stock.id">
-              <td class="stock-symbol">{{ stock.symbol }}</td>
-              
-              <td 
-                class="editable-cell"
-                @dblclick="emit('start-edit-cell', thesis.id, stock, 'pe_ratio')"
-              >
-                <input
-                  v-if="editingCell?.stockId === stock.id && editingCell?.field === 'pe_ratio'"
-                  :value="editingValue"
-                  type="number"
-                  step="0.01"
-                  @input="updateValue(($event.target as HTMLInputElement).valueAsNumber)"
-                  @blur="emit('save-edit', stock, 'pe_ratio')"
-                  @keyup.enter="emit('save-edit', stock, 'pe_ratio')"
-                  @keyup.escape="emit('cancel-edit')"
-                  autofocus
-                />
-                <span v-else>{{ stock.pe_ratio ?? '-' }}</span>
-              </td>
-              
-              <td 
-                class="editable-cell"
-                @dblclick="emit('start-edit-cell', thesis.id, stock, 'peg_ratio')"
-              >
-                <input
-                  v-if="editingCell?.stockId === stock.id && editingCell?.field === 'peg_ratio'"
-                  :value="editingValue"
-                  type="number"
-                  step="0.01"
-                  @input="updateValue(($event.target as HTMLInputElement).valueAsNumber)"
-                  @blur="emit('save-edit', stock, 'peg_ratio')"
-                  @keyup.enter="emit('save-edit', stock, 'peg_ratio')"
-                  @keyup.escape="emit('cancel-edit')"
-                  autofocus
-                />
-                <span v-else>{{ stock.peg_ratio ?? '-' }}</span>
-              </td>
-
-              <!-- Analyst Ratings -->
-              <td 
-                class="editable-cell"
-                @dblclick="emit('start-edit-cell', thesis.id, stock, 'analyst_ratings')"
-              >
-                <input
-                  v-if="editingCell?.stockId === stock.id && editingCell?.field === 'analyst_ratings'"
-                  :value="editingValue"
-                  type="text"
-                  @input="updateValue(($event.target as HTMLInputElement).value)"
-                  @blur="emit('save-edit', stock, 'analyst_ratings')"
-                  @keyup.enter="emit('save-edit', stock, 'analyst_ratings')"
-                  @keyup.escape="emit('cancel-edit')"
-                  autofocus
-                />
-                <span v-else>{{ stock.analyst_ratings || '-' }}</span>
-              </td>
-
-              <!-- Founder Led -->
-              <td 
-                class="editable-cell checkbox-cell"
-                @dblclick="emit('start-edit-cell', thesis.id, stock, 'founder_led')"
-              >
-                <input
-                  v-if="editingCell?.stockId === stock.id && editingCell?.field === 'founder_led'"
-                  :checked="!!editingValue"
-                  type="checkbox"
-                  @change="updateValue(($event.target as HTMLInputElement).checked)"
-                  @blur="emit('save-edit', stock, 'founder_led')"
-                  @keyup.enter="emit('save-edit', stock, 'founder_led')"
-                  @keyup.escape="emit('cancel-edit')"
-                  autofocus
-                />
-                <span v-else>{{ stock.founder_led ? '✅' : '❌' }}</span>
-              </td>
-
-              <!-- Next Earnings Date -->
-              <td 
-                class="editable-cell"
-                @dblclick="emit('start-edit-cell', thesis.id, stock, 'next_earnings_date')"
-              >
-                <input
-                  v-if="editingCell?.stockId === stock.id && editingCell?.field === 'next_earnings_date'"
-                  :value="editingValue"
-                  type="date"
-                  @input="updateValue(($event.target as HTMLInputElement).value)"
-                  @blur="emit('save-edit', stock, 'next_earnings_date')"
-                  @keyup.enter="emit('save-edit', stock, 'next_earnings_date')"
-                  @keyup.escape="emit('cancel-edit')"
-                  autofocus
-                />
-                <span v-else>{{ stock.next_earnings_date || '-' }}</span>
-              </td>
-
-              <!-- Passed Checks -->
-              <td 
-                class="editable-cell checkbox-cell"
-                @dblclick="emit('start-edit-cell', thesis.id, stock, 'passed_checks')"
-              >
-                <input
-                  v-if="editingCell?.stockId === stock.id && editingCell?.field === 'passed_checks'"
-                  :checked="editingValue"
-                  type="checkbox"
-                  @change="updateValue(($event.target as HTMLInputElement).checked)"
-                  @blur="emit('save-edit', stock, 'passed_checks')"
-                  @keyup.enter="emit('save-edit', stock, 'passed_checks')"
-                  @keyup.escape="emit('cancel-edit')"
-                  autofocus
-                />
-                <span v-else>{{ stock.passed_checks ? '✅' : '❌' }}</span>
-              </td>
-              
-              <!-- Currently Held -->
-              <td 
-                class="editable-cell checkbox-cell"
-                @dblclick="emit('start-edit-cell', thesis.id, stock, 'currently_held')"
-              >
-                <input
-                  v-if="editingCell?.stockId === stock.id && editingCell?.field === 'currently_held'"
-                  :checked="editingValue"
-                  type="checkbox"
-                  @change="updateValue(($event.target as HTMLInputElement).checked)"
-                  @blur="emit('save-edit', stock, 'currently_held')"
-                  @keyup.enter="emit('save-edit', stock, 'currently_held')"
-                  @keyup.escape="emit('cancel-edit')"
-                  autofocus
-                />
-                <span v-else>{{ stock.currently_held ? '✅' : '❌' }}</span>
-              </td>
-              
-              <!-- Actions -->
-              <td class="stock-actions">
-                <button 
-                  class="btn btn-primary btn-sm btn-icon"
-                  @click.stop="emit('add-resource', thesis.id, stock.id)"
-                  title="Add PDF or Link"
-                >➕</button>
-                <button 
-                  class="btn btn-danger btn-sm btn-icon" 
-                  @click.stop="emit('delete-stock', thesis.id, stock.id, stock.symbol)"
-                  title="Remove instrument"
-                >
-                  🗑️
-                </button>
-              </td>
-              <tr v-for="resource in stockResources?.[stock.id] || []" :key="resource.id" class="resource-row">
-                <td colspan="9" style="padding-left:2rem;">
-                  <span v-if="resource.type === 'pdf'">
-                    📄 <a :href="getPdfUrl(resource.url)" target="_blank">{{ resource.file_name }}</a>
-                  </span>
-                  <span v-else>
-                    🔗 <a :href="resource.url" target="_blank">{{ resource.url }}</a>
-                  </span>
-                </td>
-              </tr>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <div ref="tableRef"></div>
     </div>
 
     <!-- Render child thesis recursively -->
-    <template v-if="thesis.children && thesis.children.length > 0">
+    <template v-if="props.thesis.children && props.thesis.children.length > 0">
       <ThesisItem 
-        v-for="child in thesis.children" 
+        v-for="child in props.thesis.children" 
         :key="child.id"
         :thesis="child"
         :level="level + 1"
         :thesis-stocks="thesisStocks"
-        :expanded-thesis="expandedThesis"
+        :expanded-thesis="props.expandedThesis"
         :editing-cell="editingCell"
         :editing-value="editingValue" 
         :stock-resources="stockResources"
@@ -276,7 +354,7 @@ function updateValue(value: any) {
         @add-stock="(id) => emit('add-stock', id)"
         @delete-stock="(tid, sid, sym) => emit('delete-stock', tid, sid, sym)"
         @start-edit-cell="(tid, s, f) => emit('start-edit-cell', tid, s, f)"
-        @save-edit="(s, f) => emit('save-edit', s, f)"
+        @save-edit="(s, f, v) => emit('save-edit', s, f, v)"
         @cancel-edit="() => emit('cancel-edit')"
         @get-cell-metadata="(s, f) => emit('get-cell-metadata', s, f)"
         @update-editing-value="(v) => emit('update-editing-value', v)" 
