@@ -72,6 +72,22 @@ async function loadStockResources() {
   stockResources.value = grouped
 }
 
+async function deleteResource(thesisId: string, stockId: string, resourceId: string, resourceName: string) {
+  if (!confirm(`Are you sure you want to delete resource "${resourceName}"?`)) return
+  try {
+    const { error } = await supabase
+      .schema('hf')
+      .from('thesisStockResources')
+      .delete()
+      .eq('id', resourceId)
+    if (error) throw error
+    await loadStockResources()
+    showToast('success', 'Resource Deleted', `"${resourceName}" has been deleted.`)
+  } catch (error: any) {
+    showToast('error', 'Error', error.message)
+  }
+}
+
 async function saveResource() {
   resourceUploading.value = true
   try {
@@ -714,6 +730,7 @@ function writeExpandedThesisToUrl(expanded: Set<string>) {
               @get-cell-metadata="getCellMetadata"
               @update-editing-value="updateEditingValue" 
               @add-resource="openResourceModal"  
+              @delete-resource="deleteResource"
             />
           </template>
         </div>

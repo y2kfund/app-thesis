@@ -20,6 +20,7 @@ declare const _default: import('vue').DefineComponent<Props, {}, {}, {}, {}, imp
     "get-cell-metadata": (stock: any, field: string) => any;
     "update-editing-value": (value: any) => any;
     "add-resource": (thesisId: string, stockId: string) => any;
+    "delete-resource": (thesisId: string, stockId: string, resourceId: string, resourceName: string) => any;
 }, string, import('vue').PublicProps, Readonly<Props> & Readonly<{
     onToggle?: ((thesisId: string) => any) | undefined;
     onEdit?: ((thesis: Thesis) => any) | undefined;
@@ -32,6 +33,7 @@ declare const _default: import('vue').DefineComponent<Props, {}, {}, {}, {}, imp
     "onGet-cell-metadata"?: ((stock: any, field: string) => any) | undefined;
     "onUpdate-editing-value"?: ((value: any) => any) | undefined;
     "onAdd-resource"?: ((thesisId: string, stockId: string) => any) | undefined;
+    "onDelete-resource"?: ((thesisId: string, stockId: string, resourceId: string, resourceName: string) => any) | undefined;
 }>, {}, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {
     tableRef: HTMLDivElement;
 }, HTMLDivElement>;

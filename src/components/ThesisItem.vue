@@ -27,7 +27,8 @@ const emit = defineEmits<{
   'cancel-edit': []
   'get-cell-metadata': [stock: any, field: string]
   'update-editing-value': [value: any]
-  'add-resource': [thesisId: string, stockId: string]
+  'add-resource': [thesisId: string, stockId: string] 
+  'delete-resource': [thesisId: string, stockId: string, resourceId: string, resourceName: string]
 }>()
 
 const tableRef = ref(null)
@@ -162,8 +163,8 @@ function getTabulatorColumns() {
           return getResourceDisplay(cell)
         }
         return `
-          <button class="tab-btn-add-resource" data-stock-id="${data.id}">➕</button>
-          <button class="tab-btn-delete-stock" data-stock-id="${data.id}">🗑️</button>
+          <button class="tab-btn-add-resource" data-stock-id="${data.id}" title="Add Resource">➕</button>
+          <button class="tab-btn-delete-stock" data-stock-id="${data.id}" title="Delete Stock">🗑️</button>
         `
       },
       cellClick: (e, cell) => {
@@ -182,11 +183,15 @@ function getTabulatorColumns() {
 
 function getResourceDisplay(cell) {
   const data = cell.getData()
+  let resourceHtml = ''
   if (data.type === 'pdf') {
-    return `<span>📄 <a href="https://sb.y2k.fund/storage/v1/object/public/resources/${data.url}" target="_blank">${data.file_name}</a></span>`
+    resourceHtml = `<span>📄 <a href="https://sb.y2k.fund/storage/v1/object/public/resources/${data.url}" target="_blank">${data.file_name}</a></span>`
   } else {
-    return `<span>🔗 <a href="${data.url}" target="_blank">${data.url}</a></span>`
+    resourceHtml = `<span>🔗 <a href="${data.url}" target="_blank">${data.url}</a></span>`
   }
+  // Add delete button for resource
+  resourceHtml += ` <button class="tab-btn-delete-resource" data-resource-id="${data.id}" title="Delete Resource" style="margin-left:8px;">🗑️</button>`
+  return resourceHtml
 }
 
 function initTabulator() {
@@ -225,6 +230,13 @@ function initTabulator() {
         cell.style.fontStyle = "italic"
         cell.innerHTML = getResourceDisplay({ getData: () => data })
         rowEl.appendChild(cell)
+        const deleteBtn = cell.querySelector('.tab-btn-delete-resource')
+        if (deleteBtn) {
+          deleteBtn.addEventListener('click', (e) => {
+            e.stopPropagation()
+            emit('delete-resource', props.thesis.id, data.parent, data.id, data.file_name || data.url)
+          })
+        }
       }
     },
     cellDblClick: undefined, // not needed for built-in editing
@@ -367,7 +379,8 @@ function updateValue(value: any) {
         @cancel-edit="() => emit('cancel-edit')"
         @get-cell-metadata="(s, f) => emit('get-cell-metadata', s, f)"
         @update-editing-value="(v) => emit('update-editing-value', v)" 
-        @add-resource="(tid, sid) => emit('add-resource', tid, sid)"
+        @add-resource="(tid, sid) => emit('add-resource', tid, sid)" 
+        @delete-resource="(tid, sid, rid, name) => emit('delete-resource', tid, sid, rid, name)"
       />
     </template>
   </div>
@@ -657,5 +670,11 @@ function updateValue(value: any) {
   font-size: 1rem !important;
   padding: 0.25rem !important;
   color: #fff !important;
+}
+
+button.tab-btn-delete-resource {
+    width: auto;
+    border: none;
+    padding: 0;
 }
 </style>

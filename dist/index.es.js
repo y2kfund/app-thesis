@@ -1,10 +1,10 @@
-var ki = Object.defineProperty;
-var Ti = (l, e, t) => e in l ? ki(l, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : l[e] = t;
-var y = (l, e, t) => Ti(l, typeof e != "symbol" ? e + "" : e, t);
-import { defineComponent as Pt, ref as H, watch as Te, nextTick as St, onMounted as At, resolveComponent as Mi, createElementBlock as z, openBlock as M, normalizeClass as Je, createElementVNode as E, createCommentVNode as X, toDisplayString as J, createTextVNode as Ot, withModifiers as ue, Fragment as Ae, renderList as Oe, createBlock as _t, computed as Re, unref as fe, withDirectives as ae, vModelText as xe, vModelSelect as Dt, withKeys as Li, createVNode as Si, TransitionGroup as Di, withCtx as zi } from "vue";
-import { useThesisQuery as Fi, useSupabase as Hi } from "@y2kfund/core";
+var Ti = Object.defineProperty;
+var Mi = (l, e, t) => e in l ? Ti(l, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : l[e] = t;
+var y = (l, e, t) => Mi(l, typeof e != "symbol" ? e + "" : e, t);
+import { defineComponent as Pt, ref as H, watch as ke, nextTick as Dt, onMounted as Ot, resolveComponent as Li, createElementBlock as z, openBlock as M, normalizeClass as Ke, createElementVNode as E, createCommentVNode as X, toDisplayString as J, createTextVNode as _t, withModifiers as ue, Fragment as Oe, renderList as _e, createBlock as Bt, computed as Ee, unref as pe, withDirectives as ae, vModelText as Re, vModelSelect as zt, withKeys as Si, createVNode as Di, TransitionGroup as zi, withCtx as Fi } from "vue";
+import { useThesisQuery as Hi, useSupabase as Ai } from "@y2kfund/core";
 import { useQueryClient as Pi } from "@tanstack/vue-query";
-class _ {
+class I {
   constructor(e) {
     this.table = e;
   }
@@ -132,7 +132,7 @@ class F {
     return t;
   }
 }
-let Ai = class Bt extends _ {
+let Oi = class Vt extends I {
   constructor(e, t, i) {
     super(e), this.element = t, this.container = this._lookupContainer(), this.parent = i, this.reversedX = !1, this.childPopup = null, this.blurable = !1, this.blurCallback = null, this.blurEventsBound = !1, this.renderedCallback = null, this.visible = !1, this.hideable = !0, this.element.classList.add("tabulator-popup-container"), this.blurEvent = this.hide.bind(this, !1), this.escEvent = this._escapeCheck.bind(this), this.destroyBinding = this.tableDestroyed.bind(this), this.destroyed = !1;
   }
@@ -221,10 +221,10 @@ let Ai = class Bt extends _ {
     return this.visible && this.hideable && (this.blurable && this.blurEventsBound && (document.body.removeEventListener("keydown", this.escEvent), document.body.removeEventListener("click", this.blurEvent), document.body.removeEventListener("contextmenu", this.blurEvent), document.body.removeEventListener("mousedown", this.blurEvent), window.removeEventListener("resize", this.blurEvent), this.table.rowManager.element.removeEventListener("scroll", this.blurEvent), this.unsubscribe("cell-editing", this.blurEvent), this.blurEventsBound = !1), this.childPopup && this.childPopup.hide(), this.parent && (this.parent.childPopup = null), this.element.parentNode && this.element.parentNode.removeChild(this.element), this.visible = !1, this.blurCallback && !e && this.blurCallback(), this.unsubscribe("table-destroy", this.destroyBinding)), this;
   }
   child(e) {
-    return this.childPopup && this.childPopup.hide(), this.childPopup = new Bt(this.table, e, this), this.childPopup;
+    return this.childPopup && this.childPopup.hide(), this.childPopup = new Vt(this.table, e, this), this.childPopup;
   }
 };
-class x extends _ {
+class x extends I {
   constructor(e, t) {
     super(e), this._handler = null;
   }
@@ -284,7 +284,7 @@ class x extends _ {
   //////// Popups Management ////////
   ///////////////////////////////////
   popup(e, t) {
-    return new Ai(this.table, e, t);
+    return new Oi(this.table, e, t);
   }
   ///////////////////////////////////
   //////// Alert Management ////////
@@ -296,12 +296,12 @@ class x extends _ {
     return this.table.alertManager.clear();
   }
 }
-var Oi = {
+var _i = {
   rownum: function(l, e, t, i, s, n) {
     return n.getPosition();
   }
 };
-const me = class me extends x {
+const ge = class ge extends x {
   constructor(e) {
     super(e), this.allowedTypes = ["", "data", "download", "clipboard", "print", "htmlOutput"], this.registerColumnOption("accessor"), this.registerColumnOption("accessorParams"), this.registerColumnOption("accessorData"), this.registerColumnOption("accessorDataParams"), this.registerColumnOption("accessorDownload"), this.registerColumnOption("accessorDownloadParams"), this.registerColumnOption("accessorClipboard"), this.registerColumnOption("accessorClipboardParams"), this.registerColumnOption("accessorPrint"), this.registerColumnOption("accessorPrintParams"), this.registerColumnOption("accessorHtmlOutput"), this.registerColumnOption("accessorHtmlOutputParams");
   }
@@ -323,7 +323,7 @@ const me = class me extends x {
     var t = !1;
     switch (typeof e) {
       case "string":
-        me.accessors[e] ? t = me.accessors[e] : console.warn("Accessor Error - No such accessor found, ignoring: ", e);
+        ge.accessors[e] ? t = ge.accessors[e] : console.warn("Accessor Error - No such accessor found, ignoring: ", e);
         break;
       case "function":
         t = e;
@@ -340,35 +340,35 @@ const me = class me extends x {
     }), n;
   }
 };
-y(me, "moduleName", "accessor"), //load defaults
-y(me, "accessors", Oi);
-let Ke = me;
-var _i = {
+y(ge, "moduleName", "accessor"), //load defaults
+y(ge, "accessors", _i);
+let qe = ge;
+var Bi = {
   method: "GET"
 };
-function qe(l, e) {
+function Ye(l, e) {
   var t = [];
   if (e = e || "", Array.isArray(l))
     l.forEach((s, n) => {
-      t = t.concat(qe(s, e ? e + "[" + n + "]" : n));
+      t = t.concat(Ye(s, e ? e + "[" + n + "]" : n));
     });
   else if (typeof l == "object")
     for (var i in l)
-      t = t.concat(qe(l[i], e ? e + "[" + i + "]" : i));
+      t = t.concat(Ye(l[i], e ? e + "[" + i + "]" : i));
   else
     t.push({ key: e, value: l });
   return t;
 }
-function Bi(l) {
-  var e = qe(l), t = [];
+function Vi(l) {
+  var e = Ye(l), t = [];
   return e.forEach(function(i) {
     t.push(encodeURIComponent(i.key) + "=" + encodeURIComponent(i.value));
   }), t.join("&");
 }
-function Vt(l, e, t) {
-  return l && t && Object.keys(t).length && (!e.method || e.method.toLowerCase() == "get") && (e.method = "get", l += (l.includes("?") ? "&" : "?") + Bi(t)), l;
+function It(l, e, t) {
+  return l && t && Object.keys(t).length && (!e.method || e.method.toLowerCase() == "get") && (e.method = "get", l += (l.includes("?") ? "&" : "?") + Vi(t)), l;
 }
-function Vi(l, e, t) {
+function Ii(l, e, t) {
   var i;
   return new Promise((s, n) => {
     if (l = this.urlGenerator.call(this.table, l, e, t), e.method.toUpperCase() != "GET")
@@ -389,20 +389,20 @@ function Vi(l, e, t) {
     })) : (console.warn("Ajax Load Error - No URL Set"), s([]));
   });
 }
-function Ye(l, e) {
+function Qe(l, e) {
   var t = [];
   if (e = e || "", Array.isArray(l))
     l.forEach((s, n) => {
-      t = t.concat(Ye(s, e ? e + "[" + n + "]" : n));
+      t = t.concat(Qe(s, e ? e + "[" + n + "]" : n));
     });
   else if (typeof l == "object")
     for (var i in l)
-      t = t.concat(Ye(l[i], e ? e + "[" + i + "]" : i));
+      t = t.concat(Qe(l[i], e ? e + "[" + i + "]" : i));
   else
     t.push({ key: e, value: l });
   return t;
 }
-var Ii = {
+var Ni = {
   json: {
     headers: {
       "Content-Type": "application/json"
@@ -414,7 +414,7 @@ var Ii = {
   form: {
     headers: {},
     body: function(l, e, t) {
-      var i = Ye(t), s = new FormData();
+      var i = Qe(t), s = new FormData();
       return i.forEach(function(n) {
         s.append(n.key, n.value);
       }), s;
@@ -463,9 +463,9 @@ const $ = class $ extends x {
   }
 };
 y($, "moduleName", "ajax"), //load defaults
-y($, "defaultConfig", _i), y($, "defaultURLGenerator", Vt), y($, "defaultLoaderPromise", Vi), y($, "contentTypeFormatters", Ii);
-let Qe = $;
-var Ni = {
+y($, "defaultConfig", Bi), y($, "defaultURLGenerator", It), y($, "defaultLoaderPromise", Ii), y($, "contentTypeFormatters", Ni);
+let Ze = $;
+var Wi = {
   replace: function(l) {
     return this.table.setData(l);
   },
@@ -475,7 +475,7 @@ var Ni = {
   insert: function(l) {
     return this.table.addData(l);
   }
-}, Wi = {
+}, Gi = {
   table: function(l) {
     var e = [], t = !0, i = this.table.columnManager.columns, s = [], n = [];
     return l = l.split(`
@@ -498,19 +498,19 @@ var Ni = {
       }), n.push(o);
     }), n) : !1;
   }
-}, Gi = {
-  copyToClipboard: ["ctrl + 67", "meta + 67"]
 }, ji = {
+  copyToClipboard: ["ctrl + 67", "meta + 67"]
+}, Ui = {
   copyToClipboard: function(l) {
     this.table.modules.edit.currentCell || this.table.modExists("clipboard", !0) && this.table.modules.clipboard.copy(!1, !0);
   }
-}, Ui = {
+}, $i = {
   keybindings: {
-    bindings: Gi,
-    actions: ji
+    bindings: ji,
+    actions: Ui
   }
 };
-const te = class te extends x {
+const ee = class ee extends x {
   constructor(e) {
     super(e), this.mode = !0, this.pasteParser = function() {
     }, this.pasteAction = function() {
@@ -560,7 +560,7 @@ const te = class te extends x {
   setPasteAction(e) {
     switch (typeof e) {
       case "string":
-        this.pasteAction = te.pasteActions[e], this.pasteAction || console.warn("Clipboard Error - No such paste action found:", e);
+        this.pasteAction = ee.pasteActions[e], this.pasteAction || console.warn("Clipboard Error - No such paste action found:", e);
         break;
       case "function":
         this.pasteAction = e;
@@ -570,7 +570,7 @@ const te = class te extends x {
   setPasteParser(e) {
     switch (typeof e) {
       case "string":
-        this.pasteParser = te.pasteParsers[e], this.pasteParser || console.warn("Clipboard Error - No such paste parser found:", e);
+        this.pasteParser = ee.pasteParsers[e], this.pasteParser || console.warn("Clipboard Error - No such paste parser found:", e);
         break;
       case "function":
         this.pasteParser = e;
@@ -596,10 +596,10 @@ const te = class te extends x {
     return window.clipboardData && window.clipboardData.getData ? t = window.clipboardData.getData("Text") : e.clipboardData && e.clipboardData.getData ? t = e.clipboardData.getData("text/plain") : e.originalEvent && e.originalEvent.clipboardData.getData && (t = e.originalEvent.clipboardData.getData("text/plain")), t;
   }
 };
-y(te, "moduleName", "clipboard"), y(te, "moduleExtensions", Ui), //load defaults
-y(te, "pasteActions", Ni), y(te, "pasteParsers", Wi);
-let Ze = te;
-class $i {
+y(ee, "moduleName", "clipboard"), y(ee, "moduleExtensions", $i), //load defaults
+y(ee, "pasteActions", Wi), y(ee, "pasteParsers", Gi);
+let et = ee;
+class Xi {
   constructor(e) {
     return this._row = e, new Proxy(this, {
       get: function(t, i, s) {
@@ -630,7 +630,7 @@ class $i {
     return this._row;
   }
 }
-class It {
+class Nt {
   constructor(e) {
     return this._cell = e, new Proxy(this, {
       get: function(t, i, s) {
@@ -684,7 +684,7 @@ class It {
     return this._cell;
   }
 }
-class Fe extends _ {
+class ze extends I {
   constructor(e, t) {
     super(e.table), this.table = e.table, this.column = e, this.row = t, this.element = null, this.value = null, this.initialValue, this.oldValue = null, this.modules = {}, this.height = null, this.width = null, this.minWidth = null, this.component = null, this.loaded = !1, this.build();
   }
@@ -801,10 +801,10 @@ class Fe extends _ {
   }
   //////////////// Object Generation /////////////////
   getComponent() {
-    return this.component || (this.component = new It(this)), this.component;
+    return this.component || (this.component = new Nt(this)), this.component;
   }
 }
-class Nt {
+class Wt {
   constructor(e) {
     return this._column = e, this.type = "ColumnComponent", new Proxy(this, {
       get: function(t, i, s) {
@@ -890,7 +890,7 @@ class Nt {
     return e === !0 ? t = this._column.reinitializeWidth(!0) : t = this._column.setWidth(e), this._column.table.columnManager.rerenderColumns(!0), t;
   }
 }
-var Wt = {
+var Gt = {
   title: void 0,
   field: void 0,
   columns: void 0,
@@ -908,7 +908,7 @@ var Wt = {
   headerWordWrap: !1,
   editableTitle: void 0
 };
-const le = class le extends _ {
+const le = class le extends I {
   constructor(e, t, i) {
     super(t.table), this.definition = e, this.parent = t, this.type = "column", this.columns = [], this.cells = [], this.isGroup = !1, this.isRowHeader = i, this.element = this.createElement(), this.contentElement = !1, this.titleHolderElement = !1, this.titleElement = !1, this.groupElement = this.createGroupElement(), this.hozAlign = "", this.vertAlign = "", this.field = "", this.fieldStructure = "", this.getFieldValue = "", this.setFieldValue = "", this.titleDownload = null, this.titleFormatterRendered = !1, this.mapDefinitions(), this.setField(this.definition.field), this.modules = {}, this.width = null, this.widthStyled = "", this.maxWidth = null, this.maxWidthStyled = "", this.maxInitialWidth = null, this.minWidth = null, this.minWidthStyled = "", this.widthFixed = !1, this.visible = !0, this.component = null, this.definition.columns ? (this.isGroup = !0, this.definition.columns.forEach((s, n) => {
       var r = new le(s, this);
@@ -1203,7 +1203,7 @@ const le = class le extends _ {
   //////////////// Cell Management /////////////////
   //generate cell for this column
   generateCell(e) {
-    var t = new Fe(this, e);
+    var t = new ze(this, e);
     return this.cells.push(t), t;
   }
   nextColumn() {
@@ -1251,7 +1251,7 @@ const le = class le extends _ {
   }
   //////////////// Object Generation /////////////////
   getComponent() {
-    return this.component || (this.component = new Nt(this)), this.component;
+    return this.component || (this.component = new Wt(this)), this.component;
   }
   getPosition() {
     return this.table.columnManager.getVisibleColumnsByIndex().indexOf(this) + 1;
@@ -1260,9 +1260,9 @@ const le = class le extends _ {
     return this.parent instanceof le ? this.parent.getComponent() : !1;
   }
 };
-y(le, "defaultOptionList", Wt);
+y(le, "defaultOptionList", Gt);
 let ce = le;
-class Be {
+class Ve {
   constructor(e) {
     return this._row = e, new Proxy(this, {
       get: function(t, i, s) {
@@ -1328,7 +1328,7 @@ class Be {
     return e && e.getComponent();
   }
 }
-class I extends _ {
+class N extends I {
   constructor(e, t, i = "row") {
     super(t.table), this.parent = t, this.data = {}, this.type = i, this.element = !1, this.modules = {}, this.cells = [], this.height = 0, this.heightStyled = "", this.manualHeight = !1, this.outerHeight = 0, this.initialized = !1, this.heightInitialized = !1, this.position = 0, this.positionWatchers = [], this.component = null, this.created = !1, this.setData(e);
   }
@@ -1519,10 +1519,10 @@ class I extends _ {
   }
   //////////////// Object Generation /////////////////
   getComponent() {
-    return this.component || (this.component = new Be(this)), this.component;
+    return this.component || (this.component = new Ve(this)), this.component;
   }
 }
-var Xi = {
+var Ji = {
   avg: function(l, e, t) {
     var i = 0, s = typeof t.precision < "u" ? t.precision : 2;
     return l.length && (i = l.reduce(function(n, r) {
@@ -1564,7 +1564,7 @@ var Xi = {
     return i.length;
   }
 };
-const ie = class ie extends x {
+const te = class te extends x {
   constructor(e) {
     super(e), this.topCalcs = [], this.botCalcs = [], this.genColumn = !1, this.topElement = this.createElement(), this.botElement = this.createElement(), this.topRow = !1, this.botRow = !1, this.topInitialized = !1, this.botInitialized = !1, this.blocked = !1, this.recalcAfterBlock = !1, this.registerTableOption("columnCalcs", !0), this.registerColumnOption("topCalc"), this.registerColumnOption("topCalcParams"), this.registerColumnOption("topCalcFormatter"), this.registerColumnOption("topCalcFormatterParams"), this.registerColumnOption("bottomCalc"), this.registerColumnOption("bottomCalcParams"), this.registerColumnOption("bottomCalcFormatter"), this.registerColumnOption("bottomCalcFormatterParams");
   }
@@ -1626,7 +1626,7 @@ const ie = class ie extends x {
     if (t.topCalc) {
       switch (typeof t.topCalc) {
         case "string":
-          ie.calculations[t.topCalc] ? i.topCalc = ie.calculations[t.topCalc] : console.warn("Column Calc Error - No such calculation found, ignoring: ", t.topCalc);
+          te.calculations[t.topCalc] ? i.topCalc = te.calculations[t.topCalc] : console.warn("Column Calc Error - No such calculation found, ignoring: ", t.topCalc);
           break;
         case "function":
           i.topCalc = t.topCalc;
@@ -1637,7 +1637,7 @@ const ie = class ie extends x {
     if (t.bottomCalc) {
       switch (typeof t.bottomCalc) {
         case "string":
-          ie.calculations[t.bottomCalc] ? i.botCalc = ie.calculations[t.bottomCalc] : console.warn("Column Calc Error - No such calculation found, ignoring: ", t.bottomCalc);
+          te.calculations[t.bottomCalc] ? i.botCalc = te.calculations[t.bottomCalc] : console.warn("Column Calc Error - No such calculation found, ignoring: ", t.bottomCalc);
           break;
         case "function":
           i.botCalc = t.bottomCalc;
@@ -1715,7 +1715,7 @@ const ie = class ie extends x {
   //generate stats row
   generateRow(e, t) {
     var i = this.generateRowData(e, t), s;
-    return this.table.modExists("mutator") && this.table.modules.mutator.disable(), s = new I(i, this, "calc"), this.table.modExists("mutator") && this.table.modules.mutator.enable(), s.getElement().classList.add("tabulator-calcs", "tabulator-calcs-" + e), s.component = !1, s.getComponent = () => (s.component || (s.component = new $i(s)), s.component), s.generateCells = () => {
+    return this.table.modExists("mutator") && this.table.modules.mutator.disable(), s = new N(i, this, "calc"), this.table.modExists("mutator") && this.table.modules.mutator.enable(), s.getElement().classList.add("tabulator-calcs", "tabulator-calcs-" + e), s.component = !1, s.getComponent = () => (s.component || (s.component = new Xi(s)), s.component), s.generateCells = () => {
       var n = [];
       this.table.columnManager.columnsByIndex.forEach((r) => {
         this.genColumn.setField(r.getField()), this.genColumn.hozAlign = r.hozAlign, r.definition[e + "CalcFormatter"] && this.table.modExists("format") ? this.genColumn.modules.format = {
@@ -1725,7 +1725,7 @@ const ie = class ie extends x {
           formatter: this.table.modules.format.lookupFormatter("plaintext"),
           params: {}
         }, this.genColumn.definition.cssClass = r.definition.cssClass;
-        var o = new Fe(this.genColumn, s);
+        var o = new ze(this.genColumn, s);
         o.getElement(), o.column = r, o.setWidth(), r.cells.push(o), n.push(o), r.visible || o.hide();
       }), s.cells = n;
     }, s;
@@ -1775,10 +1775,10 @@ const ie = class ie extends x {
     this.botRow && (this.table.rtl ? this.botElement.style.paddingLeft = e + "px" : this.botElement.style.paddingRight = e + "px");
   }
 };
-y(ie, "moduleName", "columnCalcs"), //load defaults
-y(ie, "calculations", Xi);
-let et = ie;
-class Gt extends x {
+y(te, "moduleName", "columnCalcs"), //load defaults
+y(te, "calculations", Ji);
+let tt = te;
+class jt extends x {
   constructor(e) {
     super(e), this.indent = 10, this.field = "", this.collapseEl = null, this.expandEl = null, this.branchEl = null, this.elementField = !1, this.startOpen = function() {
     }, this.registerTableOption("dataTree", !1), this.registerTableOption("dataTreeFilter", !0), this.registerTableOption("dataTreeSort", !0), this.registerTableOption("dataTreeElementColumn", !1), this.registerTableOption("dataTreeBranchElement", !0), this.registerTableOption("dataTreeChildIndent", 9), this.registerTableOption("dataTreeChildField", "_children"), this.registerTableOption("dataTreeCollapseElement", !1), this.registerTableOption("dataTreeExpandElement", !1), this.registerTableOption("dataTreeStartExpanded", !1), this.registerTableOption("dataTreeChildColumnCalcs", !1), this.registerTableOption("dataTreeSelectPropagate", !1), this.registerComponentFunction("row", "treeCollapse", this.collapseRow.bind(this)), this.registerComponentFunction("row", "treeExpand", this.expandRow.bind(this)), this.registerComponentFunction("row", "treeToggle", this.toggleRow.bind(this)), this.registerComponentFunction("row", "getTreeParent", this.getTreeParent.bind(this)), this.registerComponentFunction("row", "getTreeChildren", this.getRowChildren.bind(this)), this.registerComponentFunction("row", "addTreeChild", this.addTreeChildRow.bind(this)), this.registerComponentFunction("row", "isTreeExpanded", this.isRowExpanded.bind(this));
@@ -1865,7 +1865,7 @@ class Gt extends x {
     var t = [];
     return e.forEach((i, s) => {
       var n, r;
-      t.push(i), i instanceof I && (i.create(), n = i.modules.dataTree, !n.index && n.children !== !1 && (r = this.getChildren(i, !1, !0), r.forEach((o) => {
+      t.push(i), i instanceof N && (i.create(), n = i.modules.dataTree, !n.index && n.children !== !1 && (r = this.getChildren(i, !1, !0), r.forEach((o) => {
         o.create(), t.push(o);
       })));
     }), t;
@@ -1883,7 +1883,7 @@ class Gt extends x {
   generateChildren(e) {
     var t = [], i = e.getData()[this.field];
     return Array.isArray(i) || (i = [i]), i.forEach((s) => {
-      var n = new I(s || {}, this.table.rowManager);
+      var n = new N(s || {}, this.table.rowManager);
       n.create(), n.modules.dataTree.index = e.modules.dataTree.index + 1, n.modules.dataTree.parent = e, n.modules.dataTree.children && (n.modules.dataTree.open = this.startOpen(n.getComponent(), n.modules.dataTree.index)), t.push(n);
     }), t;
   }
@@ -1911,13 +1911,13 @@ class Gt extends x {
   getFilteredTreeChildren(e) {
     var t = e.modules.dataTree, i = [], s;
     return t.children && (Array.isArray(t.children) || (t.children = this.generateChildren(e)), this.table.modExists("filter") && this.table.options.dataTreeFilter ? s = this.table.modules.filter.filter(t.children) : s = t.children, s.forEach((n) => {
-      n instanceof I && i.push(n);
+      n instanceof N && i.push(n);
     })), i;
   }
   rowDeleting(e) {
     var t = e.modules.dataTree;
     t && t.children && Array.isArray(t.children) && t.children.forEach((i) => {
-      i instanceof I && i.wipe();
+      i instanceof N && i.wipe();
     });
   }
   rowDelete(e) {
@@ -1930,12 +1930,12 @@ class Gt extends x {
   }
   findChildIndex(e, t) {
     var i = !1;
-    return typeof e == "object" ? e instanceof I ? i = e.data : e instanceof Be ? i = e._getSelf().data : typeof HTMLElement < "u" && e instanceof HTMLElement ? t.modules.dataTree && (i = t.modules.dataTree.children.find((s) => s instanceof I ? s.element === e : !1), i && (i = i.data)) : e === null && (i = !1) : typeof e > "u" ? i = !1 : i = t.data[this.field].find((s) => s.data[this.table.options.index] == e), i && (Array.isArray(t.data[this.field]) && (i = t.data[this.field].indexOf(i)), i == -1 && (i = !1)), i;
+    return typeof e == "object" ? e instanceof N ? i = e.data : e instanceof Ve ? i = e._getSelf().data : typeof HTMLElement < "u" && e instanceof HTMLElement ? t.modules.dataTree && (i = t.modules.dataTree.children.find((s) => s instanceof N ? s.element === e : !1), i && (i = i.data)) : e === null && (i = !1) : typeof e > "u" ? i = !1 : i = t.data[this.field].find((s) => s.data[this.table.options.index] == e), i && (Array.isArray(t.data[this.field]) && (i = t.data[this.field].indexOf(i)), i == -1 && (i = !1)), i;
   }
   getTreeChildren(e, t, i) {
     var s = e.modules.dataTree, n = [];
     return s && s.children && (Array.isArray(s.children) || (s.children = this.generateChildren(e)), s.children.forEach((r) => {
-      r instanceof I && (n.push(t ? r.getComponent() : r), i && this.getTreeChildren(r, t, i).forEach((o) => {
+      r instanceof N && (n.push(t ? r.getComponent() : r), i && this.getTreeChildren(r, t, i).forEach((o) => {
         n.push(o);
       }));
     })), n;
@@ -1947,8 +1947,8 @@ class Gt extends x {
     return (this.field ? typeof e[this.field] < "u" : !1) || (this.elementField ? typeof e[this.elementField] < "u" : !1);
   }
 }
-y(Gt, "moduleName", "dataTree");
-function Ji(l, e = {}, t) {
+y(jt, "moduleName", "dataTree");
+function Ki(l, e = {}, t) {
   var i = e.delimiter ? e.delimiter : ",", s = [], n = [];
   l.forEach((r) => {
     var o = [];
@@ -1983,7 +1983,7 @@ function Ji(l, e = {}, t) {
   }), n.length && s.unshift(n.join(i)), s = s.join(`
 `), e.bom && (s = "\uFEFF" + s), t(s, "text/csv");
 }
-function Ki(l, e, t) {
+function qi(l, e, t) {
   var i = [];
   l.forEach((s) => {
     var n = {};
@@ -2004,7 +2004,7 @@ function Ki(l, e, t) {
     }
   }), i = JSON.stringify(i, null, "	"), t(i, "application/json");
 }
-function qi(l, e = {}, t) {
+function Yi(l, e = {}, t) {
   var i = [], s = [], n = {}, r = e.rowGroupStyles || {
     fontStyle: "bold",
     fontSize: 12,
@@ -2034,21 +2034,21 @@ function qi(l, e = {}, t) {
   });
   function c(f, m) {
     var g = [];
-    return f.columns.forEach((w) => {
+    return f.columns.forEach((v) => {
       var b;
-      if (w) {
-        switch (typeof w.value) {
+      if (v) {
+        switch (typeof v.value) {
           case "object":
-            w.value = w.value !== null ? JSON.stringify(w.value) : "";
+            v.value = v.value !== null ? JSON.stringify(v.value) : "";
             break;
           case "undefined":
-            w.value = "";
+            v.value = "";
             break;
         }
         b = {
-          content: w.value,
-          colSpan: w.width,
-          rowSpan: w.height
+          content: v.value,
+          colSpan: v.width,
+          rowSpan: v.height
         }, m && (b.styles = m), g.push(b);
       }
     }), g;
@@ -2057,17 +2057,17 @@ function qi(l, e = {}, t) {
     u.text(h, 40, 30);
   }), n.head = i, n.body = s, u.autoTable(n), e.documentProcessing && e.documentProcessing(u), t(u.output("arraybuffer"), "application/pdf");
 }
-function Yi(l, e, t) {
-  var i = this, s = e.sheetName || "Sheet1", n = this.dependencyRegistry.lookup("XLSX"), r = n.utils.book_new(), o = new _(this), a = "compress" in e ? e.compress : !0, h = e.writeOptions || { bookType: "xlsx", bookSST: !0, compression: a }, d;
+function Qi(l, e, t) {
+  var i = this, s = e.sheetName || "Sheet1", n = this.dependencyRegistry.lookup("XLSX"), r = n.utils.book_new(), o = new I(this), a = "compress" in e ? e.compress : !0, h = e.writeOptions || { bookType: "xlsx", bookSST: !0, compression: a }, d;
   h.type = "binary", r.SheetNames = [], r.Sheets = {};
   function u() {
-    var m = [], g = [], w = {}, b = { s: { c: 0, r: 0 }, e: { c: l[0] ? l[0].columns.reduce((k, S) => k + (S && S.width ? S.width : 1), 0) : 0, r: l.length } };
+    var m = [], g = [], v = {}, b = { s: { c: 0, r: 0 }, e: { c: l[0] ? l[0].columns.reduce((k, S) => k + (S && S.width ? S.width : 1), 0) : 0, r: l.length } };
     return l.forEach((k, S) => {
-      var P = [];
+      var A = [];
       k.columns.forEach(function(D, B) {
-        D ? (P.push(!(D.value instanceof Date) && typeof D.value == "object" ? JSON.stringify(D.value) : D.value), (D.width > 1 || D.height > -1) && (D.height > 1 || D.width > 1) && g.push({ s: { r: S, c: B }, e: { r: S + D.height - 1, c: B + D.width - 1 } })) : P.push("");
-      }), m.push(P);
-    }), n.utils.sheet_add_aoa(w, m), w["!ref"] = n.utils.encode_range(b), g.length && (w["!merges"] = g), w;
+        D ? (A.push(!(D.value instanceof Date) && typeof D.value == "object" ? JSON.stringify(D.value) : D.value), (D.width > 1 || D.height > -1) && (D.height > 1 || D.width > 1) && g.push({ s: { r: S, c: B }, e: { r: S + D.height - 1, c: B + D.width - 1 } })) : A.push("");
+      }), m.push(A);
+    }), n.utils.sheet_add_aoa(v, m), v["!ref"] = n.utils.encode_range(b), g.length && (v["!merges"] = g), v;
   }
   if (e.sheetOnly) {
     t(u());
@@ -2087,15 +2087,15 @@ function Yi(l, e, t) {
     r.SheetNames.push(s), r.Sheets[s] = u();
   e.documentProcessing && (r = e.documentProcessing(r));
   function f(m) {
-    for (var g = new ArrayBuffer(m.length), w = new Uint8Array(g), b = 0; b != m.length; ++b) w[b] = m.charCodeAt(b) & 255;
+    for (var g = new ArrayBuffer(m.length), v = new Uint8Array(g), b = 0; b != m.length; ++b) v[b] = m.charCodeAt(b) & 255;
     return g;
   }
   d = n.write(r, h), t(f(d), "application/octet-stream");
 }
-function Qi(l, e, t) {
+function Zi(l, e, t) {
   this.modExists("export", !0) && t(this.modules.export.generateHTMLTable(l), "text/html");
 }
-function Zi(l, e, t) {
+function es(l, e, t) {
   const i = [];
   l.forEach((s) => {
     const n = {};
@@ -2117,15 +2117,15 @@ function Zi(l, e, t) {
   }), t(i.join(`
 `), "application/x-ndjson");
 }
-var es = {
-  csv: Ji,
-  json: Ki,
-  jsonLines: Zi,
-  pdf: qi,
-  xlsx: Yi,
-  html: Qi
+var ts = {
+  csv: Ki,
+  json: qi,
+  jsonLines: es,
+  pdf: Yi,
+  xlsx: Qi,
+  html: Zi
 };
-const ge = class ge extends x {
+const be = class be extends x {
   constructor(e) {
     super(e), this.registerTableOption("downloadEncoder", function(t, i) {
       return new Blob([t], { type: i });
@@ -2151,7 +2151,7 @@ const ge = class ge extends x {
     function o(h, d) {
       n ? n === !0 ? this.triggerDownload(h, d, e, t, !0) : n(h) : this.triggerDownload(h, d, e, t);
     }
-    if (typeof e == "function" ? r = e : ge.downloaders[e] ? r = ge.downloaders[e] : console.warn("Download Error - No such download type found: ", e), r) {
+    if (typeof e == "function" ? r = e : be.downloaders[e] ? r = be.downloaders[e] : console.warn("Download Error - No such download type found: ", e), r) {
       var a = this.generateExportList(s);
       r.call(this.table, a, i || {}, o.bind(this));
     }
@@ -2175,10 +2175,10 @@ const ge = class ge extends x {
     }
   }
 };
-y(ge, "moduleName", "download"), //load defaults
-y(ge, "downloaders", es);
-let tt = ge;
-function Ve(l, e) {
+y(be, "moduleName", "download"), //load defaults
+y(be, "downloaders", ts);
+let it = be;
+function Ie(l, e) {
   var t = e.mask, i = typeof e.maskLetterChar < "u" ? e.maskLetterChar : "A", s = typeof e.maskNumberChar < "u" ? e.maskNumberChar : "9", n = typeof e.maskWildcardChar < "u" ? e.maskWildcardChar : "*";
   function r(o) {
     var a = t[o];
@@ -2209,7 +2209,7 @@ function Ve(l, e) {
     o.keyCode > 46 && e.maskAutoFill && r(l.value.length);
   }), l.placeholder || (l.placeholder = t), e.maskAutoFill && r(l.value.length);
 }
-function ts(l, e, t, i, s) {
+function is(l, e, t, i, s) {
   var n = l.getValue(), r = document.createElement("input");
   if (r.setAttribute("type", s.search ? "search" : "text"), r.style.padding = "4px", r.style.width = "100%", r.style.boxSizing = "border-box", s.elementAttributes && typeof s.elementAttributes == "object")
     for (let a in s.elementAttributes)
@@ -2233,9 +2233,9 @@ function ts(l, e, t, i, s) {
         a.stopPropagation();
         break;
     }
-  }), s.mask && Ve(r, s), r;
+  }), s.mask && Ie(r, s), r;
 }
-function is(l, e, t, i, s) {
+function ss(l, e, t, i, s) {
   var n = l.getValue(), r = s.verticalNavigation || "hybrid", o = String(n !== null && typeof n < "u" ? n : ""), a = document.createElement("textarea"), h = 0;
   if (a.style.display = "block", a.style.padding = "2px", a.style.height = "100%", a.style.width = "100%", a.style.boxSizing = "border-box", a.style.whiteSpace = "pre-wrap", a.style.resize = "none", s.elementAttributes && typeof s.elementAttributes == "object")
     for (let u in s.elementAttributes)
@@ -2271,9 +2271,9 @@ function is(l, e, t, i, s) {
         u.stopPropagation();
         break;
     }
-  }), s.mask && Ve(a, s), a;
+  }), s.mask && Ie(a, s), a;
 }
-function ss(l, e, t, i, s) {
+function ns(l, e, t, i, s) {
   var n = l.getValue(), r = s.verticalNavigation || "editor", o = document.createElement("input");
   if (o.setAttribute("type", "number"), typeof s.max < "u" && o.setAttribute("max", s.max), typeof s.min < "u" && o.setAttribute("min", s.min), typeof s.step < "u" && o.setAttribute("step", s.step), o.style.padding = "4px", o.style.width = "100%", o.style.boxSizing = "border-box", s.elementAttributes && typeof s.elementAttributes == "object")
     for (let d in s.elementAttributes)
@@ -2306,9 +2306,9 @@ function ss(l, e, t, i, s) {
         d.stopPropagation();
         break;
     }
-  }), s.mask && Ve(o, s), o;
+  }), s.mask && Ie(o, s), o;
 }
-function ns(l, e, t, i, s) {
+function rs(l, e, t, i, s) {
   var n = l.getValue(), r = document.createElement("input");
   if (r.setAttribute("type", "range"), typeof s.max < "u" && r.setAttribute("max", s.max), typeof s.min < "u" && r.setAttribute("min", s.min), typeof s.step < "u" && r.setAttribute("step", s.step), r.style.padding = "4px", r.style.width = "100%", r.style.boxSizing = "border-box", s.elementAttributes && typeof s.elementAttributes == "object")
     for (let a in s.elementAttributes)
@@ -2333,7 +2333,7 @@ function ns(l, e, t, i, s) {
     }
   }), r;
 }
-function rs(l, e, t, i, s) {
+function os(l, e, t, i, s) {
   var n = s.format, r = s.verticalNavigation || "editor", o = n ? window.DateTime || luxon.DateTime : null, a = l.getValue(), h = document.createElement("input");
   function d(c) {
     var f;
@@ -2384,7 +2384,7 @@ function rs(l, e, t, i, s) {
     }
   }), h;
 }
-function os(l, e, t, i, s) {
+function as(l, e, t, i, s) {
   var n = s.format, r = s.verticalNavigation || "editor", o = n ? window.DateTime || luxon.DateTime : null, a, h = l.getValue(), d = document.createElement("input");
   if (d.type = "time", d.style.padding = "4px", d.style.width = "100%", d.style.boxSizing = "border-box", s.elementAttributes && typeof s.elementAttributes == "object")
     for (let c in s.elementAttributes)
@@ -2431,7 +2431,7 @@ function os(l, e, t, i, s) {
     }
   }), d;
 }
-function as(l, e, t, i, s) {
+function ls(l, e, t, i, s) {
   var n = s.format, r = s.verticalNavigation || "editor", o = n ? this.table.dependencyRegistry.lookup(["luxon", "DateTime"], "DateTime") : null, a, h = l.getValue(), d = document.createElement("input");
   if (d.type = "datetime-local", d.style.padding = "4px", d.style.width = "100%", d.style.boxSizing = "border-box", s.elementAttributes && typeof s.elementAttributes == "object")
     for (let c in s.elementAttributes)
@@ -2478,7 +2478,7 @@ function as(l, e, t, i, s) {
     }
   }), d;
 }
-let ls = class {
+let hs = class {
   constructor(e, t, i, s, n, r) {
     this.edit = e, this.table = e.table, this.cell = t, this.params = this._initializeParams(r), this.data = [], this.displayItems = [], this.currentItems = [], this.focusedItem = null, this.input = this._createInputElement(), this.listEl = this._createListElement(), this.initialValues = null, this.isFilter = t.getType() === "header", this.filterTimeout = null, this.filtered = !1, this.typing = !1, this.values = [], this.popup = null, this.listIteration = 0, this.lastAction = "", this.filterTerm = "", this.blurable = !0, this.actions = {
       success: s,
@@ -2513,7 +2513,7 @@ let ls = class {
     if (t.setAttribute("type", this.params.clearable ? "search" : "text"), t.style.padding = "4px", t.style.width = "100%", t.style.boxSizing = "border-box", this.params.autocomplete || (t.style.cursor = "default", t.style.caretColor = "transparent"), e && typeof e == "object")
       for (let i in e)
         i.charAt(0) == "+" ? (i = i.slice(1), t.setAttribute(i, t.getAttribute(i) + e["+" + i])) : t.setAttribute(i, e[i]);
-    return this.params.mask && Ve(t, this.params), this._bindInputEvents(t), t;
+    return this.params.mask && Ie(t, this.params), this._bindInputEvents(t), t;
   }
   _initializeParams(e) {
     var t = ["values", "valuesURL", "valuesLookup"], i;
@@ -2662,7 +2662,7 @@ let ls = class {
   }
   _ajaxRequest(e, t) {
     var i = this.params.filterRemote ? { term: t } : {};
-    return e = Vt(e, {}, i), fetch(e).then((s) => s.ok ? s.json().catch((n) => (console.warn("List Ajax Load Error - Invalid JSON returned", n), Promise.reject(n))) : (console.error("List Ajax Load Error - Connection Error: " + s.status, s.statusText), Promise.reject(s))).catch((s) => (console.error("List Ajax Load Error - Connection Error: ", s), Promise.reject(s)));
+    return e = It(e, {}, i), fetch(e).then((s) => s.ok ? s.json().catch((n) => (console.warn("List Ajax Load Error - Invalid JSON returned", n), Promise.reject(n))) : (console.error("List Ajax Load Error - Connection Error: " + s.status, s.statusText), Promise.reject(s))).catch((s) => (console.error("List Ajax Load Error - Connection Error: ", s), Promise.reject(s)));
   }
   _uniqueColumnValues(e) {
     var t = {}, i = this.table.getData(this.params.valuesLookup), s;
@@ -2840,11 +2840,11 @@ let ls = class {
     t === "" && (t = this.params.emptyValue), this.actions.success(t), this.isFilter && (this.initialValues = t && !Array.isArray(t) ? [t] : t, this.currentItems = []);
   }
 };
-function hs(l, e, t, i, s) {
-  var n = new ls(this, l, e, t, i, s);
+function ds(l, e, t, i, s) {
+  var n = new hs(this, l, e, t, i, s);
   return n.input;
 }
-function ds(l, e, t, i, s) {
+function us(l, e, t, i, s) {
   var n = this, r = l.getElement(), o = l.getValue(), a = r.getElementsByTagName("svg").length || 5, h = r.getElementsByTagName("svg")[0] ? r.getElementsByTagName("svg")[0].getAttribute("width") : 14, d = [], u = document.createElement("div"), c = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   function f(b) {
     d.forEach(function(k, S) {
@@ -2853,12 +2853,12 @@ function ds(l, e, t, i, s) {
   }
   function m(b) {
     var k = document.createElement("span"), S = c.cloneNode(!0);
-    d.push(S), k.addEventListener("mouseenter", function(P) {
-      P.stopPropagation(), P.stopImmediatePropagation(), f(b);
-    }), k.addEventListener("mousemove", function(P) {
-      P.stopPropagation(), P.stopImmediatePropagation();
-    }), k.addEventListener("click", function(P) {
-      P.stopPropagation(), P.stopImmediatePropagation(), t(b), r.blur();
+    d.push(S), k.addEventListener("mouseenter", function(A) {
+      A.stopPropagation(), A.stopImmediatePropagation(), f(b);
+    }), k.addEventListener("mousemove", function(A) {
+      A.stopPropagation(), A.stopImmediatePropagation();
+    }), k.addEventListener("click", function(A) {
+      A.stopPropagation(), A.stopImmediatePropagation(), t(b), r.blur();
     }), k.appendChild(S), u.appendChild(k);
   }
   function g(b) {
@@ -2867,8 +2867,8 @@ function ds(l, e, t, i, s) {
   if (r.style.whiteSpace = "nowrap", r.style.overflow = "hidden", r.style.textOverflow = "ellipsis", u.style.verticalAlign = "middle", u.style.display = "inline-block", u.style.padding = "4px", c.setAttribute("width", h), c.setAttribute("height", h), c.setAttribute("viewBox", "0 0 512 512"), c.setAttribute("xml:space", "preserve"), c.style.padding = "0 1px", s.elementAttributes && typeof s.elementAttributes == "object")
     for (let b in s.elementAttributes)
       b.charAt(0) == "+" ? (b = b.slice(1), u.setAttribute(b, u.getAttribute(b) + s.elementAttributes["+" + b])) : u.setAttribute(b, s.elementAttributes[b]);
-  for (var w = 1; w <= a; w++)
-    m(w);
+  for (var v = 1; v <= a; v++)
+    m(v);
   return o = Math.min(parseInt(o), a), f(o), u.addEventListener("mousemove", function(b) {
     f(0);
   }), u.addEventListener("click", function(b) {
@@ -2892,11 +2892,11 @@ function ds(l, e, t, i, s) {
     }
   }), u;
 }
-function us(l, e, t, i, s) {
+function cs(l, e, t, i, s) {
   var n = l.getElement(), r = typeof s.max > "u" ? n.getElementsByTagName("div")[0] && n.getElementsByTagName("div")[0].getAttribute("max") || 100 : s.max, o = typeof s.min > "u" ? n.getElementsByTagName("div")[0] && n.getElementsByTagName("div")[0].getAttribute("min") || 0 : s.min, a = (r - o) / 100, h = l.getValue() || 0, d = document.createElement("div"), u = document.createElement("div"), c, f;
   function m() {
-    var g = window.getComputedStyle(n, null), w = a * Math.round(u.offsetWidth / ((n.clientWidth - parseInt(g.getPropertyValue("padding-left")) - parseInt(g.getPropertyValue("padding-right"))) / 100)) + o;
-    t(w), n.setAttribute("aria-valuenow", w), n.setAttribute("aria-label", h);
+    var g = window.getComputedStyle(n, null), v = a * Math.round(u.offsetWidth / ((n.clientWidth - parseInt(g.getPropertyValue("padding-left")) - parseInt(g.getPropertyValue("padding-right"))) / 100)) + o;
+    t(v), n.setAttribute("aria-valuenow", v), n.setAttribute("aria-label", h);
   }
   if (d.style.position = "absolute", d.style.right = "0", d.style.top = "0", d.style.bottom = "0", d.style.width = "5px", d.classList.add("tabulator-progress-handle"), u.style.display = "inline-block", u.style.position = "relative", u.style.height = "100%", u.style.backgroundColor = "#488CE9", u.style.maxWidth = "100%", u.style.minWidth = "0%", s.elementAttributes && typeof s.elementAttributes == "object")
     for (let g in s.elementAttributes)
@@ -2929,7 +2929,7 @@ function us(l, e, t, i, s) {
     i();
   }), u;
 }
-function cs(l, e, t, i, s) {
+function fs(l, e, t, i, s) {
   var n = l.getValue(), r = document.createElement("input"), o = s.tristate, a = typeof s.indeterminateValue > "u" ? null : s.indeterminateValue, h = !1, d = Object.keys(s).includes("trueValue"), u = Object.keys(s).includes("falseValue");
   if (r.setAttribute("type", "checkbox"), r.style.marginTop = "5px", r.style.boxSizing = "border-box", s.elementAttributes && typeof s.elementAttributes == "object")
     for (let f in s.elementAttributes)
@@ -2949,7 +2949,7 @@ function cs(l, e, t, i, s) {
     f.keyCode == 13 && t(c()), f.keyCode == 27 && i();
   }), r;
 }
-function fs(l, e, t, i, s) {
+function ps(l, e, t, i, s) {
   var n = l._getSelf().column, r, o, a;
   function h(d) {
     var u = d.getValue(), c = "input";
@@ -2969,23 +2969,23 @@ function fs(l, e, t, i, s) {
   }
   return r = s.editorLookup ? s.editorLookup(l) : h(l), s.paramsLookup && (a = typeof s.paramsLookup == "function" ? s.paramsLookup(r, l) : s.paramsLookup[r]), o = this.table.modules.edit.lookupEditor(r, n), o.call(this, l, e, t, i, a || {});
 }
-var ps = {
-  input: ts,
-  textarea: is,
-  number: ss,
-  range: ns,
-  date: rs,
-  time: os,
-  datetime: as,
-  list: hs,
-  star: ds,
-  progress: us,
-  tickCross: cs,
-  adaptable: fs
+var ms = {
+  input: is,
+  textarea: ss,
+  number: ns,
+  range: rs,
+  date: os,
+  time: as,
+  datetime: ls,
+  list: ds,
+  star: us,
+  progress: cs,
+  tickCross: fs,
+  adaptable: ps
 };
-const Me = class Me extends x {
+const Te = class Te extends x {
   constructor(e) {
-    super(e), this.currentCell = !1, this.mouseClick = !1, this.recursionBlock = !1, this.invalidEdit = !1, this.editedCells = [], this.convertEmptyValues = !1, this.editors = Me.editors, this.registerTableOption("editTriggerEvent", "focus"), this.registerTableOption("editorEmptyValue"), this.registerTableOption("editorEmptyValueFunc", this.emptyValueCheck.bind(this)), this.registerColumnOption("editable"), this.registerColumnOption("editor"), this.registerColumnOption("editorParams"), this.registerColumnOption("editorEmptyValue"), this.registerColumnOption("editorEmptyValueFunc"), this.registerColumnOption("cellEditing"), this.registerColumnOption("cellEdited"), this.registerColumnOption("cellEditCancelled"), this.registerTableFunction("getEditedCells", this.getEditedCells.bind(this)), this.registerTableFunction("clearCellEdited", this.clearCellEdited.bind(this)), this.registerTableFunction("navigatePrev", this.navigatePrev.bind(this)), this.registerTableFunction("navigateNext", this.navigateNext.bind(this)), this.registerTableFunction("navigateLeft", this.navigateLeft.bind(this)), this.registerTableFunction("navigateRight", this.navigateRight.bind(this)), this.registerTableFunction("navigateUp", this.navigateUp.bind(this)), this.registerTableFunction("navigateDown", this.navigateDown.bind(this)), this.registerComponentFunction("cell", "isEdited", this.cellIsEdited.bind(this)), this.registerComponentFunction("cell", "clearEdited", this.clearEdited.bind(this)), this.registerComponentFunction("cell", "edit", this.editCell.bind(this)), this.registerComponentFunction("cell", "cancelEdit", this.cellCancelEdit.bind(this)), this.registerComponentFunction("cell", "navigatePrev", this.navigatePrev.bind(this)), this.registerComponentFunction("cell", "navigateNext", this.navigateNext.bind(this)), this.registerComponentFunction("cell", "navigateLeft", this.navigateLeft.bind(this)), this.registerComponentFunction("cell", "navigateRight", this.navigateRight.bind(this)), this.registerComponentFunction("cell", "navigateUp", this.navigateUp.bind(this)), this.registerComponentFunction("cell", "navigateDown", this.navigateDown.bind(this));
+    super(e), this.currentCell = !1, this.mouseClick = !1, this.recursionBlock = !1, this.invalidEdit = !1, this.editedCells = [], this.convertEmptyValues = !1, this.editors = Te.editors, this.registerTableOption("editTriggerEvent", "focus"), this.registerTableOption("editorEmptyValue"), this.registerTableOption("editorEmptyValueFunc", this.emptyValueCheck.bind(this)), this.registerColumnOption("editable"), this.registerColumnOption("editor"), this.registerColumnOption("editorParams"), this.registerColumnOption("editorEmptyValue"), this.registerColumnOption("editorEmptyValueFunc"), this.registerColumnOption("cellEditing"), this.registerColumnOption("cellEdited"), this.registerColumnOption("cellEditCancelled"), this.registerTableFunction("getEditedCells", this.getEditedCells.bind(this)), this.registerTableFunction("clearCellEdited", this.clearCellEdited.bind(this)), this.registerTableFunction("navigatePrev", this.navigatePrev.bind(this)), this.registerTableFunction("navigateNext", this.navigateNext.bind(this)), this.registerTableFunction("navigateLeft", this.navigateLeft.bind(this)), this.registerTableFunction("navigateRight", this.navigateRight.bind(this)), this.registerTableFunction("navigateUp", this.navigateUp.bind(this)), this.registerTableFunction("navigateDown", this.navigateDown.bind(this)), this.registerComponentFunction("cell", "isEdited", this.cellIsEdited.bind(this)), this.registerComponentFunction("cell", "clearEdited", this.clearEdited.bind(this)), this.registerComponentFunction("cell", "edit", this.editCell.bind(this)), this.registerComponentFunction("cell", "cancelEdit", this.cellCancelEdit.bind(this)), this.registerComponentFunction("cell", "navigatePrev", this.navigatePrev.bind(this)), this.registerComponentFunction("cell", "navigateNext", this.navigateNext.bind(this)), this.registerComponentFunction("cell", "navigateLeft", this.navigateLeft.bind(this)), this.registerComponentFunction("cell", "navigateRight", this.navigateRight.bind(this)), this.registerComponentFunction("cell", "navigateUp", this.navigateUp.bind(this)), this.registerComponentFunction("cell", "navigateDown", this.navigateDown.bind(this));
   }
   initialize() {
     this.subscribe("cell-init", this.bindEditor.bind(this)), this.subscribe("cell-delete", this.clearEdited.bind(this)), this.subscribe("cell-value-changed", this.updateCellClass.bind(this)), this.subscribe("column-layout", this.initializeColumnCheck.bind(this)), this.subscribe("column-delete", this.columnDeleteCheck.bind(this)), this.subscribe("row-deleting", this.rowDeleteCheck.bind(this)), this.subscribe("row-layout", this.rowEditableCheck.bind(this)), this.subscribe("data-refreshing", this.cancelEdit.bind(this)), this.subscribe("clipboard-paste", this.pasteBlocker.bind(this)), this.subscribe("keybinding-nav-prev", this.navigatePrev.bind(this, void 0)), this.subscribe("keybinding-nav-next", this.keybindingNavigateNext.bind(this)), this.subscribe("keybinding-nav-up", this.navigateUp.bind(this, void 0)), this.subscribe("keybinding-nav-down", this.navigateDown.bind(this, void 0)), Object.keys(this.table.options).includes("editorEmptyValue") && (this.convertEmptyValues = !0);
@@ -3222,8 +3222,8 @@ const Me = class Me extends x {
         if (h instanceof Node) {
           for (o.classList.add("tabulator-editing"), e.row.getElement().classList.add("tabulator-editing"), e.table.element.classList.add("tabulator-editing"); o.firstChild; ) o.removeChild(o.firstChild);
           o.appendChild(h), r();
-          for (var g = o.children, w = 0; w < g.length; w++)
-            g[w].addEventListener("click", function(b) {
+          for (var g = o.children, v = 0; v < g.length; v++)
+            g[v].addEventListener("click", function(b) {
               b.stopPropagation();
             });
         } else
@@ -3255,20 +3255,20 @@ const Me = class Me extends x {
     e.modules.edit && e.modules.edit.edited && (e.modules.edit.edited = !1, this.dispatch("edit-edited-clear", e)), t = this.editedCells.indexOf(e), t > -1 && this.editedCells.splice(t, 1);
   }
 };
-y(Me, "moduleName", "edit"), //load defaults
-y(Me, "editors", ps);
-let it = Me;
-class zt {
+y(Te, "moduleName", "edit"), //load defaults
+y(Te, "editors", ms);
+let st = Te;
+class Ft {
   constructor(e, t, i, s) {
     this.type = e, this.columns = t, this.component = i || !1, this.indent = s || 0;
   }
 }
-class $e {
+class Xe {
   constructor(e, t, i, s, n) {
     this.value = e, this.component = t || !1, this.width = i, this.height = s, this.depth = n;
   }
 }
-var ms = {}, gs = {
+var gs = {}, bs = {
   visible: function() {
     return this.rowManager.getVisibleRows(!1, !0);
   },
@@ -3282,7 +3282,7 @@ var ms = {}, gs = {
     return this.options.pagination ? this.rowManager.getDisplayRows(this.rowManager.displayRows.length - 2) : this.rowManager.getDisplayRows();
   }
 };
-const se = class se extends x {
+const ie = class ie extends x {
   constructor(e) {
     super(e), this.config = {}, this.cloneTableStyle = !0, this.colVisProp = "", this.colVisPropAttach = "", this.registerTableOption("htmlOutputConfig", !1), this.registerColumnOption("htmlOutput"), this.registerColumnOption("titleHtmlOutput");
   }
@@ -3294,7 +3294,7 @@ const se = class se extends x {
   ///////////////////////////////////
   generateExportList(e, t, i, s) {
     var n, r, o, a;
-    return this.cloneTableStyle = t, this.config = e || {}, this.colVisProp = s, this.colVisPropAttach = this.colVisProp.charAt(0).toUpperCase() + this.colVisProp.slice(1), a = se.columnLookups[i], a && (o = a.call(this.table), o = o.filter((h) => this.columnVisCheck(h))), n = this.config.columnHeaders !== !1 ? this.headersToExportRows(this.generateColumnGroupHeaders(o)) : [], o && (o = o.map((h) => h.getComponent())), r = this.bodyToExportRows(this.rowLookup(i), o), n.concat(r);
+    return this.cloneTableStyle = t, this.config = e || {}, this.colVisProp = s, this.colVisPropAttach = this.colVisProp.charAt(0).toUpperCase() + this.colVisProp.slice(1), a = ie.columnLookups[i], a && (o = a.call(this.table), o = o.filter((h) => this.columnVisCheck(h))), n = this.config.columnHeaders !== !1 ? this.headersToExportRows(this.generateColumnGroupHeaders(o)) : [], o && (o = o.map((h) => h.getComponent())), r = this.bodyToExportRows(this.rowLookup(i), o), n.concat(r);
   }
   generateTable(e, t, i, s) {
     var n = this.generateExportList(e, t, i, s);
@@ -3304,7 +3304,7 @@ const se = class se extends x {
     var t = [], i;
     return typeof e == "function" ? e.call(this.table).forEach((s) => {
       s = this.table.rowManager.findRow(s), s && t.push(s);
-    }) : (i = se.rowLookups[e] || se.rowLookups.active, t = i.call(this.table)), Object.assign([], t);
+    }) : (i = ie.rowLookups[e] || ie.rowLookups.active, t = i.call(this.table)), Object.assign([], t);
   }
   generateColumnGroupHeaders(e) {
     var t = [];
@@ -3358,10 +3358,10 @@ const se = class se extends x {
       r.forEach((a) => {
         if (a) {
           let h = typeof a.title > "u" ? "" : a.title;
-          o.push(new $e(h, a.column.getComponent(), a.width, a.height, a.depth));
+          o.push(new Xe(h, a.column.getComponent(), a.width, a.height, a.depth));
         } else
           o.push(null);
-      }), s.push(new zt("header", o));
+      }), s.push(new Ft("header", o));
     }), s;
   }
   bodyToExportRows(e, t = []) {
@@ -3382,16 +3382,16 @@ const se = class se extends x {
       var r = s.getData(this.colVisProp), o = [], a = 0;
       switch (s.type) {
         case "group":
-          a = s.level, o.push(new $e(s.key, s.getComponent(), t.length, 1));
+          a = s.level, o.push(new Xe(s.key, s.getComponent(), t.length, 1));
           break;
         case "calc":
         case "row":
           t.forEach((h) => {
-            o.push(new $e(h._column.getFieldValue(r), h, 1, 1));
+            o.push(new Xe(h._column.getFieldValue(r), h, 1, 1));
           }), this.table.options.dataTree && this.config.dataTree !== !1 && (a = s.modules.dataTree.index);
           break;
       }
-      i.push(new zt(s.type, o, s.getComponent(), a));
+      i.push(new Ft(s.type, o, s.getComponent(), a));
     }), i;
   }
   generateTableElement(e) {
@@ -3472,8 +3472,8 @@ const se = class se extends x {
           },
           column: a
         }, g = a.definition.cssClass ? a.definition.cssClass.split(" ") : [];
-        if (g.forEach(function(w) {
-          o.classList.add(w);
+        if (g.forEach(function(v) {
+          o.classList.add(v);
         }), this.table.modExists("format") && this.config.formatCells !== !1)
           u = this.table.modules.format.formatExportValue(m, this.colVisProp);
         else
@@ -3531,9 +3531,9 @@ const se = class se extends x {
     }
   }
 };
-y(se, "moduleName", "export"), y(se, "columnLookups", ms), y(se, "rowLookups", gs);
-let st = se;
-var bs = {
+y(ie, "moduleName", "export"), y(ie, "columnLookups", gs), y(ie, "rowLookups", bs);
+let nt = ie;
+var vs = {
   //equal to
   "=": function(l, e, t, i) {
     return e == l;
@@ -3585,7 +3585,7 @@ var bs = {
     return Array.isArray(l) ? l.length ? l.indexOf(e) > -1 : !0 : (console.warn("Filter Error - filter value is not an array:", l), !1);
   }
 };
-const Y = class Y extends x {
+const q = class q extends x {
   constructor(e) {
     super(e), this.filterList = [], this.headerFilters = {}, this.headerFilterColumns = [], this.prevHeaderFilterChangeCheck = "", this.prevHeaderFilterChangeCheck = "{}", this.changed = !1, this.tableInitialized = !1, this.registerTableOption("filterMode", "local"), this.registerTableOption("initialFilter", !1), this.registerTableOption("initialHeaderFilter", !1), this.registerTableOption("headerFilterLiveFilterDelay", 300), this.registerTableOption("placeholderHeaderFilter", !1), this.registerColumnOption("headerFilter"), this.registerColumnOption("headerFilterPlaceholder"), this.registerColumnOption("headerFilterParams"), this.registerColumnOption("headerFilterEmptyCheck"), this.registerColumnOption("headerFilterFunc"), this.registerColumnOption("headerFilterFuncParams"), this.registerColumnOption("headerFilterLiveFilter"), this.registerTableFunction("searchRows", this.searchRows.bind(this)), this.registerTableFunction("searchData", this.searchData.bind(this)), this.registerTableFunction("setFilter", this.userSetFilter.bind(this)), this.registerTableFunction("refreshFilter", this.userRefreshFilter.bind(this)), this.registerTableFunction("addFilter", this.userAddFilter.bind(this)), this.registerTableFunction("getFilters", this.getFilters.bind(this)), this.registerTableFunction("setHeaderFilterFocus", this.userSetHeaderFilterFocus.bind(this)), this.registerTableFunction("getHeaderFilterValue", this.userGetHeaderFilterValue.bind(this)), this.registerTableFunction("setHeaderFilterValue", this.userSetHeaderFilterValue.bind(this)), this.registerTableFunction("getHeaderFilters", this.getHeaderFilters.bind(this)), this.registerTableFunction("removeFilter", this.userRemoveFilter.bind(this)), this.registerTableFunction("clearFilter", this.userClearFilter.bind(this)), this.registerTableFunction("clearHeaderFilter", this.userClearHeaderFilter.bind(this)), this.registerComponentFunction("column", "headerFilterFocus", this.setHeaderFilterFocus.bind(this)), this.registerComponentFunction("column", "reloadHeaderFilter", this.reloadHeaderFilter.bind(this)), this.registerComponentFunction("column", "getHeaderFilterValue", this.getHeaderFilterValue.bind(this)), this.registerComponentFunction("column", "setHeaderFilterValue", this.setHeaderFilterValue.bind(this));
   }
@@ -3681,9 +3681,9 @@ const Y = class Y extends x {
         else {
           switch (e.modules.filter.value = r, typeof e.definition.headerFilterFunc) {
             case "string":
-              Y.filters[e.definition.headerFilterFunc] ? (a = e.definition.headerFilterFunc, d = function(u) {
+              q.filters[e.definition.headerFilterFunc] ? (a = e.definition.headerFilterFunc, d = function(u) {
                 var c = e.definition.headerFilterFuncParams || {}, f = e.getFieldValue(u);
-                return c = typeof c == "function" ? c(r, f, u) : c, Y.filters[e.definition.headerFilterFunc](r, f, u, c);
+                return c = typeof c == "function" ? c(r, f, u) : c, q.filters[e.definition.headerFilterFunc](r, f, u, c);
               }) : console.warn("Header Filter Error - Matching filter function not found: ", e.definition.headerFilterFunc);
               break;
             case "function":
@@ -3724,7 +3724,7 @@ const Y = class Y extends x {
     e.modules.filter.value = t;
     function g() {
     }
-    function w(b) {
+    function v(b) {
       m = b;
     }
     if (e.modules.filter.headerElement && e.modules.filter.headerElement.parentNode && e.contentElement.removeChild(e.modules.filter.headerElement.parentNode), r) {
@@ -3767,7 +3767,7 @@ const Y = class Y extends x {
               }
             };
           }
-        }, f = e.definition.headerFilterParams || {}, f = typeof f == "function" ? f.call(s.table, d) : f, h = a.call(this.table.modules.edit, d, w, n, g, f), !h) {
+        }, f = e.definition.headerFilterParams || {}, f = typeof f == "function" ? f.call(s.table, d) : f, h = a.call(this.table.modules.edit, d, v, n, g, f), !h) {
           console.warn("Filter Error - Cannot add filter to " + r + " column, editor returned a value of false");
           return;
         }
@@ -3854,10 +3854,10 @@ const Y = class Y extends x {
     var i = !1;
     return typeof e.field == "function" ? i = function(s) {
       return e.field(s, e.type || {});
-    } : Y.filters[e.type] ? (t = this.table.columnManager.getColumnByField(e.field), t ? i = function(s) {
-      return Y.filters[e.type](e.value, t.getFieldValue(s), s, e.params || {});
+    } : q.filters[e.type] ? (t = this.table.columnManager.getColumnByField(e.field), t ? i = function(s) {
+      return q.filters[e.type](e.value, t.getFieldValue(s), s, e.params || {});
     } : i = function(s) {
-      return Y.filters[e.type](e.value, s[e.field], s, e.params || {});
+      return q.filters[e.type](e.value, s[e.field], s, e.params || {});
     }) : console.warn("Filter Error - No such filter type found, ignoring: ", e.type), e.func = i, e.func ? e : !1;
   }
   findSubFilters(e) {
@@ -3943,19 +3943,19 @@ const Y = class Y extends x {
     }) : i = e.func(t), i;
   }
 };
-y(Y, "moduleName", "filter"), //load defaults
-y(Y, "filters", bs);
-let nt = Y;
-function vs(l, e, t) {
+y(q, "moduleName", "filter"), //load defaults
+y(q, "filters", vs);
+let rt = q;
+function ws(l, e, t) {
   return this.emptyToSpace(this.sanitizeHTML(l.getValue()));
 }
-function ws(l, e, t) {
+function Cs(l, e, t) {
   return l.getValue();
 }
-function Cs(l, e, t) {
+function ys(l, e, t) {
   return l.getElement().style.whiteSpace = "pre-wrap", this.emptyToSpace(this.sanitizeHTML(l.getValue()));
 }
-function ys(l, e, t) {
+function Es(l, e, t) {
   var i = parseFloat(l.getValue()), s = "", n, r, o, a, h, d = e.decimal || ".", u = e.thousand || ",", c = e.negativeSign || "-", f = e.symbol || "", m = !!e.symbolAfter, g = typeof e.precision < "u" ? e.precision : 2;
   if (isNaN(i))
     return this.emptyToSpace(this.sanitizeHTML(l.getValue()));
@@ -3964,7 +3964,7 @@ function ys(l, e, t) {
       r = r.replace(a, "$1" + u + "$2");
   return h = r + o, s === !0 ? (h = "(" + h + ")", m ? h + f : f + h) : m ? s + h + f : s + f + h;
 }
-function Es(l, e, t) {
+function Rs(l, e, t) {
   var i = l.getValue(), s = e.urlPrefix || "", n = e.download, r = i, o = document.createElement("a"), a;
   function h(d, u) {
     var c = d.shift(), f = u[c];
@@ -3993,7 +3993,7 @@ function Es(l, e, t) {
   } else
     return "&nbsp;";
 }
-function Rs(l, e, t) {
+function xs(l, e, t) {
   var i = document.createElement("img"), s = l.getValue();
   switch (e.urlPrefix && (s = e.urlPrefix + l.getValue()), e.urlSuffix && (s = s + e.urlSuffix), i.setAttribute("src", s), typeof e.height) {
     case "number":
@@ -4015,11 +4015,11 @@ function Rs(l, e, t) {
     l.getRow().normalizeHeight();
   }), i;
 }
-function xs(l, e, t) {
+function ks(l, e, t) {
   var i = l.getValue(), s = l.getElement(), n = e.allowEmpty, r = e.allowTruthy, o = Object.keys(e).includes("trueValue"), a = typeof e.tickElement < "u" ? e.tickElement : '<svg enable-background="new 0 0 24 24" height="14" width="14" viewBox="0 0 24 24" xml:space="preserve" ><path fill="#2DC214" clip-rule="evenodd" d="M21.652,3.211c-0.293-0.295-0.77-0.295-1.061,0L9.41,14.34  c-0.293,0.297-0.771,0.297-1.062,0L3.449,9.351C3.304,9.203,3.114,9.13,2.923,9.129C2.73,9.128,2.534,9.201,2.387,9.351  l-2.165,1.946C0.078,11.445,0,11.63,0,11.823c0,0.194,0.078,0.397,0.223,0.544l4.94,5.184c0.292,0.296,0.771,0.776,1.062,1.07  l2.124,2.141c0.292,0.293,0.769,0.293,1.062,0l14.366-14.34c0.293-0.294,0.293-0.777,0-1.071L21.652,3.211z" fill-rule="evenodd"/></svg>', h = typeof e.crossElement < "u" ? e.crossElement : '<svg enable-background="new 0 0 24 24" height="14" width="14"  viewBox="0 0 24 24" xml:space="preserve" ><path fill="#CE1515" d="M22.245,4.015c0.313,0.313,0.313,0.826,0,1.139l-6.276,6.27c-0.313,0.312-0.313,0.826,0,1.14l6.273,6.272  c0.313,0.313,0.313,0.826,0,1.14l-2.285,2.277c-0.314,0.312-0.828,0.312-1.142,0l-6.271-6.271c-0.313-0.313-0.828-0.313-1.141,0  l-6.276,6.267c-0.313,0.313-0.828,0.313-1.141,0l-2.282-2.28c-0.313-0.313-0.313-0.826,0-1.14l6.278-6.269  c0.313-0.312,0.313-0.826,0-1.14L1.709,5.147c-0.314-0.313-0.314-0.827,0-1.14l2.284-2.278C4.308,1.417,4.821,1.417,5.135,1.73  L11.405,8c0.314,0.314,0.828,0.314,1.141,0.001l6.276-6.267c0.312-0.312,0.826-0.312,1.141,0L22.245,4.015z"/></svg>';
   return o && i === e.trueValue || !o && (r && i || i === !0 || i === "true" || i === "True" || i === 1 || i === "1") ? (s.setAttribute("aria-checked", !0), a || "") : n && (i === "null" || i === "" || i === null || typeof i > "u") ? (s.setAttribute("aria-checked", "mixed"), "") : (s.setAttribute("aria-checked", !1), h || "");
 }
-function ks(l, e, t) {
+function Ts(l, e, t) {
   var i = this.table.dependencyRegistry.lookup(["luxon", "DateTime"], "DateTime"), s = e.inputFormat || "yyyy-MM-dd HH:mm:ss", n = e.outputFormat || "dd/MM/yyyy HH:mm:ss", r = typeof e.invalidPlaceholder < "u" ? e.invalidPlaceholder : "", o = l.getValue();
   if (typeof i < "u") {
     var a;
@@ -4027,7 +4027,7 @@ function ks(l, e, t) {
   } else
     console.error("Format Error - 'datetime' formatter is dependant on luxon.js");
 }
-function Ts(l, e, t) {
+function Ms(l, e, t) {
   var i = this.table.dependencyRegistry.lookup(["luxon", "DateTime"], "DateTime"), s = e.inputFormat || "yyyy-MM-dd HH:mm:ss", n = typeof e.invalidPlaceholder < "u" ? e.invalidPlaceholder : "", r = typeof e.suffix < "u" ? e.suffix : !1, o = typeof e.unit < "u" ? e.unit : "days", a = typeof e.humanize < "u" ? e.humanize : !1, h = typeof e.date < "u" ? e.date : i.now(), d = l.getValue();
   if (typeof i < "u") {
     var u;
@@ -4035,11 +4035,11 @@ function Ts(l, e, t) {
   } else
     console.error("Format Error - 'datetimediff' formatter is dependant on luxon.js");
 }
-function Ms(l, e, t) {
+function Ls(l, e, t) {
   var i = l.getValue();
   return typeof e[i] > "u" ? (console.warn("Missing display value for " + i), i) : e[i];
 }
-function Ls(l, e, t) {
+function Ss(l, e, t) {
   var i = l.getValue(), s = l.getElement(), n = e && e.stars ? e.stars : 5, r = document.createElement("span"), o = document.createElementNS("http://www.w3.org/2000/svg", "svg"), a = '<polygon fill="#FFEA00" stroke="#C1AB60" stroke-width="37.6152" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="259.216,29.942 330.27,173.919 489.16,197.007 374.185,309.08 401.33,467.31 259.216,392.612 117.104,467.31 144.25,309.08 29.274,197.007 188.165,173.919 "/>', h = '<polygon fill="#D2D2D2" stroke="#686868" stroke-width="37.6152" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="259.216,29.942 330.27,173.919 489.16,197.007 374.185,309.08 401.33,467.31 259.216,392.612 117.104,467.31 144.25,309.08 29.274,197.007 188.165,173.919 "/>';
   r.style.verticalAlign = "middle", o.setAttribute("width", "14"), o.setAttribute("height", "14"), o.setAttribute("viewBox", "0 0 512 512"), o.setAttribute("xml:space", "preserve"), o.style.padding = "0 1px", i = i && !isNaN(i) ? parseInt(i) : 0, i = Math.max(0, Math.min(i, n));
   for (var d = 1; d <= n; d++) {
@@ -4048,7 +4048,7 @@ function Ls(l, e, t) {
   }
   return s.style.whiteSpace = "nowrap", s.style.overflow = "hidden", s.style.textOverflow = "ellipsis", s.setAttribute("aria-label", i), r;
 }
-function Ss(l, e, t) {
+function Ds(l, e, t) {
   var i = this.sanitizeHTML(l.getValue()) || 0, s = document.createElement("span"), n = e && e.max ? e.max : 100, r = e && e.min ? e.min : 0, o = e && typeof e.color < "u" ? e.color : ["red", "orange", "green"], a = "#666666", h, d;
   if (!(isNaN(i) || typeof l.getValue() > "u")) {
     switch (s.classList.add("tabulator-traffic-light"), d = parseFloat(i) <= n ? parseFloat(i) : n, d = parseFloat(d) >= r ? parseFloat(d) : r, h = (n - r) / 100, d = Math.round((d - r) / h), typeof o) {
@@ -4068,7 +4068,7 @@ function Ss(l, e, t) {
     return s.style.backgroundColor = a, s;
   }
 }
-function Ds(l, e = {}, t) {
+function zs(l, e = {}, t) {
   var i = this.sanitizeHTML(l.getValue()) || 0, s = l.getElement(), n = e.max ? e.max : 100, r = e.min ? e.min : 0, o = e.legendAlign ? e.legendAlign : "center", a, h, d, u, c;
   switch (h = parseFloat(i) <= n ? parseFloat(i) : n, h = parseFloat(h) >= r ? parseFloat(h) : r, a = (n - r) / 100, h = Math.round((h - r) / a), typeof e.color) {
     case "string":
@@ -4079,7 +4079,7 @@ function Ds(l, e = {}, t) {
       break;
     case "object":
       if (Array.isArray(e.color)) {
-        let w = 100 / e.color.length, b = Math.floor(h / w);
+        let v = 100 / e.color.length, b = Math.floor(h / v);
         b = Math.min(b, e.color.length - 1), b = Math.max(b, 0), d = e.color[b];
         break;
       }
@@ -4108,7 +4108,7 @@ function Ds(l, e = {}, t) {
       break;
     case "object":
       if (Array.isArray(e.legendColor)) {
-        let w = 100 / e.legendColor.length, b = Math.floor(h / w);
+        let v = 100 / e.legendColor.length, b = Math.floor(h / v);
         b = Math.min(b, e.legendColor.length - 1), b = Math.max(b, 0), c = e.legendColor[b];
       }
       break;
@@ -4124,20 +4124,20 @@ function Ds(l, e = {}, t) {
     g.style.position = "absolute", g.style.top = 0, g.style.left = 0, g.style.textAlign = o, g.style.width = "100%", g.style.color = c, g.innerHTML = u;
   }
   return t(function() {
-    if (!(l instanceof It)) {
-      var w = document.createElement("div");
-      w.style.position = "absolute", w.style.top = "4px", w.style.bottom = "4px", w.style.left = "4px", w.style.right = "4px", s.appendChild(w), s = w;
+    if (!(l instanceof Nt)) {
+      var v = document.createElement("div");
+      v.style.position = "absolute", v.style.top = "4px", v.style.bottom = "4px", v.style.left = "4px", v.style.right = "4px", s.appendChild(v), s = v;
     }
     s.appendChild(m), m.appendChild(f), u && m.appendChild(g);
   }), "";
 }
-function zs(l, e, t) {
+function Fs(l, e, t) {
   return l.getElement().style.backgroundColor = this.sanitizeHTML(l.getValue()), "";
 }
-function Fs(l, e, t) {
+function Hs(l, e, t) {
   return '<svg enable-background="new 0 0 24 24" height="14" width="14" viewBox="0 0 24 24" xml:space="preserve" ><path fill="#2DC214" clip-rule="evenodd" d="M21.652,3.211c-0.293-0.295-0.77-0.295-1.061,0L9.41,14.34  c-0.293,0.297-0.771,0.297-1.062,0L3.449,9.351C3.304,9.203,3.114,9.13,2.923,9.129C2.73,9.128,2.534,9.201,2.387,9.351  l-2.165,1.946C0.078,11.445,0,11.63,0,11.823c0,0.194,0.078,0.397,0.223,0.544l4.94,5.184c0.292,0.296,0.771,0.776,1.062,1.07  l2.124,2.141c0.292,0.293,0.769,0.293,1.062,0l14.366-14.34c0.293-0.294,0.293-0.777,0-1.071L21.652,3.211z" fill-rule="evenodd"/></svg>';
 }
-function Hs(l, e, t) {
+function As(l, e, t) {
   return '<svg enable-background="new 0 0 24 24" height="14" width="14" viewBox="0 0 24 24" xml:space="preserve" ><path fill="#CE1515" d="M22.245,4.015c0.313,0.313,0.313,0.826,0,1.139l-6.276,6.27c-0.313,0.312-0.313,0.826,0,1.14l6.273,6.272  c0.313,0.313,0.313,0.826,0,1.14l-2.285,2.277c-0.314,0.312-0.828,0.312-1.142,0l-6.271-6.271c-0.313-0.313-0.828-0.313-1.141,0  l-6.276,6.267c-0.313,0.313-0.828,0.313-1.141,0l-2.282-2.28c-0.313-0.313-0.313-0.826,0-1.14l6.278-6.269  c0.313-0.312,0.313-0.826,0-1.14L1.709,5.147c-0.314-0.313-0.314-0.827,0-1.14l2.284-2.278C4.308,1.417,4.821,1.417,5.135,1.73  L11.405,8c0.314,0.314,0.828,0.314,1.141,0.001l6.276-6.267c0.312-0.312,0.826-0.312,1.141,0L22.245,4.015z"/></svg>';
 }
 function Ps(l, e, t) {
@@ -4146,16 +4146,16 @@ function Ps(l, e, t) {
     l.setValue(d ? h : a);
   }), o = document.createElement("div"), o.classList.add("tabulator-toggle-switch"), o.style.height = n, o.style.width = n, o.style.borderRadius = n, r.appendChild(o), r;
 }
-function As(l, e, t) {
+function Os(l, e, t) {
   var i = document.createElement("span"), s = l.getRow(), n = l.getTable();
   return s.watchPosition((r) => {
     e.relativeToPage && (r += n.modules.page.getPageSize() * (n.modules.page.getPage() - 1)), i.innerText = r;
   }), i;
 }
-function Os(l, e, t) {
+function _s(l, e, t) {
   return l.getElement().classList.add("tabulator-row-handle"), "<div class='tabulator-row-handle-box'><div class='tabulator-row-handle-bar'></div><div class='tabulator-row-handle-bar'></div><div class='tabulator-row-handle-bar'></div></div>";
 }
-function _s(l, e, t) {
+function Bs(l, e, t) {
   var i, s, n;
   function r(o) {
     var a = o.getValue(), h = "plaintext";
@@ -4172,41 +4172,41 @@ function _s(l, e, t) {
   }
   return i = e.formatterLookup ? e.formatterLookup(l) : r(l), e.paramsLookup && (n = typeof e.paramsLookup == "function" ? e.paramsLookup(i, l) : e.paramsLookup[i]), s = this.table.modules.format.lookupFormatter(i), s.call(this, l, n || {}, t);
 }
-function Bs(l, e, t) {
+function Vs(l, e, t) {
   var i = e.delimiter || ",", s = l.getValue(), n = this.table, r;
   return e.valueMap && (typeof e.valueMap == "string" ? r = function(o) {
     return o.map((a) => F.retrieveNestedData(n.options.nestedFieldSeparator, e.valueMap, a));
   } : r = e.valueMap), Array.isArray(s) ? (r && (s = r(s)), s.join(i)) : s;
 }
-function Vs(l, e, t) {
+function Is(l, e, t) {
   var i = e.indent || "	", s = typeof e.multiline > "u" ? !0 : e.multiline, n = e.replacer || null, r = l.getValue();
   return s && (l.getElement().style.whiteSpace = "pre-wrap"), JSON.stringify(r, n, i);
 }
-var Is = {
-  plaintext: vs,
-  html: ws,
-  textarea: Cs,
-  money: ys,
-  link: Es,
-  image: Rs,
-  tickCross: xs,
-  datetime: ks,
-  datetimediff: Ts,
-  lookup: Ms,
-  star: Ls,
-  traffic: Ss,
-  progress: Ds,
-  color: zs,
-  buttonTick: Fs,
-  buttonCross: Hs,
+var Ns = {
+  plaintext: ws,
+  html: Cs,
+  textarea: ys,
+  money: Es,
+  link: Rs,
+  image: xs,
+  tickCross: ks,
+  datetime: Ts,
+  datetimediff: Ms,
+  lookup: Ls,
+  star: Ss,
+  traffic: Ds,
+  progress: zs,
+  color: Fs,
+  buttonTick: Hs,
+  buttonCross: As,
   toggle: Ps,
-  rownum: As,
-  handle: Os,
-  adaptable: _s,
-  array: Bs,
-  json: Vs
+  rownum: Os,
+  handle: _s,
+  adaptable: Bs,
+  array: Vs,
+  json: Is
 };
-const ne = class ne extends x {
+const se = class se extends x {
   constructor(e) {
     super(e), this.registerColumnOption("formatter"), this.registerColumnOption("formatterParams"), this.registerColumnOption("formatterPrint"), this.registerColumnOption("formatterPrintParams"), this.registerColumnOption("formatterClipboard"), this.registerColumnOption("formatterClipboardParams"), this.registerColumnOption("formatterHtmlOutput"), this.registerColumnOption("formatterHtmlOutputParams"), this.registerColumnOption("titleFormatter"), this.registerColumnOption("titleFormatterParams");
   }
@@ -4225,13 +4225,13 @@ const ne = class ne extends x {
     var t;
     switch (typeof e) {
       case "string":
-        ne.formatters[e] ? t = ne.formatters[e] : (console.warn("Formatter Error - No such formatter found: ", e), t = ne.formatters.plaintext);
+        se.formatters[e] ? t = se.formatters[e] : (console.warn("Formatter Error - No such formatter found: ", e), t = se.formatters.plaintext);
         break;
       case "function":
         t = e;
         break;
       default:
-        t = ne.formatters.plaintext;
+        t = se.formatters.plaintext;
         break;
     }
     return t;
@@ -4300,10 +4300,10 @@ const ne = class ne extends x {
     return e === null || typeof e > "u" || e === "" ? "&nbsp;" : e;
   }
 };
-y(ne, "moduleName", "format"), //load defaults
-y(ne, "formatters", Is);
-let rt = ne;
-class jt extends x {
+y(se, "moduleName", "format"), //load defaults
+y(se, "formatters", Ns);
+let ot = se;
+class Ut extends x {
   constructor(e) {
     super(e), this.leftColumns = [], this.rightColumns = [], this.initializationMode = "left", this.active = !1, this.blocked = !0, this.registerColumnOption("frozen");
   }
@@ -4404,8 +4404,8 @@ class jt extends x {
     return i;
   }
 }
-y(jt, "moduleName", "frozenColumns");
-class Ut extends x {
+y(Ut, "moduleName", "frozenColumns");
+class $t extends x {
   constructor(e) {
     super(e), this.topElement = document.createElement("div"), this.rows = [], this.registerComponentFunction("row", "freeze", this.freezeRow.bind(this)), this.registerComponentFunction("row", "unfreeze", this.unfreezeRow.bind(this)), this.registerComponentFunction("row", "isFrozen", this.isRowFrozen.bind(this)), this.registerTableOption("frozenRowsField", "id"), this.registerTableOption("frozenRows", !1);
   }
@@ -4464,8 +4464,8 @@ class Ut extends x {
     });
   }
 }
-y(Ut, "moduleName", "frozenRows");
-class Ns {
+y($t, "moduleName", "frozenRows");
+class Ws {
   constructor(e) {
     return this._group = e, this.type = "GroupComponent", new Proxy(this, {
       get: function(t, i, s) {
@@ -4513,7 +4513,7 @@ class Ns {
     return this._group.groupManager.table;
   }
 }
-class pe {
+class me {
   constructor(e, t, i, s, n, r, o) {
     this.groupManager = e, this.parent = t, this.key = s, this.level = i, this.field = n, this.hasSubGroups = i < e.groupIDLookups.length - 1, this.addRow = this.hasSubGroups ? this._addRowToGroup : this._addRow, this.type = "group", this.old = o, this.rows = [], this.groups = [], this.groupList = [], this.generator = r, this.element = !1, this.elementContents = !1, this.height = 0, this.outerHeight = 0, this.initialized = !1, this.calcs = {}, this.initialized = !1, this.modules = {}, this.arrowElement = !1, this.visible = o ? o.visible : typeof e.startOpen[i] < "u" ? e.startOpen[i] : e.startOpen[0], this.component = null, this.createElements(), this.addBindings(), this.createValueGroups();
   }
@@ -4543,7 +4543,7 @@ class pe {
     }));
   }
   _createGroup(e, t) {
-    var i = t + "_" + e, s = new pe(this.groupManager, this, t, e, this.groupManager.groupIDLookups[t].field, this.groupManager.headerGenerator[t] || this.groupManager.headerGenerator[0], this.old ? this.old.groups[i] : !1);
+    var i = t + "_" + e, s = new me(this.groupManager, this, t, e, this.groupManager.groupIDLookups[t].field, this.groupManager.headerGenerator[t] || this.groupManager.headerGenerator[0], this.old ? this.old.groups[i] : !1);
     this.groups[i] = s, this.groupList.push(s);
   }
   _addRowToGroup(e) {
@@ -4717,10 +4717,10 @@ class pe {
   }
   //////////////// Object Generation /////////////////
   getComponent() {
-    return this.component || (this.component = new Ns(this)), this.component;
+    return this.component || (this.component = new Ws(this)), this.component;
   }
 }
-class $t extends x {
+class Xt extends x {
   constructor(e) {
     super(e), this.groupIDLookups = !1, this.startOpen = [function() {
       return !1;
@@ -4828,8 +4828,8 @@ class $t extends x {
   ///////////////////////////////////
   rowMoving(e, t, i) {
     if (this.table.options.groupBy) {
-      !i && t instanceof pe && (t = this.table.rowManager.prevDisplayRow(e) || t);
-      var s = t instanceof pe ? t : t.modules.group, n = e instanceof pe ? e : e.modules.group;
+      !i && t instanceof me && (t = this.table.rowManager.prevDisplayRow(e) || t);
+      var s = t instanceof me ? t : t.modules.group, n = e instanceof me ? e : e.modules.group;
       s === n ? this.table.rowManager.moveRowInArray(s.rows, e, t, i) : (n && n.removeRow(e), s.insertRow(e, t, i));
     }
   }
@@ -4901,7 +4901,7 @@ class $t extends x {
   }
   createGroup(e, t, i) {
     var s = t + "_" + e, n;
-    i = i || [], n = new pe(this, !1, t, e, this.groupIDLookups[0].field, this.headerGenerator[0], i[s]), this.groups[s] = n, this.groupList.push(n);
+    i = i || [], n = new me(this, !1, t, e, this.groupIDLookups[0].field, this.headerGenerator[0], i[s]), this.groups[s] = n, this.groupList.push(n);
   }
   assignRowToExistingGroup(e, t) {
     var i = this.groupIDLookups[0].func(e.getData()), s = "0_" + i;
@@ -4945,8 +4945,8 @@ class $t extends x {
     }), t ? e.style.minWidth = this.table.columnManager.getWidth() + "px" : e.style.minWidth = "";
   }
 }
-y($t, "moduleName", "groupRows");
-var Ws = {
+y(Xt, "moduleName", "groupRows");
+var Gs = {
   cellEdit: function(l) {
     l.component.setValueProcessData(l.data.oldValue), l.component.cellRendered();
   },
@@ -4961,7 +4961,7 @@ var Ws = {
     var e = l.data.posFrom - l.data.posTo > 0;
     this.table.rowManager.moveRowActual(l.component, this.table.rowManager.getRowFromPosition(l.data.posFrom), e), this.table.rowManager.regenerateRowPositions(), this.table.rowManager.reRenderInPosition();
   }
-}, Gs = {
+}, js = {
   cellEdit: function(l) {
     l.component.setValueProcessData(l.data.newValue), l.component.cellRendered();
   },
@@ -4975,10 +4975,10 @@ var Ws = {
   rowMove: function(l) {
     this.table.rowManager.moveRowActual(l.component, this.table.rowManager.getRowFromPosition(l.data.posTo), l.data.after), this.table.rowManager.regenerateRowPositions(), this.table.rowManager.reRenderInPosition();
   }
-}, js = {
+}, Us = {
   undo: ["ctrl + 90", "meta + 90"],
   redo: ["ctrl + 89", "meta + 89"]
-}, Us = {
+}, $s = {
   undo: function(l) {
     var e = !1;
     this.table.options.history && this.table.modExists("history") && this.table.modExists("edit") && (e = this.table.modules.edit.currentCell, e || (l.preventDefault(), this.table.modules.history.undo()));
@@ -4987,13 +4987,13 @@ var Ws = {
     var e = !1;
     this.table.options.history && this.table.modExists("history") && this.table.modExists("edit") && (e = this.table.modules.edit.currentCell, e || (l.preventDefault(), this.table.modules.history.redo()));
   }
-}, $s = {
+}, Xs = {
   keybindings: {
-    bindings: js,
-    actions: Us
+    bindings: Us,
+    actions: $s
   }
 };
-const re = class re extends x {
+const ne = class ne extends x {
   constructor(e) {
     super(e), this.history = [], this.index = -1, this.registerTableOption("history", !1);
   }
@@ -5038,7 +5038,7 @@ const re = class re extends x {
   undo() {
     if (this.index > -1) {
       let e = this.history[this.index];
-      return re.undoers[e.type].call(this, e), this.index--, this.dispatchExternal("historyUndo", e.type, e.component.getComponent(), e.data), !0;
+      return ne.undoers[e.type].call(this, e), this.index--, this.dispatchExternal("historyUndo", e.type, e.component.getComponent(), e.data), !0;
     } else
       return console.warn(this.options("history") ? "History Undo Error - No more history to undo" : "History module not enabled"), !1;
   }
@@ -5046,26 +5046,26 @@ const re = class re extends x {
     if (this.history.length - 1 > this.index) {
       this.index++;
       let e = this.history[this.index];
-      return re.redoers[e.type].call(this, e), this.dispatchExternal("historyRedo", e.type, e.component.getComponent(), e.data), !0;
+      return ne.redoers[e.type].call(this, e), this.dispatchExternal("historyRedo", e.type, e.component.getComponent(), e.data), !0;
     } else
       return console.warn(this.options("history") ? "History Redo Error - No more history to redo" : "History module not enabled"), !1;
   }
   //rebind rows to new element after deletion
   _rebindRow(e, t) {
     this.history.forEach(function(i) {
-      if (i.component instanceof I)
+      if (i.component instanceof N)
         i.component === e && (i.component = t);
-      else if (i.component instanceof Fe && i.component.row === e) {
+      else if (i.component instanceof ze && i.component.row === e) {
         var s = i.component.column.getField();
         s && (i.component = t.getCell(s));
       }
     });
   }
 };
-y(re, "moduleName", "history"), y(re, "moduleExtensions", $s), //load defaults
-y(re, "undoers", Ws), y(re, "redoers", Gs);
-let ot = re;
-class Xt extends x {
+y(ne, "moduleName", "history"), y(ne, "moduleExtensions", Xs), //load defaults
+y(ne, "undoers", Gs), y(ne, "redoers", js);
+let at = ne;
+class Jt extends x {
   constructor(e) {
     super(e), this.fieldIndex = [], this.hasIndex = !1;
   }
@@ -5126,8 +5126,8 @@ class Xt extends x {
     }
   }
 }
-y(Xt, "moduleName", "htmlTableImport");
-function Xs(l) {
+y(Jt, "moduleName", "htmlTableImport");
+function Js(l) {
   var e = [], t = 0, i = 0, s = !1;
   for (let n = 0; n < l.length; n++) {
     let r = l[n], o = l[n + 1];
@@ -5157,27 +5157,27 @@ function Xs(l) {
   }
   return e;
 }
-function Js(l) {
+function Ks(l) {
   try {
     return JSON.parse(l);
   } catch (e) {
     return console.warn("JSON Import Error - File contents is invalid JSON", e), Promise.reject();
   }
 }
-function Ks(l) {
+function qs(l) {
   return l;
 }
-function qs(l) {
+function Ys(l) {
   var e = this.dependencyRegistry.lookup("XLSX"), t = e.read(l), i = t.Sheets[t.SheetNames[0]];
   return e.utils.sheet_to_json(i, { header: 1 });
 }
-var Ys = {
-  csv: Xs,
-  json: Js,
-  array: Ks,
-  xlsx: qs
+var Qs = {
+  csv: Js,
+  json: Ks,
+  array: qs,
+  xlsx: Ys
 };
-const Le = class Le extends x {
+const Me = class Me extends x {
   constructor(e) {
     super(e), this.registerTableOption("importFormat"), this.registerTableOption("importReader", "text"), this.registerTableOption("importHeaderTransform"), this.registerTableOption("importValueTransform"), this.registerTableOption("importDataValidator"), this.registerTableOption("importFileValidator");
   }
@@ -5192,7 +5192,7 @@ const Le = class Le extends x {
   }
   lookupImporter(e) {
     var t;
-    return e || (e = this.table.options.importFormat), typeof e == "string" ? t = Le.importers[e] : t = e, t || console.error("Import Error - Importer not found:", e), t;
+    return e || (e = this.table.options.importFormat), typeof e == "string" ? t = Me.importers[e] : t = e, t || console.error("Import Error - Importer not found:", e), t;
   }
   importFromFile(e, t, i) {
     var s = this.lookupImporter(e);
@@ -5299,10 +5299,10 @@ const Le = class Le extends x {
     return this.dispatch("import-imported", e), this.dispatchExternal("importImported", e), this.table.dataLoader.clearAlert(), this.table.setData(e);
   }
 };
-y(Le, "moduleName", "import"), //load defaults
-y(Le, "importers", Ys);
-let at = Le;
-class Jt extends x {
+y(Me, "moduleName", "import"), //load defaults
+y(Me, "importers", Qs);
+let lt = Me;
+class Kt extends x {
   constructor(e) {
     super(e), this.eventMap = {
       //row events
@@ -5449,11 +5449,11 @@ class Jt extends x {
   }
   dispatchEvent(e, t, i) {
     var s = i.getComponent(), n;
-    this.columnSubscribers[e] && (i instanceof Fe ? n = i.column.definition[e] : i instanceof ce && (n = i.definition[e]), n && n(t, s)), this.dispatchExternal(e, t, s);
+    this.columnSubscribers[e] && (i instanceof ze ? n = i.column.definition[e] : i instanceof ce && (n = i.definition[e]), n && n(t, s)), this.dispatchExternal(e, t, s);
   }
 }
-y(Jt, "moduleName", "interaction");
-var Qs = {
+y(Kt, "moduleName", "interaction");
+var Zs = {
   navPrev: "shift + 9",
   navNext: 9,
   navUp: 38,
@@ -5464,7 +5464,7 @@ var Qs = {
   scrollPageDown: 34,
   scrollToStart: 36,
   scrollToEnd: 35
-}, Zs = {
+}, en = {
   keyBlock: function(l) {
     l.stopPropagation(), l.preventDefault();
   },
@@ -5503,17 +5503,17 @@ var Qs = {
     this.dispatch("keybinding-nav-down", l);
   }
 };
-const oe = class oe extends x {
+const re = class re extends x {
   constructor(e) {
     super(e), this.watchKeys = null, this.pressedKeys = null, this.keyupBinding = !1, this.keydownBinding = !1, this.registerTableOption("keybindings", {}), this.registerTableOption("tabEndNewRow", !1);
   }
   initialize() {
     var e = this.table.options.keybindings, t = {};
-    this.watchKeys = {}, this.pressedKeys = [], e !== !1 && (Object.assign(t, oe.bindings), Object.assign(t, e), this.mapBindings(t), this.bindEvents()), this.subscribe("table-destroy", this.clearBindings.bind(this));
+    this.watchKeys = {}, this.pressedKeys = [], e !== !1 && (Object.assign(t, re.bindings), Object.assign(t, e), this.mapBindings(t), this.bindEvents()), this.subscribe("table-destroy", this.clearBindings.bind(this));
   }
   mapBindings(e) {
     for (let t in e)
-      oe.actions[t] ? e[t] && (typeof e[t] != "object" && (e[t] = [e[t]]), e[t].forEach((i) => {
+      re.actions[t] ? e[t] && (typeof e[t] != "object" && (e[t] = [e[t]]), e[t].forEach((i) => {
         var s = Array.isArray(i) ? i : [i];
         s.forEach((n) => {
           this.mapBinding(t, n);
@@ -5522,7 +5522,7 @@ const oe = class oe extends x {
   }
   mapBinding(e, t) {
     var i = {
-      action: oe.actions[e],
+      action: re.actions[e],
       keys: [],
       ctrl: !1,
       shift: !1,
@@ -5570,10 +5570,10 @@ const oe = class oe extends x {
     }), i && t.action.call(this, e), !0) : !1;
   }
 };
-y(oe, "moduleName", "keybindings"), //load defaults
-y(oe, "bindings", Qs), y(oe, "actions", Zs);
-let lt = oe;
-class Kt extends x {
+y(re, "moduleName", "keybindings"), //load defaults
+y(re, "bindings", Zs), y(re, "actions", en);
+let ht = re;
+class qt extends x {
   constructor(e) {
     super(e), this.menuContainer = null, this.nestedMenuBlock = !1, this.currentComponent = null, this.rootPopup = null, this.columnSubscribers = {}, this.registerTableOption("rowContextMenu", !1), this.registerTableOption("rowClickMenu", !1), this.registerTableOption("rowDblClickMenu", !1), this.registerTableOption("groupContextMenu", !1), this.registerTableOption("groupClickMenu", !1), this.registerTableOption("groupDblClickMenu", !1), this.registerColumnOption("headerContextMenu"), this.registerColumnOption("headerClickMenu"), this.registerColumnOption("headerDblClickMenu"), this.registerColumnOption("headerMenu"), this.registerColumnOption("headerMenuIcon"), this.registerColumnOption("contextMenu"), this.registerColumnOption("clickMenu"), this.registerColumnOption("dblClickMenu");
   }
@@ -5639,8 +5639,8 @@ class Kt extends x {
     }
   }
 }
-y(Kt, "moduleName", "menu");
-class qt extends x {
+y(qt, "moduleName", "menu");
+class Yt extends x {
   constructor(e) {
     super(e), this.placeholderElement = this.createPlaceholderElement(), this.hoverElement = !1, this.checkTimeout = !1, this.checkPeriod = 250, this.moving = !1, this.toCol = !1, this.toColAfter = !1, this.startX = 0, this.autoScrollMargin = 40, this.autoScrollStep = 5, this.autoScrollTimeout = !1, this.touchMove = !1, this.moveHover = this.moveHover.bind(this), this.endMove = this.endMove.bind(this), this.registerTableOption("movableColumns", !1);
   }
@@ -5715,12 +5715,12 @@ class qt extends x {
     }, 1)));
   }
 }
-y(qt, "moduleName", "moveColumn");
-var en = {
+y(Yt, "moduleName", "moveColumn");
+var tn = {
   delete: function(l, e, t) {
     l.delete();
   }
-}, tn = {
+}, sn = {
   insert: function(l, e, t) {
     return this.table.addRow(l.getData(), void 0, e), !0;
   },
@@ -5910,10 +5910,10 @@ const he = class he extends x {
   }
 };
 y(he, "moduleName", "moveRow"), //load defaults
-y(he, "senders", en), y(he, "receivers", tn);
-let ht = he;
-var sn = {};
-const be = class be extends x {
+y(he, "senders", tn), y(he, "receivers", sn);
+let dt = he;
+var nn = {};
+const ve = class ve extends x {
   constructor(e) {
     super(e), this.allowedTypes = ["", "data", "edit", "clipboard", "import"], this.enabled = !0, this.registerColumnOption("mutator"), this.registerColumnOption("mutatorParams"), this.registerColumnOption("mutatorData"), this.registerColumnOption("mutatorDataParams"), this.registerColumnOption("mutatorEdit"), this.registerColumnOption("mutatorEditParams"), this.registerColumnOption("mutatorClipboard"), this.registerColumnOption("mutatorClipboardParams"), this.registerColumnOption("mutatorImport"), this.registerColumnOption("mutatorImportParams"), this.registerColumnOption("mutateLink");
   }
@@ -5938,7 +5938,7 @@ const be = class be extends x {
     var t = !1;
     switch (typeof e) {
       case "string":
-        be.mutators[e] ? t = be.mutators[e] : console.warn("Mutator Error - No such mutator found, ignoring: ", e);
+        ve.mutators[e] ? t = ve.mutators[e] : console.warn("Mutator Error - No such mutator found, ignoring: ", e);
         break;
       case "function":
         t = e;
@@ -5977,10 +5977,10 @@ const be = class be extends x {
     this.enabled = !1;
   }
 };
-y(be, "moduleName", "mutator"), //load defaults
-y(be, "mutators", sn);
-let dt = be;
-function nn(l, e, t, i, s) {
+y(ve, "moduleName", "mutator"), //load defaults
+y(ve, "mutators", nn);
+let ut = ve;
+function rn(l, e, t, i, s) {
   var n = document.createElement("span"), r = document.createElement("span"), o = document.createElement("span"), a = document.createElement("span"), h = document.createElement("span"), d = document.createElement("span");
   return this.table.modules.localize.langBind("pagination|counter|showing", (u) => {
     r.innerHTML = u;
@@ -5990,7 +5990,7 @@ function nn(l, e, t, i, s) {
     d.innerHTML = u;
   }), i ? (o.innerHTML = " " + e + "-" + Math.min(e + l - 1, i) + " ", h.innerHTML = " " + i + " ", n.appendChild(r), n.appendChild(o), n.appendChild(a), n.appendChild(h), n.appendChild(d)) : (o.innerHTML = " 0 ", n.appendChild(r), n.appendChild(o), n.appendChild(d)), n;
 }
-function rn(l, e, t, i, s) {
+function on(l, e, t, i, s) {
   var n = document.createElement("span"), r = document.createElement("span"), o = document.createElement("span"), a = document.createElement("span"), h = document.createElement("span"), d = document.createElement("span");
   return this.table.modules.localize.langBind("pagination|counter|showing", (u) => {
     r.innerHTML = u;
@@ -6000,11 +6000,11 @@ function rn(l, e, t, i, s) {
     d.innerHTML = u;
   }), n.appendChild(r), n.appendChild(o), n.appendChild(a), n.appendChild(h), n.appendChild(d), n;
 }
-var on = {
-  rows: nn,
-  pages: rn
+var an = {
+  rows: rn,
+  pages: on
 };
-const Se = class Se extends x {
+const Le = class Le extends x {
   constructor(e) {
     super(e), this.mode = "local", this.progressiveLoad = !1, this.element = null, this.pageCounterElement = null, this.pageCounter = null, this.size = 0, this.page = 1, this.count = 5, this.max = 1, this.remoteRowCountEstimate = null, this.initialLoad = !0, this.dataChanging = !1, this.pageSizes = [], this.registerTableOption("pagination", !1), this.registerTableOption("paginationMode", "local"), this.registerTableOption("paginationSize", !1), this.registerTableOption("paginationInitialPage", 1), this.registerTableOption("paginationCounter", !1), this.registerTableOption("paginationCounterElement", !1), this.registerTableOption("paginationButtonCount", 5), this.registerTableOption("paginationSizeSelector", !1), this.registerTableOption("paginationElement", !1), this.registerTableOption("paginationAddRow", "page"), this.registerTableOption("paginationOutOfRange", !1), this.registerTableOption("progressiveLoad", !1), this.registerTableOption("progressiveLoadDelay", 0), this.registerTableOption("progressiveLoadScrollMargin", 0), this.registerTableFunction("setMaxPage", this.setMaxPage.bind(this)), this.registerTableFunction("setPage", this.setPage.bind(this)), this.registerTableFunction("setPageToRow", this.userSetPageToRow.bind(this)), this.registerTableFunction("setPageSize", this.userSetPageSize.bind(this)), this.registerTableFunction("getPageSize", this.getPageSize.bind(this)), this.registerTableFunction("previousPage", this.previousPage.bind(this)), this.registerTableFunction("nextPage", this.nextPage.bind(this)), this.registerTableFunction("getPage", this.getPage.bind(this)), this.registerTableFunction("getPageMax", this.getPageMax.bind(this)), this.registerComponentFunction("row", "pageTo", this.setPageToRow.bind(this));
   }
@@ -6075,7 +6075,7 @@ const Se = class Se extends x {
   }
   initializePageCounter() {
     var e = this.table.options.paginationCounter, t = null;
-    e && (typeof e == "function" ? t = e : t = Se.pageCounters[e], t ? (this.pageCounter = t, this.pageCounterElement = document.createElement("span"), this.pageCounterElement.classList.add("tabulator-page-counter")) : console.warn("Pagination Error - No such page counter found: ", e));
+    e && (typeof e == "function" ? t = e : t = Le.pageCounters[e], t ? (this.pageCounter = t, this.pageCounterElement = document.createElement("span"), this.pageCounterElement.classList.add("tabulator-page-counter")) : console.warn("Pagination Error - No such page counter found: ", e));
   }
   //setup pagination
   initializePaginator(e) {
@@ -6271,10 +6271,10 @@ const Se = class Se extends x {
     Math.ceil(e.clientWidth) - e.scrollWidth < 0 ? this.pagesElement.style.display = "none" : (this.pagesElement.style.display = "", Math.ceil(e.clientWidth) - e.scrollWidth < 0 && (this.pagesElement.style.display = "none"));
   }
 };
-y(Se, "moduleName", "page"), //load defaults
-y(Se, "pageCounters", on);
-let ut = Se;
-var an = {
+y(Le, "moduleName", "page"), //load defaults
+y(Le, "pageCounters", an);
+let ct = Le;
+var ln = {
   local: function(l, e) {
     var t = localStorage.getItem(l + "-" + e);
     return t ? JSON.parse(t) : !1;
@@ -6283,7 +6283,7 @@ var an = {
     var t = document.cookie, i = l + "-" + e, s = t.indexOf(i + "="), n, r;
     return s > -1 && (t = t.slice(s), n = t.indexOf(";"), n > -1 && (t = t.slice(0, n)), r = t.replace(i + "=", "")), r ? JSON.parse(r) : !1;
   }
-}, ln = {
+}, hn = {
   local: function(l, e, t) {
     localStorage.setItem(l + "-" + e, JSON.stringify(t));
   },
@@ -6450,9 +6450,9 @@ const G = class G extends x {
   }
 };
 y(G, "moduleName", "persistence"), y(G, "moduleInitOrder", -10), //load defaults
-y(G, "readers", an), y(G, "writers", ln);
-let ct = G;
-class Yt extends x {
+y(G, "readers", ln), y(G, "writers", hn);
+let ft = G;
+class Qt extends x {
   constructor(e) {
     super(e), this.columnSubscribers = {}, this.registerTableOption("rowContextPopup", !1), this.registerTableOption("rowClickPopup", !1), this.registerTableOption("rowDblClickPopup", !1), this.registerTableOption("groupContextPopup", !1), this.registerTableOption("groupClickPopup", !1), this.registerTableOption("groupDblClickPopup", !1), this.registerColumnOption("headerContextPopup"), this.registerColumnOption("headerClickPopup"), this.registerColumnOption("headerDblClickPopup"), this.registerColumnOption("headerPopup"), this.registerColumnOption("headerPopupIcon"), this.registerColumnOption("contextPopup"), this.registerColumnOption("clickPopup"), this.registerColumnOption("dblClickPopup"), this.registerComponentFunction("cell", "popup", this._componentPopupCall.bind(this)), this.registerComponentFunction("column", "popup", this._componentPopupCall.bind(this)), this.registerComponentFunction("row", "popup", this._componentPopupCall.bind(this)), this.registerComponentFunction("group", "popup", this._componentPopupCall.bind(this));
   }
@@ -6500,8 +6500,8 @@ class Yt extends x {
     }), this.dispatchExternal("popupOpened", t.getComponent());
   }
 }
-y(Yt, "moduleName", "popup");
-class Qt extends x {
+y(Qt, "moduleName", "popup");
+class Zt extends x {
   constructor(e) {
     super(e), this.element = !1, this.manualBlock = !1, this.beforeprintEventHandler = null, this.afterprintEventHandler = null, this.registerTableOption("printAsHtml", !1), this.registerTableOption("printFormatter", !1), this.registerTableOption("printHeader", !1), this.registerTableOption("printFooter", !1), this.registerTableOption("printStyled", !0), this.registerTableOption("printRowRange", "visible"), this.registerTableOption("printConfig", {}), this.registerColumnOption("print"), this.registerColumnOption("titlePrint");
   }
@@ -6528,8 +6528,8 @@ class Qt extends x {
     this.manualBlock = !0, this.element = document.createElement("div"), this.element.classList.add("tabulator-print-fullscreen"), this.table.options.printHeader && (r.classList.add("tabulator-print-header"), h = typeof this.table.options.printHeader == "function" ? this.table.options.printHeader.call(this.table) : this.table.options.printHeader, typeof h == "string" ? r.innerHTML = h : r.appendChild(h), this.element.appendChild(r)), this.element.appendChild(a), this.table.options.printFooter && (o.classList.add("tabulator-print-footer"), d = typeof this.table.options.printFooter == "function" ? this.table.options.printFooter.call(this.table) : this.table.options.printFooter, typeof d == "string" ? o.innerHTML = d : o.appendChild(d), this.element.appendChild(o)), document.body.classList.add("tabulator-print-fullscreen-hide"), document.body.appendChild(this.element), this.table.options.printFormatter && this.table.options.printFormatter(this.element, a), window.print(), this.cleanup(), window.scrollTo(s, n), this.manualBlock = !1;
   }
 }
-y(Qt, "moduleName", "print");
-class Zt extends x {
+y(Zt, "moduleName", "print");
+class ei extends x {
   constructor(e) {
     super(e), this.data = !1, this.blocked = !1, this.origFuncs = {}, this.currentVersion = 0, this.registerTableOption("reactiveData", !1);
   }
@@ -6699,8 +6699,8 @@ class Zt extends x {
     this.blocked === e && (this.blocked = !1);
   }
 }
-y(Zt, "moduleName", "reactiveData");
-class ei extends x {
+y(ei, "moduleName", "reactiveData");
+class ti extends x {
   constructor(e) {
     super(e), this.startColumn = !1, this.startX = !1, this.startWidth = !1, this.latestX = !1, this.handle = null, this.initialNextColumn = null, this.nextColumn = null, this.initialized = !1, this.registerColumnOption("resizable", !0), this.registerTableOption("resizableColumnFit", !1), this.registerTableOption("resizableColumnGuide", !1);
   }
@@ -6795,8 +6795,8 @@ class ei extends x {
     e.stopPropagation(), s.startColumn.modules.edit && (s.startColumn.modules.edit.blocked = !0), s.startX = typeof e.clientX > "u" ? e.touches[0].clientX : e.clientX, s.latestX = s.startX, s.startWidth = t.getWidth(), document.body.addEventListener("mousemove", r), document.body.addEventListener("mouseup", o), i.addEventListener("touchmove", r, { passive: !0 }), i.addEventListener("touchend", o);
   }
 }
-y(ei, "moduleName", "resizeColumns");
-class ti extends x {
+y(ti, "moduleName", "resizeColumns");
+class ii extends x {
   constructor(e) {
     super(e), this.startColumn = !1, this.startY = !1, this.startHeight = !1, this.handle = null, this.prevHandle = null, this.registerTableOption("resizableRows", !1), this.registerTableOption("resizableRowGuide", !1);
   }
@@ -6843,8 +6843,8 @@ class ti extends x {
     e.stopPropagation(), s.startY = typeof e.screenY > "u" ? e.touches[0].screenY : e.screenY, s.startHeight = t.getHeight(), document.body.addEventListener("mousemove", r), document.body.addEventListener("mouseup", o), i.addEventListener("touchmove", r, { passive: !0 }), i.addEventListener("touchend", o);
   }
 }
-y(ti, "moduleName", "resizeRows");
-class ii extends x {
+y(ii, "moduleName", "resizeRows");
+class si extends x {
   constructor(e) {
     super(e), this.binding = !1, this.visibilityObserver = !1, this.resizeObserver = !1, this.containerObserver = !1, this.tableHeight = 0, this.tableWidth = 0, this.containerHeight = 0, this.containerWidth = 0, this.autoResize = !1, this.visible = !1, this.initialized = !1, this.initialRedraw = !1, this.registerTableOption("autoResize", !0);
   }
@@ -6881,8 +6881,8 @@ class ii extends x {
     this.binding && window.removeEventListener("resize", this.binding), this.resizeObserver && this.resizeObserver.unobserve(this.table.element), this.visibilityObserver && this.visibilityObserver.unobserve(this.table.element), this.containerObserver && this.containerObserver.unobserve(this.table.element.parentNode);
   }
 }
-y(ii, "moduleName", "resizeTable");
-function hn(l, e, t) {
+y(si, "moduleName", "resizeTable");
+function dn(l, e, t) {
   var i = document.createElement("div"), s = l.getRow()._row.modules.responsiveLayout;
   i.classList.add("tabulator-responsive-collapse-toggle"), i.innerHTML = `<svg class='tabulator-responsive-collapse-toggle-open' viewbox="0 0 24 24">
   <line x1="7" y1="12" x2="17" y2="12" fill="none" stroke-width="3" stroke-linecap="round" />
@@ -6900,14 +6900,14 @@ function hn(l, e, t) {
     r.stopImmediatePropagation(), n(!s.open), l.getTable().rowManager.adjustTableSize();
   }), n(s.open), i;
 }
-var dn = {
+var un = {
   format: {
     formatters: {
-      responsiveCollapse: hn
+      responsiveCollapse: dn
     }
   }
 };
-class ft extends x {
+class pt extends x {
   constructor(e) {
     super(e), this.columns = [], this.hiddenColumns = [], this.mode = "", this.index = 0, this.collapseFormatter = [], this.collapseStartOpen = !0, this.collapseHandleColumn = !1, this.registerTableOption("responsiveLayout", !1), this.registerTableOption("responsiveLayoutCollapseStartOpen", !0), this.registerTableOption("responsiveLayoutCollapseUseFormatters", !0), this.registerTableOption("responsiveLayoutCollapseFormatter", !1), this.registerColumnOption("responsive");
   }
@@ -7042,15 +7042,15 @@ class ft extends x {
     }), Object.keys(e).length ? t : "";
   }
 }
-y(ft, "moduleName", "responsiveLayout"), y(ft, "moduleExtensions", dn);
-function un(l, e, t) {
+y(pt, "moduleName", "responsiveLayout"), y(pt, "moduleExtensions", un);
+function cn(l, e, t) {
   var i = document.createElement("input"), s = !1;
   if (i.type = "checkbox", i.setAttribute("aria-label", "Select Row"), this.table.modExists("selectRow", !0))
     if (i.addEventListener("click", (r) => {
       r.stopPropagation();
     }), typeof l.getRow == "function") {
       var n = l.getRow();
-      n instanceof Be ? (i.addEventListener("change", (r) => {
+      n instanceof Ve ? (i.addEventListener("change", (r) => {
         this.table.options.selectableRowsRangeMode === "click" && s ? s = !1 : n.toggleSelect();
       }), this.table.options.selectableRowsRangeMode === "click" && i.addEventListener("click", (r) => {
         s = !0, this.table.modules.selectRow.handleComplexRowClick(n._row, r);
@@ -7061,14 +7061,14 @@ function un(l, e, t) {
       }), this.table.modules.selectRow.registerHeaderSelectCheckbox(i);
   return i;
 }
-var cn = {
+var fn = {
   format: {
     formatters: {
-      rowSelection: un
+      rowSelection: cn
     }
   }
 };
-class pt extends x {
+class mt extends x {
   constructor(e) {
     super(e), this.selecting = !1, this.lastClickedRow = !1, this.selectPrev = [], this.selectedRows = [], this.headerCheckboxElement = null, this.registerTableOption("selectableRows", "highlight"), this.registerTableOption("selectableRowsRangeMode", "drag"), this.registerTableOption("selectableRowsRollingSelection", !0), this.registerTableOption("selectableRowsPersistence", !0), this.registerTableOption("selectableRowsCheck", function(t, i) {
       return !0;
@@ -7223,8 +7223,8 @@ class pt extends x {
         this._deselectRow(s, !0);
   }
 }
-y(pt, "moduleName", "selectRow"), y(pt, "moduleExtensions", cn);
-class fn {
+y(mt, "moduleName", "selectRow"), y(mt, "moduleExtensions", fn);
+class pn {
   constructor(e) {
     return this._range = e, new Proxy(this, {
       get: function(t, i, s) {
@@ -7281,7 +7281,7 @@ class fn {
     this._range.destroyedGuard("remove") && this._range.destroy(!0);
   }
 }
-class pn extends _ {
+class mn extends I {
   constructor(e, t, i, s) {
     super(e), this.rangeManager = t, this.element = null, this.initialized = !1, this.initializing = {
       start: !1,
@@ -7395,7 +7395,7 @@ class pn extends _ {
     return t.length ? (i.start = t[0], i.end = t[t.length - 1]) : console.warn("No bounds defined on range"), i;
   }
   getComponent() {
-    return this.component || (this.component = new fn(this)), this.component;
+    return this.component || (this.component = new pn(this)), this.component;
   }
   destroy(e) {
     this.destroyed = !0, this.element.remove(), e && this.rangeManager.rangeRemoved(this), this.initialized && this.dispatchExternal("rangeRemoved", this.getComponent());
@@ -7404,7 +7404,7 @@ class pn extends _ {
     return this.destroyed && console.warn("You cannot call the " + e + " function on a destroyed range"), !this.destroyed;
   }
 }
-var mn = {
+var gn = {
   rangeJumpUp: ["ctrl + 38", "meta + 38"],
   rangeJumpDown: ["ctrl + 40", "meta + 40"],
   rangeJumpLeft: ["ctrl + 37", "meta + 37"],
@@ -7417,7 +7417,7 @@ var mn = {
   rangeExpandJumpDown: ["ctrl + shift + 40", "meta + shift + 40"],
   rangeExpandJumpLeft: ["ctrl + shift + 37", "meta + shift + 37"],
   rangeExpandJumpRight: ["ctrl + shift + 39", "meta + shift + 39"]
-}, gn = {
+}, bn = {
   rangeJumpLeft: function(l) {
     this.dispatch("keybinding-nav-range", l, "left", !0, !1);
   },
@@ -7454,14 +7454,14 @@ var mn = {
   rangeExpandJumpDown: function(l) {
     this.dispatch("keybinding-nav-range", l, "down", !0, !0);
   }
-}, bn = {
+}, vn = {
   range: function(l) {
     var e = [], t = this.table.modules.selectRange.activeRange, i = !1, s, n, r, o, a;
     return a = l.length, t && (s = t.getBounds(), n = s.start, s.start === s.end && (i = !0), n && (e = this.table.rowManager.activeRows.slice(), r = e.indexOf(n.row), i ? o = l.length : o = e.indexOf(s.end.row) - r + 1, r > -1 && (this.table.blockRedraw(), e = e.slice(r, r + o), e.forEach((h, d) => {
       h.updateData(l[d % a]);
     }), this.table.restoreRedraw()))), e;
   }
-}, vn = {
+}, wn = {
   range: function(l) {
     var e = [], t = [], i = this.table.modules.selectRange.activeRange, s = !1, n, r, o, a, h;
     return i && (n = i.getBounds(), r = n.start, n.start === n.end && (s = !0), r && (l = l.split(`
@@ -7474,30 +7474,30 @@ var mn = {
       }), t.push(u);
     }), t) : !1;
   }
-}, wn = {
+}, Cn = {
   range: function() {
     var l = this.modules.selectRange.selectedColumns();
     return this.columnManager.rowHeader && l.unshift(this.columnManager.rowHeader), l;
   }
-}, Cn = {
+}, yn = {
   range: function() {
     return this.modules.selectRange.selectedRows();
   }
-}, yn = {
+}, En = {
   keybindings: {
-    bindings: mn,
-    actions: gn
+    bindings: gn,
+    actions: bn
   },
   clipboard: {
-    pasteActions: bn,
-    pasteParsers: vn
+    pasteActions: vn,
+    pasteParsers: wn
   },
   export: {
-    columnLookups: wn,
-    rowLookups: Cn
+    columnLookups: Cn,
+    rowLookups: yn
   }
 };
-class _e extends x {
+class Be extends x {
   constructor(e) {
     super(e), this.selecting = "cell", this.mousedown = !1, this.ranges = [], this.overlay = null, this.rowHeader = null, this.layoutChangeTimeout = null, this.columnSelection = !1, this.rowSelection = !1, this.maxRanges = 0, this.activeRange = !1, this.blockKeydown = !1, this.keyDownEvent = this._handleKeyDown.bind(this), this.mouseUpEvent = this._handleMouseUp.bind(this), this.registerTableOption("selectableRange", !1), this.registerTableOption("selectableRangeColumns", !1), this.registerTableOption("selectableRangeRows", !1), this.registerTableOption("selectableRangeClearCells", !1), this.registerTableOption("selectableRangeClearCellsValue", void 0), this.registerTableOption("selectableRangeAutoFocus", !0), this.registerTableFunction("getRangesData", this.getRangesData.bind(this)), this.registerTableFunction("getRanges", this.getRanges.bind(this)), this.registerTableFunction("addRange", this.addRangeFromComponent.bind(this)), this.registerComponentFunction("cell", "getRanges", this.cellGetRanges.bind(this)), this.registerComponentFunction("row", "getRanges", this.rowGetRanges.bind(this)), this.registerComponentFunction("column", "getRanges", this.colGetRanges.bind(this));
   }
@@ -7635,7 +7635,7 @@ class _e extends x {
     var s = !1, n, r, o, a, h, d, u, c, f, m, g;
     if (this.table.modules.edit && this.table.modules.edit.currentCell)
       return !1;
-    if (this.ranges.length > 1 && (this.ranges = this.ranges.filter((w) => w === this.activeRange ? (w.setEnd(w.start.row, w.start.col), !0) : (w.destroy(), !1))), n = this.activeRange, o = {
+    if (this.ranges.length > 1 && (this.ranges = this.ranges.filter((v) => v === this.activeRange ? (v.setEnd(v.start.row, v.start.col), !0) : (v.destroy(), !1))), n = this.activeRange, o = {
       top: n.top,
       bottom: n.bottom,
       left: n.left,
@@ -7807,7 +7807,7 @@ class _e extends x {
   }
   addRange(e, t) {
     var i;
-    return this.maxRanges !== !0 && this.ranges.length >= this.maxRanges && this.ranges.shift().destroy(), i = new pn(this.table, this, e, t), this.activeRange = i, this.ranges.push(i), this.rangeContainer.appendChild(i.element), i;
+    return this.maxRanges !== !0 && this.ranges.length >= this.maxRanges && this.ranges.shift().destroy(), i = new mn(this.table, this, e, t), this.activeRange = i, this.ranges.push(i), this.rangeContainer.appendChild(i.element), i;
   }
   resetRanges() {
     var e, t, i;
@@ -7829,8 +7829,8 @@ class _e extends x {
     return e == null || e === "";
   }
 }
-y(_e, "moduleName", "selectRange"), y(_e, "moduleInitOrder", 1), y(_e, "moduleExtensions", yn);
-function En(l, e, t, i, s, n, r) {
+y(Be, "moduleName", "selectRange"), y(Be, "moduleInitOrder", 1), y(Be, "moduleExtensions", En);
+function Rn(l, e, t, i, s, n, r) {
   var o = r.alignEmptyValues, a = r.decimalSeparator, h = r.thousandSeparator, d = 0;
   if (l = String(l), e = String(e), h && (l = l.split(h).join(""), e = e.split(h).join("")), a && (l = l.split(a).join("."), e = e.split(a).join(".")), l = parseFloat(l), e = parseFloat(e), isNaN(l))
     d = isNaN(e) ? 0 : -1;
@@ -7840,7 +7840,7 @@ function En(l, e, t, i, s, n, r) {
     return l - e;
   return (o === "top" && n === "desc" || o === "bottom" && n === "asc") && (d *= -1), d;
 }
-function Rn(l, e, t, i, s, n, r) {
+function xn(l, e, t, i, s, n, r) {
   var o = r.alignEmptyValues, a = 0, h;
   if (!l)
     a = e ? -1 : 0;
@@ -7859,7 +7859,7 @@ function Rn(l, e, t, i, s, n, r) {
   }
   return (o === "top" && n === "desc" || o === "bottom" && n === "asc") && (a *= -1), a;
 }
-function Et(l, e, t, i, s, n, r) {
+function Rt(l, e, t, i, s, n, r) {
   var o = this.table.dependencyRegistry.lookup(["luxon", "DateTime"], "DateTime"), a = r.format || "dd/MM/yyyy HH:mm:ss", h = r.alignEmptyValues, d = 0;
   if (typeof o < "u") {
     if (o.isDateTime(l) || (a === "iso" ? l = o.fromISO(String(l)) : l = o.fromFormat(String(l), a)), o.isDateTime(e) || (a === "iso" ? e = o.fromISO(String(e)) : e = o.fromFormat(String(e), a)), !l.isValid)
@@ -7872,17 +7872,17 @@ function Et(l, e, t, i, s, n, r) {
   } else
     console.error("Sort Error - 'datetime' sorter is dependant on luxon.js");
 }
-function xn(l, e, t, i, s, n, r) {
-  return r.format || (r.format = "dd/MM/yyyy"), Et.call(this, l, e, t, i, s, n, r);
-}
 function kn(l, e, t, i, s, n, r) {
-  return r.format || (r.format = "HH:mm"), Et.call(this, l, e, t, i, s, n, r);
+  return r.format || (r.format = "dd/MM/yyyy"), Rt.call(this, l, e, t, i, s, n, r);
 }
 function Tn(l, e, t, i, s, n, r) {
+  return r.format || (r.format = "HH:mm"), Rt.call(this, l, e, t, i, s, n, r);
+}
+function Mn(l, e, t, i, s, n, r) {
   var o = l === !0 || l === "true" || l === "True" || l === 1 ? 1 : 0, a = e === !0 || e === "true" || e === "True" || e === 1 ? 1 : 0;
   return o - a;
 }
-function Mn(l, e, t, i, s, n, r) {
+function Ln(l, e, t, i, s, n, r) {
   var o = r.type || "length", a = r.alignEmptyValues, h = 0, d = this.table, u;
   r.valueMap && (typeof r.valueMap == "string" ? u = function(f) {
     return f.map((m) => F.retrieveNestedData(d.options.nestedFieldSeparator, r.valueMap, m));
@@ -7894,8 +7894,8 @@ function Mn(l, e, t, i, s, n, r) {
         m = f.length;
         break;
       case "sum":
-        m = f.reduce(function(g, w) {
-          return g + w;
+        m = f.reduce(function(g, v) {
+          return g + v;
         });
         break;
       case "max":
@@ -7905,8 +7905,8 @@ function Mn(l, e, t, i, s, n, r) {
         m = Math.min.apply(null, f);
         break;
       case "avg":
-        m = f.reduce(function(g, w) {
-          return g + w;
+        m = f.reduce(function(g, v) {
+          return g + v;
         }) / f.length;
         break;
       case "string":
@@ -7923,16 +7923,16 @@ function Mn(l, e, t, i, s, n, r) {
     return o === "string" ? String(c(l)).toLowerCase().localeCompare(String(c(e)).toLowerCase()) : c(e) - c(l);
   return (a === "top" && n === "desc" || a === "bottom" && n === "asc") && (h *= -1), h;
 }
-function Ln(l, e, t, i, s, n, r) {
+function Sn(l, e, t, i, s, n, r) {
   var o = typeof l > "u" ? 0 : 1, a = typeof e > "u" ? 0 : 1;
   return o - a;
 }
-function Sn(l, e, t, i, s, n, r) {
-  var o, a, h, d, u = 0, c, f = /(\d+)|(\D+)/g, m = /\d/, g = r.alignEmptyValues, w = 0;
+function Dn(l, e, t, i, s, n, r) {
+  var o, a, h, d, u = 0, c, f = /(\d+)|(\D+)/g, m = /\d/, g = r.alignEmptyValues, v = 0;
   if (!l && l !== 0)
-    w = !e && e !== 0 ? 0 : -1;
+    v = !e && e !== 0 ? 0 : -1;
   else if (!e && e !== 0)
-    w = 1;
+    v = 1;
   else {
     if (isFinite(l) && isFinite(e)) return l - e;
     if (o = String(l).toLowerCase(), a = String(e).toLowerCase(), o === a) return 0;
@@ -7942,18 +7942,18 @@ function Sn(l, e, t, i, s, n, r) {
         return isFinite(h) && isFinite(d) ? (h.charAt(0) === "0" && (h = "." + h), d.charAt(0) === "0" && (d = "." + d), h - d) : h > d ? 1 : -1;
     return o.length > a.length;
   }
-  return (g === "top" && n === "desc" || g === "bottom" && n === "asc") && (w *= -1), w;
+  return (g === "top" && n === "desc" || g === "bottom" && n === "asc") && (v *= -1), v;
 }
-var Dn = {
-  number: En,
-  string: Rn,
-  date: xn,
-  time: kn,
-  datetime: Et,
-  boolean: Tn,
-  array: Mn,
-  exists: Ln,
-  alphanum: Sn
+var zn = {
+  number: Rn,
+  string: xn,
+  date: kn,
+  time: Tn,
+  datetime: Rt,
+  boolean: Mn,
+  array: Ln,
+  exists: Sn,
+  alphanum: Dn
 };
 const de = class de extends x {
   constructor(e) {
@@ -8136,9 +8136,9 @@ const de = class de extends x {
   }
 };
 y(de, "moduleName", "sort"), //load defaults
-y(de, "sorters", Dn);
-let mt = de;
-class zn {
+y(de, "sorters", zn);
+let gt = de;
+class Fn {
   constructor(e, t) {
     this.columnCount = e, this.rowCount = t, this.columnString = [], this.columns = [], this.rows = [];
   }
@@ -8167,7 +8167,7 @@ class zn {
     this.columnCount = e;
   }
 }
-class si {
+class ni {
   constructor(e) {
     return this._sheet = e, new Proxy(this, {
       get: function(t, i, s) {
@@ -8209,9 +8209,9 @@ class si {
     return this._sheet.setColumns(e);
   }
 }
-class Ft extends _ {
+class Ht extends I {
   constructor(e, t) {
-    super(e.table), this.spreadsheetManager = e, this.definition = t, this.title = this.definition.title || "", this.key = this.definition.key || this.definition.title, this.rowCount = this.definition.rows, this.columnCount = this.definition.columns, this.data = this.definition.data || [], this.element = null, this.isActive = !1, this.grid = new zn(this.columnCount, this.rowCount), this.defaultColumnDefinition = { width: 100, headerHozAlign: "center", headerSort: !1 }, this.columnDefinition = Object.assign(this.defaultColumnDefinition, this.options("spreadsheetColumnDefinition")), this.columnDefs = [], this.rowDefs = [], this.columnFields = [], this.columns = [], this.rows = [], this.scrollTop = null, this.scrollLeft = null, this.initialize(), this.dispatchExternal("sheetAdded", this.getComponent());
+    super(e.table), this.spreadsheetManager = e, this.definition = t, this.title = this.definition.title || "", this.key = this.definition.key || this.definition.title, this.rowCount = this.definition.rows, this.columnCount = this.definition.columns, this.data = this.definition.data || [], this.element = null, this.isActive = !1, this.grid = new Fn(this.columnCount, this.rowCount), this.defaultColumnDefinition = { width: 100, headerHozAlign: "center", headerSort: !1 }, this.columnDefinition = Object.assign(this.defaultColumnDefinition, this.options("spreadsheetColumnDefinition")), this.columnDefs = [], this.rowDefs = [], this.columnFields = [], this.columns = [], this.rows = [], this.scrollTop = null, this.scrollLeft = null, this.initialize(), this.dispatchExternal("sheetAdded", this.getComponent());
   }
   ///////////////////////////////////
   ///////// Initialization //////////
@@ -8254,7 +8254,7 @@ class Ft extends _ {
   //////// Helper Functions /////////
   ///////////////////////////////////
   getComponent() {
-    return new si(this);
+    return new ni(this);
   }
   getDefinition() {
     return {
@@ -8299,7 +8299,7 @@ class Ft extends _ {
     this.spreadsheetManager.loadSheet(this);
   }
 }
-class ni extends x {
+class ri extends x {
   constructor(e) {
     super(e), this.sheets = [], this.element = null, this.registerTableOption("spreadsheet", !1), this.registerTableOption("spreadsheetRows", 50), this.registerTableOption("spreadsheetColumns", 50), this.registerTableOption("spreadsheetColumnDefinition", {}), this.registerTableOption("spreadsheetOutputFull", !1), this.registerTableOption("spreadsheetData", !1), this.registerTableOption("spreadsheetSheets", !1), this.registerTableOption("spreadsheetSheetTabs", !1), this.registerTableOption("spreadsheetSheetTabsElement", !1), this.registerTableFunction("setSheets", this.setSheets.bind(this)), this.registerTableFunction("addSheet", this.addSheet.bind(this)), this.registerTableFunction("getSheets", this.getSheets.bind(this)), this.registerTableFunction("getSheetDefinitions", this.getSheetDefinitions.bind(this)), this.registerTableFunction("setSheetData", this.setSheetData.bind(this)), this.registerTableFunction("getSheet", this.getSheet.bind(this)), this.registerTableFunction("getSheetData", this.getSheetData.bind(this)), this.registerTableFunction("clearSheet", this.clearSheet.bind(this)), this.registerTableFunction("removeSheet", this.removeSheetFunc.bind(this)), this.registerTableFunction("activeSheet", this.activeSheetFunc.bind(this));
   }
@@ -8353,14 +8353,14 @@ Data:     `, e), !1;
   }
   newSheet(e = {}) {
     var t;
-    return e.rows || (e.rows = this.options("spreadsheetRows")), e.columns || (e.columns = this.options("spreadsheetColumns")), t = new Ft(this, e), this.sheets.push(t), this.element && this.element.appendChild(t.element), t;
+    return e.rows || (e.rows = this.options("spreadsheetRows")), e.columns || (e.columns = this.options("spreadsheetColumns")), t = new Ht(this, e), this.sheets.push(t), this.element && this.element.appendChild(t.element), t;
   }
   removeSheet(e) {
     var t = this.sheets.indexOf(e), i;
     this.sheets.length > 1 ? t > -1 && (this.sheets.splice(t, 1), e.destroy(), this.activeSheet === e && (i = this.sheets[t - 1] || this.sheets[0], i ? this.loadSheet(i) : this.activeSheet = null)) : console.warn("Unable to remove sheet, at least one sheet must be active");
   }
   lookupSheet(e) {
-    return e ? e instanceof Ft ? e : e instanceof si ? e._sheet : this.sheets.find((t) => t.key === e) || !1 : this.activeSheet;
+    return e ? e instanceof Ht ? e : e instanceof ni ? e._sheet : this.sheets.find((t) => t.key === e) || !1 : this.activeSheet;
   }
   ///////////////////////////////////
   //////// Public Functions /////////
@@ -8403,8 +8403,8 @@ Data:     `, e), !1;
     return t ? this.loadSheet(t) : !1;
   }
 }
-y(ni, "moduleName", "spreadsheet");
-class ri extends x {
+y(ri, "moduleName", "spreadsheet");
+class oi extends x {
   constructor(e) {
     super(e), this.tooltipSubscriber = null, this.headerSubscriber = null, this.timeout = null, this.popupInstance = null, this.registerTableOption("tooltipDelay", 300), this.registerColumnOption("tooltip"), this.registerColumnOption("headerTooltip");
   }
@@ -8431,15 +8431,15 @@ class ri extends x {
     function o(a) {
       n = a;
     }
-    typeof i == "function" && (i = i(e, t.getComponent(), o)), i instanceof HTMLElement ? s = i : (s = document.createElement("div"), i === !0 && (t instanceof Fe ? i = t.value : t.definition.field ? this.langBind("columns|" + t.definition.field, (a) => {
+    typeof i == "function" && (i = i(e, t.getComponent(), o)), i instanceof HTMLElement ? s = i : (s = document.createElement("div"), i === !0 && (t instanceof ze ? i = t.value : t.definition.field ? this.langBind("columns|" + t.definition.field, (a) => {
       s.innerHTML = i = a || t.definition.title;
     }) : i = t.definition.title), s.innerHTML = i), (i || i === 0 || i === !1) && (s.classList.add("tabulator-tooltip"), s.addEventListener("mousemove", (a) => a.preventDefault()), this.popupInstance = this.popup(s), typeof n == "function" && this.popupInstance.renderCallback(n), r = this.popupInstance.containerEventCoords(e), this.popupInstance.show(r.x + 15, r.y + 15).hideOnBlur(() => {
       this.dispatchExternal("TooltipClosed", t.getComponent()), this.popupInstance = null;
     }), this.dispatchExternal("TooltipOpened", t.getComponent()));
   }
 }
-y(ri, "moduleName", "tooltip");
-var Fn = {
+y(oi, "moduleName", "tooltip");
+var Hn = {
   //is integer
   integer: function(l, e, t) {
     return e === "" || e === null || typeof e > "u" ? !0 : (e = Number(e), !isNaN(e) && isFinite(e) && Math.floor(e) === e);
@@ -8513,7 +8513,7 @@ var Fn = {
     return e !== "" && e !== null && typeof e < "u";
   }
 };
-const De = class De extends x {
+const Se = class Se extends x {
   constructor(e) {
     super(e), this.invalidCells = [], this.registerTableOption("validationMode", "blocking"), this.registerColumnOption("validator"), this.registerTableFunction("getInvalidCells", this.getInvalidCells.bind(this)), this.registerTableFunction("clearCellValidation", this.userClearCellValidation.bind(this)), this.registerTableFunction("validate", this.userValidate.bind(this)), this.registerComponentFunction("cell", "isValid", this.cellIsValid.bind(this)), this.registerComponentFunction("cell", "clearValidation", this.clearValidation.bind(this)), this.registerComponentFunction("cell", "validate", this.cellValidate.bind(this)), this.registerComponentFunction("column", "validate", this.columnValidate.bind(this)), this.registerComponentFunction("row", "validate", this.rowValidate.bind(this));
   }
@@ -8603,7 +8603,7 @@ const De = class De extends x {
     }
   }
   _buildValidator(e, t) {
-    var i = typeof e == "function" ? e : De.validators[e];
+    var i = typeof e == "function" ? e : Se.validators[e];
     return i ? {
       type: typeof e == "function" ? "function" : e,
       func: i,
@@ -8630,49 +8630,49 @@ const De = class De extends x {
     e.modules.validate && e.modules.validate.invalid && (e.getElement().classList.remove("tabulator-validation-fail"), e.modules.validate.invalid = !1, t = this.invalidCells.indexOf(e), t > -1 && this.invalidCells.splice(t, 1));
   }
 };
-y(De, "moduleName", "validate"), //load defaults
-y(De, "validators", Fn);
-let gt = De;
-var Xe = /* @__PURE__ */ Object.freeze({
+y(Se, "moduleName", "validate"), //load defaults
+y(Se, "validators", Hn);
+let bt = Se;
+var Je = /* @__PURE__ */ Object.freeze({
   __proto__: null,
-  AccessorModule: Ke,
-  AjaxModule: Qe,
-  ClipboardModule: Ze,
-  ColumnCalcsModule: et,
-  DataTreeModule: Gt,
-  DownloadModule: tt,
-  EditModule: it,
-  ExportModule: st,
-  FilterModule: nt,
-  FormatModule: rt,
-  FrozenColumnsModule: jt,
-  FrozenRowsModule: Ut,
-  GroupRowsModule: $t,
-  HistoryModule: ot,
-  HtmlTableImportModule: Xt,
-  ImportModule: at,
-  InteractionModule: Jt,
-  KeybindingsModule: lt,
-  MenuModule: Kt,
-  MoveColumnsModule: qt,
-  MoveRowsModule: ht,
-  MutatorModule: dt,
-  PageModule: ut,
-  PersistenceModule: ct,
-  PopupModule: Yt,
-  PrintModule: Qt,
-  ReactiveDataModule: Zt,
-  ResizeColumnsModule: ei,
-  ResizeRowsModule: ti,
-  ResizeTableModule: ii,
-  ResponsiveLayoutModule: ft,
-  SelectRangeModule: _e,
-  SelectRowModule: pt,
-  SortModule: mt,
-  SpreadsheetModule: ni,
-  TooltipModule: ri,
-  ValidateModule: gt
-}), Hn = {
+  AccessorModule: qe,
+  AjaxModule: Ze,
+  ClipboardModule: et,
+  ColumnCalcsModule: tt,
+  DataTreeModule: jt,
+  DownloadModule: it,
+  EditModule: st,
+  ExportModule: nt,
+  FilterModule: rt,
+  FormatModule: ot,
+  FrozenColumnsModule: Ut,
+  FrozenRowsModule: $t,
+  GroupRowsModule: Xt,
+  HistoryModule: at,
+  HtmlTableImportModule: Jt,
+  ImportModule: lt,
+  InteractionModule: Kt,
+  KeybindingsModule: ht,
+  MenuModule: qt,
+  MoveColumnsModule: Yt,
+  MoveRowsModule: dt,
+  MutatorModule: ut,
+  PageModule: ct,
+  PersistenceModule: ft,
+  PopupModule: Qt,
+  PrintModule: Zt,
+  ReactiveDataModule: ei,
+  ResizeColumnsModule: ti,
+  ResizeRowsModule: ii,
+  ResizeTableModule: si,
+  ResponsiveLayoutModule: pt,
+  SelectRangeModule: Be,
+  SelectRowModule: mt,
+  SortModule: gt,
+  SpreadsheetModule: ri,
+  TooltipModule: oi,
+  ValidateModule: bt
+}), An = {
   debugEventsExternal: !1,
   //flag to console log events
   debugEventsInternal: !1,
@@ -8737,7 +8737,7 @@ var Xe = /* @__PURE__ */ Object.freeze({
   dataReceiveParams: {},
   dependencies: {}
 };
-class oi {
+class ai {
   constructor(e, t, i = {}) {
     this.table = e, this.msgType = t, this.registeredDefaults = Object.assign({}, i);
   }
@@ -8754,7 +8754,7 @@ class oi {
     return i;
   }
 }
-class Ie extends _ {
+class Ne extends I {
   constructor(e) {
     super(e), this.elementVertical = e.rowManager.element, this.elementHorizontal = e.columnManager.element, this.tableElement = e.rowManager.tableElement, this.verticalFillMode = "fit";
   }
@@ -8842,7 +8842,7 @@ class Ie extends _ {
     });
   }
 }
-class Pn extends Ie {
+class Pn extends Ne {
   constructor(e) {
     super(e);
   }
@@ -8860,7 +8860,7 @@ class Pn extends Ie {
     });
   }
 }
-class An extends Ie {
+class On extends Ne {
   constructor(e) {
     super(e), this.leftCol = 0, this.rightCol = 0, this.scrollLeft = 0, this.vDomScrollPosLeft = 0, this.vDomScrollPosRight = 0, this.vDomPadLeft = 0, this.vDomPadRight = 0, this.fitDataColAvg = 0, this.windowBuffer = 200, this.visibleRows = null, this.initialized = !1, this.isFitData = !1, this.columns = [];
   }
@@ -9084,9 +9084,9 @@ class An extends Ie {
     }
   }
 }
-class On extends _ {
+class _n extends I {
   constructor(e) {
-    super(e), this.blockHozScrollEvent = !1, this.headersElement = null, this.contentsElement = null, this.rowHeader = null, this.element = null, this.columns = [], this.columnsByIndex = [], this.columnsByField = {}, this.scrollLeft = 0, this.optionsList = new oi(this.table, "column definition", Wt), this.redrawBlock = !1, this.redrawBlockUpdate = null, this.renderer = null;
+    super(e), this.blockHozScrollEvent = !1, this.headersElement = null, this.contentsElement = null, this.rowHeader = null, this.element = null, this.columns = [], this.columnsByIndex = [], this.columnsByField = {}, this.scrollLeft = 0, this.optionsList = new ai(this.table, "column definition", Gt), this.redrawBlock = !1, this.redrawBlockUpdate = null, this.renderer = null;
   }
   ////////////// Setup Functions /////////////////
   initialize() {
@@ -9097,7 +9097,7 @@ class On extends _ {
   }
   initializeRenderer() {
     var e, t = {
-      virtual: An,
+      virtual: On,
       basic: Pn
     };
     typeof this.table.options.renderHorizontal == "string" ? e = t[this.table.options.renderHorizontal] : e = this.table.options.renderHorizontal, e ? (this.renderer = new e(this.table, this.element, this.tableElement), this.renderer.initialize()) : console.error("Unable to find matching renderer:", this.table.options.renderHorizontal);
@@ -9233,7 +9233,7 @@ class On extends _ {
     if (typeof e == "object") {
       if (e instanceof ce)
         return e;
-      if (e instanceof Nt)
+      if (e instanceof Wt)
         return e._getSelf() || !1;
       if (typeof HTMLElement < "u" && e instanceof HTMLElement)
         return t = [], this.columns.forEach((s) => {
@@ -9380,7 +9380,7 @@ class On extends _ {
     F.elVisible(this.element) && this.verticalAlignHeaders(), e && (this.table.rowManager.resetScroll(), this.table.rowManager.reinitialize()), this.confirm("table-redrawing", e) || this.layoutRefresh(e), this.dispatch("table-redraw", e), this.table.footerManager.redraw();
   }
 }
-class _n extends Ie {
+class Bn extends Ne {
   constructor(e) {
     super(e), this.verticalFillMode = "fill", this.scrollTop = 0, this.scrollLeft = 0, this.scrollTop = 0, this.scrollLeft = 0;
   }
@@ -9413,7 +9413,7 @@ class _n extends Ie {
     return this.rows();
   }
 }
-class Bn extends Ie {
+class Vn extends Ne {
   constructor(e) {
     super(e), this.verticalFillMode = "fill", this.scrollTop = 0, this.scrollLeft = 0, this.vDomRowHeight = 20, this.vDomTop = 0, this.vDomBottom = 0, this.vDomScrollPosTop = 0, this.vDomScrollPosBottom = 0, this.vDomTopPad = 0, this.vDomBottomPad = 0, this.vDomMaxRenderChain = 90, this.vDomWindowBuffer = 0, this.vDomWindowMinTotalRows = 20, this.vDomWindowMinMarginRows = 5, this.vDomTopNewRows = [], this.vDomBottomNewRows = [];
   }
@@ -9487,7 +9487,7 @@ class Bn extends Ie {
   //////////////////////////////////////
   //full virtual render
   _virtualRenderFill(e, t, i) {
-    var s = this.tableElement, n = this.elementVertical, r = 0, o = 0, a = 0, h = 0, d = 0, u = 0, c = this.rows(), f = c.length, m = 0, g, w, b = [], k = 0, S = 0, P = this.table.rowManager.fixedHeight, D = this.elementVertical.clientHeight, B = this.table.options.rowHeight, Z = !0;
+    var s = this.tableElement, n = this.elementVertical, r = 0, o = 0, a = 0, h = 0, d = 0, u = 0, c = this.rows(), f = c.length, m = 0, g, v, b = [], k = 0, S = 0, A = this.table.rowManager.fixedHeight, D = this.elementVertical.clientHeight, B = this.table.options.rowHeight, Q = !0;
     if (e = e || 0, i = i || 0, !e)
       this.clear();
     else {
@@ -9495,18 +9495,18 @@ class Bn extends Ie {
       h = (f - e + 1) * this.vDomRowHeight, h < D && (e -= Math.ceil((D - h) / this.vDomRowHeight), e < 0 && (e = 0)), r = Math.min(Math.max(Math.floor(this.vDomWindowBuffer / this.vDomRowHeight), this.vDomWindowMinMarginRows), e), e -= r;
     }
     if (f && F.elVisible(this.elementVertical)) {
-      for (this.vDomTop = e, this.vDomBottom = e - 1, P || this.table.options.maxHeight ? (B && (S = D / B + this.vDomWindowBuffer / B), S = Math.max(this.vDomWindowMinTotalRows, Math.ceil(S))) : S = f; (S == f || o <= D + this.vDomWindowBuffer || k < this.vDomWindowMinTotalRows) && this.vDomBottom < f - 1; ) {
-        for (b = [], w = document.createDocumentFragment(), u = 0; u < S && this.vDomBottom < f - 1; )
-          m = this.vDomBottom + 1, g = c[m], this.styleRow(g, m), g.initialize(!1, !0), !g.heightInitialized && !this.table.options.rowHeight && g.clearCellHeight(), w.appendChild(g.getElement()), b.push(g), this.vDomBottom++, u++;
+      for (this.vDomTop = e, this.vDomBottom = e - 1, A || this.table.options.maxHeight ? (B && (S = D / B + this.vDomWindowBuffer / B), S = Math.max(this.vDomWindowMinTotalRows, Math.ceil(S))) : S = f; (S == f || o <= D + this.vDomWindowBuffer || k < this.vDomWindowMinTotalRows) && this.vDomBottom < f - 1; ) {
+        for (b = [], v = document.createDocumentFragment(), u = 0; u < S && this.vDomBottom < f - 1; )
+          m = this.vDomBottom + 1, g = c[m], this.styleRow(g, m), g.initialize(!1, !0), !g.heightInitialized && !this.table.options.rowHeight && g.clearCellHeight(), v.appendChild(g.getElement()), b.push(g), this.vDomBottom++, u++;
         if (!b.length)
           break;
-        s.appendChild(w), b.forEach((O) => {
-          O.rendered(), O.heightInitialized || O.calcHeight(!0);
-        }), b.forEach((O) => {
-          O.heightInitialized || O.setCellHeight();
-        }), b.forEach((O) => {
-          a = O.getHeight(), k < r ? d += a : o += a, a > this.vDomWindowBuffer && (this.vDomWindowBuffer = a * 2), k++;
-        }), Z = this.table.rowManager.adjustTableSize(), D = this.elementVertical.clientHeight, Z && (P || this.table.options.maxHeight) && (B = o / k, S = Math.max(this.vDomWindowMinTotalRows, Math.ceil(D / B + this.vDomWindowBuffer / B)));
+        s.appendChild(v), b.forEach((V) => {
+          V.rendered(), V.heightInitialized || V.calcHeight(!0);
+        }), b.forEach((V) => {
+          V.heightInitialized || V.setCellHeight();
+        }), b.forEach((V) => {
+          a = V.getHeight(), k < r ? d += a : o += a, a > this.vDomWindowBuffer && (this.vDomWindowBuffer = a * 2), k++;
+        }), Q = this.table.rowManager.adjustTableSize(), D = this.elementVertical.clientHeight, Q && (A || this.table.options.maxHeight) && (B = o / k, S = Math.max(this.vDomWindowMinTotalRows, Math.ceil(D / B + this.vDomWindowBuffer / B)));
       }
       e ? (this.vDomTopPad = t ? this.vDomRowHeight * this.vDomTop + i : this.scrollTop - d, this.vDomBottomPad = this.vDomBottom == f - 1 ? 0 : Math.max(this.vDomScrollHeight - this.vDomTopPad - o - d, 0)) : (this.vDomTopPad = 0, this.vDomRowHeight = Math.floor((o + d) / k), this.vDomBottomPad = this.vDomRowHeight * (f - this.vDomBottom - 1), this.vDomScrollHeight = d + o + this.vDomBottomPad - D), s.style.paddingTop = this.vDomTopPad + "px", s.style.paddingBottom = this.vDomBottomPad + "px", t && (this.scrollTop = this.vDomTopPad + d + i - (this.elementVertical.scrollWidth > this.elementVertical.clientWidth ? this.elementVertical.offsetHeight - D : 0)), this.scrollTop = Math.min(this.scrollTop, this.elementVertical.scrollHeight - D), this.elementVertical.scrollWidth > this.elementVertical.clientWidth && t && (this.scrollTop += this.elementVertical.offsetHeight - D), this.vDomScrollPosTop = this.scrollTop, this.vDomScrollPosBottom = this.scrollTop, n.scrollTop = this.scrollTop, this.dispatch("render-virtual-fill");
     }
@@ -9560,7 +9560,7 @@ class Bn extends Ie {
       t.setCellHeight();
   }
 }
-class Vn extends _ {
+class In extends I {
   constructor(e) {
     super(e), this.element = this.createHolderElement(), this.tableElement = this.createTableElement(), this.heightFixer = this.createTableElement(), this.placeholder = null, this.placeholderContents = null, this.firstRender = !1, this.renderMode = "virtual", this.fixedHeight = !1, this.rows = [], this.activeRowsPipeline = [], this.activeRows = [], this.activeRowsCount = 0, this.displayRows = [], this.displayRowsCount = 0, this.scrollTop = 0, this.scrollLeft = 0, this.redrawBlock = !1, this.redrawBlockRestoreConfig = !1, this.redrawBlockRenderInPosition = !1, this.dataPipeline = [], this.displayPipeline = [], this.scrollbarWidth = 0, this.renderer = null;
   }
@@ -9601,9 +9601,9 @@ class Vn extends _ {
   ////////////////// Row Manipulation //////////////////
   findRow(e) {
     if (typeof e == "object") {
-      if (e instanceof I)
+      if (e instanceof N)
         return e;
-      if (e instanceof Be)
+      if (e instanceof Ve)
         return e._getSelf() || !1;
       if (typeof HTMLElement < "u" && e instanceof HTMLElement)
         return this.rows.find((i) => i.getElement() === e) || !1;
@@ -9633,7 +9633,7 @@ class Vn extends _ {
   _setDataActual(e, t) {
     this.dispatchExternal("dataProcessing", e), this._wipeElements(), Array.isArray(e) ? (this.dispatch("data-processing", e), e.forEach((i, s) => {
       if (i && typeof i == "object") {
-        var n = new I(i, this);
+        var n = new N(i, this);
         this.rows.push(n);
       } else
         console.warn("Data Loading Warning - Invalid row data detected and ignored, expecting object but received:", i);
@@ -9675,7 +9675,7 @@ Data:     `, e);
     return typeof e > "u" && (e = this.table.options.addRowPos), e === "pos" && (e = !0), e === "bottom" && (e = !1), e;
   }
   addRowActual(e, t, i, s) {
-    var n = e instanceof I ? e : new I(e || {}, this), r = this.findAddRowPos(t), o = -1, a, h;
+    var n = e instanceof N ? e : new N(e || {}, this), r = this.findAddRowPos(t), o = -1, a, h;
     return i || (h = this.chain("row-adding-position", [n, r], null, { index: i, top: r }), i = h.index, r = h.top), typeof i < "u" && (i = this.findRow(i)), i = this.chain("row-adding-index", [n, i, r], null, i), i && (o = this.rows.indexOf(i)), i && o > -1 ? (a = this.activeRows.indexOf(i), this.displayRowIterator(function(d) {
       var u = d.indexOf(i);
       u > -1 && d.splice(r ? u : u + 1, 0, n);
@@ -9713,11 +9713,11 @@ Data:     `, e);
   }
   nextDisplayRow(e, t) {
     var i = this.getDisplayRowIndex(e), s = !1;
-    return i !== !1 && i < this.displayRowsCount - 1 && (s = this.getDisplayRows()[i + 1]), s && (!(s instanceof I) || s.type != "row") ? this.nextDisplayRow(s, t) : s;
+    return i !== !1 && i < this.displayRowsCount - 1 && (s = this.getDisplayRows()[i + 1]), s && (!(s instanceof N) || s.type != "row") ? this.nextDisplayRow(s, t) : s;
   }
   prevDisplayRow(e, t) {
     var i = this.getDisplayRowIndex(e), s = !1;
-    return i && (s = this.getDisplayRows()[i - 1]), t && s && (!(s instanceof I) || s.type != "row") ? this.prevDisplayRow(s, t) : s;
+    return i && (s = this.getDisplayRows()[i - 1]), t && s && (!(s instanceof N) || s.type != "row") ? this.prevDisplayRow(s, t) : s;
   }
   findRowIndex(e, t) {
     var i;
@@ -9855,8 +9855,8 @@ Data:     `, e);
   }
   initializeRenderer() {
     var e, t = {
-      virtual: Bn,
-      basic: _n
+      virtual: Vn,
+      basic: Bn
     };
     typeof this.table.options.renderVertical == "string" ? e = t[this.table.options.renderVertical] : e = this.table.options.renderVertical, e ? (this.renderMode = this.table.options.renderVertical, this.renderer = new e(this.table, this.element, this.tableElement), this.renderer.initialize(), (this.table.element.clientHeight || this.table.options.height) && !(this.table.options.minHeight && this.table.options.maxHeight) ? this.fixedHeight = !0 : this.fixedHeight = !1) : console.error("Unable to find matching renderer:", this.table.options.renderVertical);
   }
@@ -9939,7 +9939,7 @@ Data:     `, e);
       this.element.dispatchEvent(new Event("scroll"));
   }
 }
-class In extends _ {
+class Nn extends I {
   constructor(e) {
     super(e), this.active = !1, this.element = this.createElement(), this.containerElement = this.createContainerElement(), this.external = !1;
   }
@@ -9987,7 +9987,7 @@ class In extends _ {
     this.dispatch("footer-redraw");
   }
 }
-class Nn extends _ {
+class Wn extends I {
   constructor(e) {
     super(e), this.el = null, this.abortClasses = ["tabulator-headers", "tabulator-table"], this.previousTargets = {}, this.listeners = [
       "click",
@@ -10111,7 +10111,7 @@ class Nn extends _ {
             s.components.includes("column") && (h = this.table.columnManager.findColumn(d));
             break;
           case "cell":
-            s.components.includes("cell") && (n.row instanceof I ? h = n.row.findCell(d) : t.row && console.warn("Event Target Lookup Error - The row this cell is attached to cannot be found, has the table been reinitialized without being destroyed first?"));
+            s.components.includes("cell") && (n.row instanceof N ? h = n.row.findCell(d) : t.row && console.warn("Event Target Lookup Error - The row this cell is attached to cannot be found, has the table been reinitialized without being destroyed first?"));
             break;
         }
       h && (n[a] = h, o[a] = {
@@ -10136,7 +10136,7 @@ class Nn extends _ {
     }
   }
 }
-class Wn {
+class Gn {
   constructor(e) {
     this.table = e, this.bindings = {};
   }
@@ -10149,7 +10149,7 @@ class Wn {
     i !== "then" && typeof i == "string" && !i.startsWith("_") && this.table.options.debugInvalidComponentFuncs && console.error("The " + e + " component does not have a " + i + " function, have you checked that you have the correct Tabulator module installed?");
   }
 }
-class Gn extends _ {
+class jn extends I {
   constructor(e) {
     super(e), this.requestOrder = 0, this.loading = !1;
   }
@@ -10206,7 +10206,7 @@ class Gn extends _ {
     this.table.alertManager.clear();
   }
 }
-class jn {
+class Un {
   constructor(e, t, i) {
     this.table = e, this.events = {}, this.optionsList = t || {}, this.subscriptionNotifiers = {}, this.dispatch = i ? this._debugDispatch.bind(this) : this._dispatch.bind(this), this.debug = i;
   }
@@ -10255,7 +10255,7 @@ class jn {
     return e[0] = "ExternalEvent:" + e[0], (this.debug === !0 || this.debug.includes(t)) && console.log(...e), this._dispatch(...arguments);
   }
 }
-class Un {
+class $n {
   constructor(e) {
     this.events = {}, this.subscriptionNotifiers = {}, this.dispatch = e ? this._debugDispatch.bind(this) : this._dispatch.bind(this), this.chain = e ? this._debugChain.bind(this) : this._chain.bind(this), this.confirm = e ? this._debugConfirm.bind(this) : this._confirm.bind(this), this.debug = e;
   }
@@ -10321,7 +10321,7 @@ class Un {
     return e[0] = "InternalEvent:" + t, (this.debug === !0 || this.debug.includes(t)) && console.log(...e), this._confirm(...arguments);
   }
 }
-class $n extends _ {
+class Xn extends I {
   constructor(e) {
     super(e);
   }
@@ -10339,7 +10339,7 @@ class $n extends _ {
     this._warnUser(e);
   }
 }
-class Xn extends _ {
+class Jn extends I {
   constructor(e) {
     super(e), this.deps = {}, this.props = {};
   }
@@ -10374,48 +10374,48 @@ class Xn extends _ {
     console.error("Unable to find dependency", e, "Please check documentation and ensure you have imported the required library into your project");
   }
 }
-function Jn(l, e) {
+function Kn(l, e) {
   e && this.table.columnManager.renderer.reinitializeColumnWidths(l), this.table.options.responsiveLayout && this.table.modExists("responsiveLayout", !0) && this.table.modules.responsiveLayout.update();
 }
-function Ht(l, e) {
+function At(l, e) {
   l.forEach(function(t) {
     t.reinitializeWidth();
   }), this.table.options.responsiveLayout && this.table.modExists("responsiveLayout", !0) && this.table.modules.responsiveLayout.update();
 }
-function Kn(l, e) {
+function qn(l, e) {
   var t = 0, i = this.table.rowManager.element.clientWidth, s = 0, n = !1;
   l.forEach((r, o) => {
     r.widthFixed || r.reinitializeWidth(), (this.table.options.responsiveLayout ? r.modules.responsive.visible : r.visible) && (n = r), r.visible && (t += r.getWidth());
   }), n ? (s = i - t + n.getWidth(), this.table.options.responsiveLayout && this.table.modExists("responsiveLayout", !0) && (n.setWidth(0), this.table.modules.responsiveLayout.update()), s > 0 ? n.setWidth(s) : n.reinitializeWidth()) : this.table.options.responsiveLayout && this.table.modExists("responsiveLayout", !0) && this.table.modules.responsiveLayout.update();
 }
-function qn(l, e) {
+function Yn(l, e) {
   var t = this.table.rowManager.element.getBoundingClientRect().width, i = 0, s = 0, n = 0, r = 0, o = [], a = [], h = 0, d = 0, u = 0;
   function c(m) {
     var g;
     return typeof m == "string" ? m.indexOf("%") > -1 ? g = t / 100 * parseInt(m) : g = parseInt(m) : g = m, g;
   }
-  function f(m, g, w, b) {
-    var k = [], S = 0, P = 0, D = 0, B = n, Z = 0, O = 0, we = [];
+  function f(m, g, v, b) {
+    var k = [], S = 0, A = 0, D = 0, B = n, Q = 0, V = 0, Ce = [];
+    function Fe(T) {
+      return v * (T.column.definition.widthGrow || 1);
+    }
     function He(T) {
-      return w * (T.column.definition.widthGrow || 1);
+      return c(T.width) - v * (T.column.definition.widthShrink || 0);
     }
-    function Ce(T) {
-      return c(T.width) - w * (T.column.definition.widthShrink || 0);
-    }
-    return m.forEach(function(T, ye) {
-      var K = b ? Ce(T) : He(T);
-      T.column.minWidth >= K ? k.push(T) : T.column.maxWidth && T.column.maxWidth < K ? (T.width = T.column.maxWidth, g -= T.column.maxWidth, B -= b ? T.column.definition.widthShrink || 1 : T.column.definition.widthGrow || 1, B && (w = Math.floor(g / B))) : (we.push(T), O += b ? T.column.definition.widthShrink || 1 : T.column.definition.widthGrow || 1);
+    return m.forEach(function(T, Ae) {
+      var oe = b ? He(T) : Fe(T);
+      T.column.minWidth >= oe ? k.push(T) : T.column.maxWidth && T.column.maxWidth < oe ? (T.width = T.column.maxWidth, g -= T.column.maxWidth, B -= b ? T.column.definition.widthShrink || 1 : T.column.definition.widthGrow || 1, B && (v = Math.floor(g / B))) : (Ce.push(T), V += b ? T.column.definition.widthShrink || 1 : T.column.definition.widthGrow || 1);
     }), k.length ? (k.forEach(function(T) {
       S += b ? T.width - T.column.minWidth : T.column.minWidth, T.width = T.column.minWidth;
-    }), P = g - S, D = O ? Math.floor(P / O) : P, Z = f(we, P, D, b)) : (Z = O ? g - Math.floor(g / O) * O : g, we.forEach(function(T) {
-      T.width = b ? Ce(T) : He(T);
-    })), Z;
+    }), A = g - S, D = V ? Math.floor(A / V) : A, Q = f(Ce, A, D, b)) : (Q = V ? g - Math.floor(g / V) * V : g, Ce.forEach(function(T) {
+      T.width = b ? He(T) : Fe(T);
+    })), Q;
   }
   this.table.options.responsiveLayout && this.table.modExists("responsiveLayout", !0) && this.table.modules.responsiveLayout.update(), this.table.rowManager.element.scrollHeight > this.table.rowManager.element.clientHeight && (t -= this.table.rowManager.element.offsetWidth - this.table.rowManager.element.clientWidth), l.forEach(function(m) {
-    var g, w, b;
-    m.visible && (g = m.definition.width, w = parseInt(m.minWidth), g ? (b = c(g), i += b > w ? b : w, m.definition.widthShrink && (a.push({
+    var g, v, b;
+    m.visible && (g = m.definition.width, v = parseInt(m.minWidth), g ? (b = c(g), i += b > v ? b : v, m.definition.widthShrink && (a.push({
       column: m,
-      width: b > w ? b : w
+      width: b > v ? b : v
     }), h += m.definition.widthShrink)) : (o.push({
       column: m,
       width: 0
@@ -10428,21 +10428,21 @@ function qn(l, e) {
     m.column.setWidth(m.width);
   });
 }
-var Yn = {
-  fitData: Jn,
-  fitDataFill: Ht,
-  fitDataTable: Ht,
-  fitDataStretch: Kn,
-  fitColumns: qn
+var Qn = {
+  fitData: Kn,
+  fitDataFill: At,
+  fitDataTable: At,
+  fitDataStretch: qn,
+  fitColumns: Yn
 };
-const ve = class ve extends x {
+const we = class we extends x {
   constructor(e) {
     super(e, "layout"), this.mode = null, this.registerTableOption("layout", "fitData"), this.registerTableOption("layoutColumnsOnNewData", !1), this.registerColumnOption("widthGrow"), this.registerColumnOption("widthShrink");
   }
   //initialize layout system
   initialize() {
     var e = this.table.options.layout;
-    ve.modes[e] ? this.mode = e : (console.warn("Layout Error - invalid mode set, defaulting to 'fitData' : " + e), this.mode = "fitData"), this.table.element.setAttribute("tabulator-layout", this.mode), this.subscribe("column-init", this.initializeColumn.bind(this));
+    we.modes[e] ? this.mode = e : (console.warn("Layout Error - invalid mode set, defaulting to 'fitData' : " + e), this.mode = "fitData"), this.table.element.setAttribute("tabulator-layout", this.mode), this.subscribe("column-init", this.initializeColumn.bind(this));
   }
   initializeColumn(e) {
     e.definition.widthGrow && (e.definition.widthGrow = Number(e.definition.widthGrow)), e.definition.widthShrink && (e.definition.widthShrink = Number(e.definition.widthShrink));
@@ -10453,13 +10453,13 @@ const ve = class ve extends x {
   //trigger table layout
   layout(e) {
     var t = this.table.columnManager.columnsByIndex.find((i) => i.definition.variableHeight || i.definition.formatter === "textarea");
-    this.dispatch("layout-refreshing"), ve.modes[this.mode].call(this, this.table.columnManager.columnsByIndex, e), t && this.table.rowManager.normalizeHeight(!0), this.dispatch("layout-refreshed");
+    this.dispatch("layout-refreshing"), we.modes[this.mode].call(this, this.table.columnManager.columnsByIndex, e), t && this.table.rowManager.normalizeHeight(!0), this.dispatch("layout-refreshed");
   }
 };
-y(ve, "moduleName", "layout"), //load defaults
-y(ve, "modes", Yn);
-let bt = ve;
-var Qn = {
+y(we, "moduleName", "layout"), //load defaults
+y(we, "modes", Qn);
+let vt = we;
+var Zn = {
   default: {
     //hold default locale text
     groups: {
@@ -10496,12 +10496,12 @@ var Qn = {
     }
   }
 };
-const ze = class ze extends x {
+const De = class De extends x {
   constructor(e) {
     super(e), this.locale = "default", this.lang = !1, this.bindings = {}, this.langList = {}, this.registerTableOption("locale", !1), this.registerTableOption("langs", {});
   }
   initialize() {
-    this.langList = F.deepClone(ze.langs), this.table.options.columnDefaults.headerFilterPlaceholder !== !1 && this.setHeaderFilterPlaceholder(this.table.options.columnDefaults.headerFilterPlaceholder);
+    this.langList = F.deepClone(De.langs), this.table.options.columnDefaults.headerFilterPlaceholder !== !1 && this.setHeaderFilterPlaceholder(this.table.options.columnDefaults.headerFilterPlaceholder);
     for (let e in this.table.options.langs)
       this.installLang(e, this.table.options.langs[e]);
     this.setLocale(this.table.options.locale), this.registerTableFunction("setLocale", this.setLocale.bind(this)), this.registerTableFunction("getLocale", this.getLocale.bind(this)), this.registerTableFunction("getLang", this.getLang.bind(this));
@@ -10564,10 +10564,10 @@ const ze = class ze extends x {
       });
   }
 };
-y(ze, "moduleName", "localize"), //load defaults
-y(ze, "langs", Qn);
-let vt = ze;
-class ai extends x {
+y(De, "moduleName", "localize"), //load defaults
+y(De, "langs", Zn);
+let wt = De;
+class li extends x {
   constructor(e) {
     super(e);
   }
@@ -10592,12 +10592,12 @@ class ai extends x {
     console.warn("Inter-table Comms Error - no such module:", t);
   }
 }
-y(ai, "moduleName", "comms");
-var Zn = /* @__PURE__ */ Object.freeze({
+y(li, "moduleName", "comms");
+var er = /* @__PURE__ */ Object.freeze({
   __proto__: null,
-  CommsModule: ai,
-  LayoutModule: bt,
-  LocalizeModule: vt
+  CommsModule: li,
+  LayoutModule: vt,
+  LocalizeModule: wt
 });
 const j = class j {
   static findTable(e) {
@@ -10631,13 +10631,13 @@ y(j, "registry", {
     });
   }
 });
-let wt = j;
-const L = class L extends wt {
+let Ct = j;
+const L = class L extends Ct {
   constructor() {
     super();
   }
   static initializeModuleBinder(e) {
-    L.modulesRegistered || (L.modulesRegistered = !0, L._registerModules(Zn, !0), e && L._registerModules(e));
+    L.modulesRegistered || (L.modulesRegistered = !0, L._registerModules(er, !0), e && L._registerModules(e));
   }
   static _extendModule(e, t, i) {
     if (L.moduleBindings[e]) {
@@ -10701,8 +10701,8 @@ const L = class L extends wt {
   }
 };
 y(L, "moduleBindings", {}), y(L, "moduleExtensions", {}), y(L, "modulesRegistered", !1), y(L, "defaultModules", !1);
-let Ct = L;
-class er extends _ {
+let yt = L;
+class tr extends I {
   constructor(e) {
     super(e), this.element = this._createAlertElement(), this.msgElement = this._createMsgElement(), this.type = null, this.element.appendChild(this.msgElement);
   }
@@ -10727,15 +10727,15 @@ class er extends _ {
     this.dispatch("alert-hide", this.type), this.element.parentNode && this.element.parentNode.removeChild(this.element), this.msgElement.classList.remove(this._typeClass());
   }
 }
-const Q = class Q extends Ct {
+const Y = class Y extends yt {
   static extendModule() {
-    Q.initializeModuleBinder(), Q._extendModule(...arguments);
+    Y.initializeModuleBinder(), Y._extendModule(...arguments);
   }
   static registerModule() {
-    Q.initializeModuleBinder(), Q._registerModule(...arguments);
+    Y.initializeModuleBinder(), Y._registerModule(...arguments);
   }
   constructor(e, t, i) {
-    super(), Q.initializeModuleBinder(i), this.options = {}, this.columnManager = null, this.rowManager = null, this.footerManager = null, this.alertManager = null, this.vdomHoz = null, this.externalEvents = null, this.eventBus = null, this.interactionMonitor = !1, this.browser = "", this.browserSlow = !1, this.browserMobile = !1, this.rtl = !1, this.originalElement = null, this.componentFunctionBinder = new Wn(this), this.dataLoader = !1, this.modules = {}, this.modulesCore = [], this.modulesRegular = [], this.deprecationAdvisor = new $n(this), this.optionsList = new oi(this, "table constructor"), this.dependencyRegistry = new Xn(this), this.initialized = !1, this.destroyed = !1, this.initializeElement(e) && (this.initializeCoreSystems(t), setTimeout(() => {
+    super(), Y.initializeModuleBinder(i), this.options = {}, this.columnManager = null, this.rowManager = null, this.footerManager = null, this.alertManager = null, this.vdomHoz = null, this.externalEvents = null, this.eventBus = null, this.interactionMonitor = !1, this.browser = "", this.browserSlow = !1, this.browserMobile = !1, this.rtl = !1, this.originalElement = null, this.componentFunctionBinder = new Gn(this), this.dataLoader = !1, this.modules = {}, this.modulesCore = [], this.modulesRegular = [], this.deprecationAdvisor = new Xn(this), this.optionsList = new ai(this, "table constructor"), this.dependencyRegistry = new Jn(this), this.initialized = !1, this.destroyed = !1, this.initializeElement(e) && (this.initializeCoreSystems(t), setTimeout(() => {
       this._create();
     })), this.constructor.registry.register(this);
   }
@@ -10743,7 +10743,7 @@ const Q = class Q extends Ct {
     return typeof HTMLElement < "u" && e instanceof HTMLElement ? (this.element = e, !0) : typeof e == "string" ? (this.element = document.querySelector(e), this.element ? !0 : (console.error("Tabulator Creation Error - no element found matching selector: ", e), !1)) : (console.error("Tabulator Creation Error - Invalid element provided:", e), !1);
   }
   initializeCoreSystems(e) {
-    this.columnManager = new On(this), this.rowManager = new Vn(this), this.footerManager = new In(this), this.dataLoader = new Gn(this), this.alertManager = new er(this), this._bindModules(), this.options = this.optionsList.generate(Q.defaultOptions, e), this._clearObjectPointers(), this._mapDeprecatedFunctionality(), this.externalEvents = new jn(this, this.options, this.options.debugEventsExternal), this.eventBus = new Un(this.options.debugEventsInternal), this.interactionMonitor = new Nn(this), this.dataLoader.initialize(), this.footerManager.initialize(), this.dependencyRegistry.initialize();
+    this.columnManager = new _n(this), this.rowManager = new In(this), this.footerManager = new Nn(this), this.dataLoader = new jn(this), this.alertManager = new tr(this), this._bindModules(), this.options = this.optionsList.generate(Y.defaultOptions, e), this._clearObjectPointers(), this._mapDeprecatedFunctionality(), this.externalEvents = new Un(this, this.options, this.options.debugEventsExternal), this.eventBus = new $n(this.options.debugEventsInternal), this.interactionMonitor = new Wn(this), this.dataLoader.initialize(), this.footerManager.initialize(), this.dependencyRegistry.initialize();
   }
   //convert deprecated functionality to new functions
   _mapDeprecatedFunctionality() {
@@ -11035,31 +11035,31 @@ const Q = class Q extends Ct {
   }
 };
 //default setup options
-y(Q, "defaultOptions", Hn);
-let yt = Q;
-var ke = yt;
-class tr extends ke {
+y(Y, "defaultOptions", An);
+let Et = Y;
+var xe = Et;
+class ir extends xe {
   static extendModule() {
-    ke.initializeModuleBinder(Xe), ke._extendModule(...arguments);
+    xe.initializeModuleBinder(Je), xe._extendModule(...arguments);
   }
   static registerModule() {
-    ke.initializeModuleBinder(Xe), ke._registerModule(...arguments);
+    xe.initializeModuleBinder(Je), xe._registerModule(...arguments);
   }
   constructor(e, t, i) {
-    super(e, t, Xe);
+    super(e, t, Je);
   }
 }
-var ir = tr;
-const sr = { class: "thesis-item" }, nr = { class: "thesis-expand-icon" }, rr = { class: "thesis-info" }, or = { class: "thesis-title" }, ar = {
+var sr = ir;
+const nr = { class: "thesis-item" }, rr = { class: "thesis-expand-icon" }, or = { class: "thesis-info" }, ar = { class: "thesis-title" }, lr = {
   key: 0,
   class: "thesis-parent-badge"
-}, lr = {
+}, hr = {
   key: 0,
   class: "thesis-description"
-}, hr = { class: "thesis-actions" }, dr = {
+}, dr = { class: "thesis-actions" }, ur = {
   key: 0,
   class: "stocks-section"
-}, ur = { class: "stocks-header" }, cr = /* @__PURE__ */ Pt({
+}, cr = { class: "stocks-header" }, fr = /* @__PURE__ */ Pt({
   __name: "ThesisItem",
   props: {
     thesis: {},
@@ -11070,7 +11070,7 @@ const sr = { class: "thesis-item" }, nr = { class: "thesis-expand-icon" }, rr = 
     editingValue: {},
     stockResources: {}
   },
-  emits: ["toggle", "edit", "delete", "add-stock", "delete-stock", "start-edit-cell", "save-edit", "cancel-edit", "get-cell-metadata", "update-editing-value", "add-resource"],
+  emits: ["toggle", "edit", "delete", "add-stock", "delete-stock", "start-edit-cell", "save-edit", "cancel-edit", "get-cell-metadata", "update-editing-value", "add-resource", "delete-resource"],
   setup(l, { emit: e }) {
     const t = l, i = e, s = H(null);
     let n = null;
@@ -11181,8 +11181,8 @@ const sr = { class: "thesis-item" }, nr = { class: "thesis-expand-icon" }, rr = 
           formatter: (d) => {
             const u = d.getData();
             return u.isResource ? a(d) : `
-          <button class="tab-btn-add-resource" data-stock-id="${u.id}">➕</button>
-          <button class="tab-btn-delete-stock" data-stock-id="${u.id}">🗑️</button>
+          <button class="tab-btn-add-resource" data-stock-id="${u.id}" title="Add Resource">➕</button>
+          <button class="tab-btn-delete-stock" data-stock-id="${u.id}" title="Delete Stock">🗑️</button>
         `;
           },
           cellClick: (d, u) => {
@@ -11194,7 +11194,8 @@ const sr = { class: "thesis-item" }, nr = { class: "thesis-expand-icon" }, rr = 
     }
     function a(d) {
       const u = d.getData();
-      return u.type === "pdf" ? `<span>📄 <a href="https://sb.y2k.fund/storage/v1/object/public/resources/${u.url}" target="_blank">${u.file_name}</a></span>` : `<span>🔗 <a href="${u.url}" target="_blank">${u.url}</a></span>`;
+      let c = "";
+      return u.type === "pdf" ? c = `<span>📄 <a href="https://sb.y2k.fund/storage/v1/object/public/resources/${u.url}" target="_blank">${u.file_name}</a></span>` : c = `<span>🔗 <a href="${u.url}" target="_blank">${u.url}</a></span>`, c += ` <button class="tab-btn-delete-resource" data-resource-id="${u.id}" title="Delete Resource" style="margin-left:8px;">🗑️</button>`, c;
     }
     function h() {
       if (s.value) {
@@ -11205,7 +11206,7 @@ const sr = { class: "thesis-item" }, nr = { class: "thesis-expand-icon" }, rr = 
           }
           n = null;
         }
-        n = new ir(s.value, {
+        n = new sr(s.value, {
           data: r(),
           columns: o(),
           layout: "fitColumns",
@@ -11226,6 +11227,10 @@ const sr = { class: "thesis-item" }, nr = { class: "thesis-expand-icon" }, rr = 
               f.innerHTML = "";
               const m = document.createElement("td");
               m.colSpan = c, m.style.background = "#f6f6f6", m.style.fontStyle = "italic", m.innerHTML = a({ getData: () => u }), f.appendChild(m);
+              const g = m.querySelector(".tab-btn-delete-resource");
+              g && g.addEventListener("click", (v) => {
+                v.stopPropagation(), i("delete-resource", t.thesis.id, u.parent, u.id, u.file_name || u.url);
+              });
             }
           },
           cellDblClick: void 0,
@@ -11240,11 +11245,11 @@ const sr = { class: "thesis-item" }, nr = { class: "thesis-expand-icon" }, rr = 
         });
       }
     }
-    return Te(
+    return ke(
       () => t.expandedThesis.has(t.thesis.id),
       async (d) => {
         if (d)
-          await St(), h();
+          await Dt(), h();
         else if (n) {
           try {
             n.destroy();
@@ -11254,42 +11259,42 @@ const sr = { class: "thesis-item" }, nr = { class: "thesis-expand-icon" }, rr = 
         }
       },
       { immediate: !0 }
-    ), Te(
+    ), ke(
       () => [t.thesisStocks[t.thesis.id], t.stockResources],
       () => {
         n && n.replaceData(r());
       },
       { deep: !0 }
-    ), Te(
+    ), ke(
       () => t.editingCell,
       () => {
         n && n.redraw(!0);
       }
-    ), At(() => {
-      t.expandedThesis.has(t.thesis.id) && St(() => {
+    ), Ot(() => {
+      t.expandedThesis.has(t.thesis.id) && Dt(() => {
         h();
       });
     }), (d, u) => {
       var f;
-      const c = Mi("ThesisItem", !0);
+      const c = Li("ThesisItem", !0);
       return M(), z("div", {
-        class: Je(["thesis-item-wrapper", `thesis-item-level-${l.level}`])
+        class: Ke(["thesis-item-wrapper", `thesis-item-level-${l.level}`])
       }, [
-        E("div", sr, [
+        E("div", nr, [
           E("div", {
             class: "thesis-content",
             onClick: u[0] || (u[0] = (m) => i("toggle", t.thesis.id))
           }, [
-            E("div", nr, J(t.expandedThesis.has(t.thesis.id) ? "▼" : "▶"), 1),
-            E("div", rr, [
-              E("div", or, [
-                Ot(J(t.thesis.title) + " ", 1),
-                t.thesis.parent_thesis_id ? (M(), z("span", ar, " ↳ Child ")) : X("", !0)
+            E("div", rr, J(t.expandedThesis.has(t.thesis.id) ? "▼" : "▶"), 1),
+            E("div", or, [
+              E("div", ar, [
+                _t(J(t.thesis.title) + " ", 1),
+                t.thesis.parent_thesis_id ? (M(), z("span", lr, " ↳ Child ")) : X("", !0)
               ]),
-              t.thesis.description ? (M(), z("div", lr, J(t.thesis.description), 1)) : X("", !0)
+              t.thesis.description ? (M(), z("div", hr, J(t.thesis.description), 1)) : X("", !0)
             ])
           ]),
-          E("div", hr, [
+          E("div", dr, [
             E("button", {
               class: "btn btn-secondary btn-sm btn-icon",
               onClick: u[1] || (u[1] = ue((m) => i("edit", l.thesis), ["stop"])),
@@ -11302,8 +11307,8 @@ const sr = { class: "thesis-item" }, nr = { class: "thesis-expand-icon" }, rr = 
             }, " 🗑️ ")
           ])
         ]),
-        t.expandedThesis.has(t.thesis.id) ? (M(), z("div", dr, [
-          E("div", ur, [
+        t.expandedThesis.has(t.thesis.id) ? (M(), z("div", ur, [
+          E("div", cr, [
             E("h4", null, "Instruments (" + J(((f = t.thesisStocks[t.thesis.id]) == null ? void 0 : f.length) || 0) + ")", 1),
             E("button", {
               class: "btn btn-primary btn-sm btn-icon",
@@ -11317,7 +11322,7 @@ const sr = { class: "thesis-item" }, nr = { class: "thesis-expand-icon" }, rr = 
             style: { width: "100%" }
           }, null, 512)
         ])) : X("", !0),
-        t.thesis.children && t.thesis.children.length > 0 ? (M(!0), z(Ae, { key: 1 }, Oe(t.thesis.children, (m) => (M(), _t(c, {
+        t.thesis.children && t.thesis.children.length > 0 ? (M(!0), z(Oe, { key: 1 }, _e(t.thesis.children, (m) => (M(), Bt(c, {
           key: m.id,
           thesis: m,
           level: l.level + 1,
@@ -11328,52 +11333,53 @@ const sr = { class: "thesis-item" }, nr = { class: "thesis-expand-icon" }, rr = 
           "stock-resources": l.stockResources,
           onToggle: u[4] || (u[4] = (g) => i("toggle", g)),
           onEdit: u[5] || (u[5] = (g) => i("edit", g)),
-          onDelete: u[6] || (u[6] = (g, w) => i("delete", g, w)),
+          onDelete: u[6] || (u[6] = (g, v) => i("delete", g, v)),
           onAddStock: u[7] || (u[7] = (g) => i("add-stock", g)),
-          onDeleteStock: u[8] || (u[8] = (g, w, b) => i("delete-stock", g, w, b)),
-          onStartEditCell: u[9] || (u[9] = (g, w, b) => i("start-edit-cell", g, w, b)),
-          onSaveEdit: u[10] || (u[10] = (g, w, b) => i("save-edit", g, w, b)),
+          onDeleteStock: u[8] || (u[8] = (g, v, b) => i("delete-stock", g, v, b)),
+          onStartEditCell: u[9] || (u[9] = (g, v, b) => i("start-edit-cell", g, v, b)),
+          onSaveEdit: u[10] || (u[10] = (g, v, b) => i("save-edit", g, v, b)),
           onCancelEdit: u[11] || (u[11] = () => i("cancel-edit")),
-          onGetCellMetadata: u[12] || (u[12] = (g, w) => i("get-cell-metadata", g, w)),
+          onGetCellMetadata: u[12] || (u[12] = (g, v) => i("get-cell-metadata", g, v)),
           onUpdateEditingValue: u[13] || (u[13] = (g) => i("update-editing-value", g)),
-          onAddResource: u[14] || (u[14] = (g, w) => i("add-resource", g, w))
+          onAddResource: u[14] || (u[14] = (g, v) => i("add-resource", g, v)),
+          onDeleteResource: u[15] || (u[15] = (g, v, b, k) => i("delete-resource", g, v, b, k))
         }, null, 8, ["thesis", "level", "thesis-stocks", "expanded-thesis", "editing-cell", "editing-value", "stock-resources"]))), 128)) : X("", !0)
       ], 2);
     };
   }
-}), li = (l, e) => {
+}), hi = (l, e) => {
   const t = l.__vccOpts || l;
   for (const [i, s] of e)
     t[i] = s;
   return t;
-}, fr = /* @__PURE__ */ li(cr, [["__scopeId", "data-v-24cc2e65"]]), pr = { class: "thesis-card" }, mr = {
+}, pr = /* @__PURE__ */ hi(fr, [["__scopeId", "data-v-2f388449"]]), mr = { class: "thesis-card" }, gr = {
   key: 0,
   class: "loading"
-}, gr = {
+}, br = {
   key: 1,
   class: "error"
-}, br = {
+}, vr = {
   key: 2,
   class: "thesis-container"
-}, vr = { class: "thesis-header" }, wr = { class: "thesis-header-actions" }, Cr = { class: "thesis-list" }, yr = {
+}, wr = { class: "thesis-header" }, Cr = { class: "thesis-header-actions" }, yr = { class: "thesis-list" }, Er = {
   key: 0,
   class: "thesis-empty"
-}, Er = {
+}, Rr = {
   key: 1,
   class: "thesis-items"
-}, Rr = { class: "modal-header" }, xr = { class: "modal-body" }, kr = { class: "form-group" }, Tr = ["for"], Mr = ["id"], Lr = { class: "form-group" }, Sr = ["for"], Dr = ["id"], zr = { class: "form-group" }, Fr = ["for"], Hr = ["id"], Pr = ["value"], Ar = { class: "modal-footer" }, Or = ["disabled"], _r = { class: "modal-header" }, Br = { class: "modal-body" }, Vr = { class: "form-group" }, Ir = { class: "modal-footer" }, Nr = ["disabled"], Wr = { class: "toast-container" }, Gr = ["onClick"], jr = { class: "toast-icon" }, Ur = { key: 0 }, $r = { key: 1 }, Xr = { key: 2 }, Jr = { key: 3 }, Kr = { class: "toast-content" }, qr = { class: "toast-title" }, Yr = {
+}, xr = { class: "modal-header" }, kr = { class: "modal-body" }, Tr = { class: "form-group" }, Mr = ["for"], Lr = ["id"], Sr = { class: "form-group" }, Dr = ["for"], zr = ["id"], Fr = { class: "form-group" }, Hr = ["for"], Ar = ["id"], Pr = ["value"], Or = { class: "modal-footer" }, _r = ["disabled"], Br = { class: "modal-header" }, Vr = { class: "modal-body" }, Ir = { class: "form-group" }, Nr = { class: "modal-footer" }, Wr = ["disabled"], Gr = { class: "toast-container" }, jr = ["onClick"], Ur = { class: "toast-icon" }, $r = { key: 0 }, Xr = { key: 1 }, Jr = { key: 2 }, Kr = { key: 3 }, qr = { class: "toast-content" }, Yr = { class: "toast-title" }, Qr = {
   key: 0,
   class: "toast-message"
-}, Qr = ["onClick"], Zr = {
+}, Zr = ["onClick"], eo = {
   key: 5,
   class: "rename-dialog-backdrop"
-}, eo = { class: "rename-dialog" }, to = { class: "dialog-actions" }, io = { class: "modal-header" }, so = { class: "modal-body" }, no = { class: "form-group" }, ro = {
+}, to = { class: "rename-dialog" }, io = { class: "dialog-actions" }, so = { class: "modal-header" }, no = { class: "modal-body" }, ro = { class: "form-group" }, oo = {
   key: 0,
   class: "form-group"
-}, oo = {
+}, ao = {
   key: 1,
   class: "form-group"
-}, ao = { class: "modal-footer" }, lo = ["disabled"], ho = /* @__PURE__ */ Pt({
+}, lo = { class: "modal-footer" }, ho = ["disabled"], uo = /* @__PURE__ */ Pt({
   __name: "Thesis",
   props: {
     userId: { default: "67e578fd-2cf7-48a4-b028-a11a3f89bb9b" },
@@ -11382,99 +11388,109 @@ const sr = { class: "thesis-item" }, nr = { class: "thesis-expand-icon" }, rr = 
   },
   emits: ["minimize", "navigate"],
   setup(l, { emit: e }) {
-    const t = l, i = e, s = Fi(), n = Hi(), r = Pi(), o = H(""), a = H(/* @__PURE__ */ new Set()), h = H("Thesis Management"), d = H(!1), u = H(""), c = H(!1), f = H(""), m = H("pdf"), g = H(""), w = H(null), b = H(!1), k = H({});
+    const t = l, i = e, s = Hi(), n = Ai(), r = Pi(), o = H(""), a = H(/* @__PURE__ */ new Set()), h = H("Thesis Management"), d = H(!1), u = H(""), c = H(!1), f = H(""), m = H("pdf"), g = H(""), v = H(null), b = H(!1), k = H({});
     function S() {
       return new URL(window.location.href).searchParams.get(`${t.window}_thesis_app_name`) || "Thesis Management";
     }
-    function P(v) {
+    function A(w) {
       const p = new URL(window.location.href);
-      v && v.trim() && v !== "Thesis Management" ? p.searchParams.set(`${t.window}_thesis_app_name`, v.trim()) : p.searchParams.delete(`${t.window}_thesis_app_name`), window.history.replaceState({}, "", p.toString());
+      w && w.trim() && w !== "Thesis Management" ? p.searchParams.set(`${t.window}_thesis_app_name`, w.trim()) : p.searchParams.delete(`${t.window}_thesis_app_name`), window.history.replaceState({}, "", p.toString());
     }
     function D() {
       u.value = h.value, d.value = !0;
     }
     async function B() {
-      const { data: v, error: p } = await n.schema("hf").from("thesisStockResources").select("*");
+      const { data: w, error: p } = await n.schema("hf").from("thesisStockResources").select("*");
       if (p) return;
       const C = {};
-      v.forEach((R) => {
+      w.forEach((R) => {
         C[R.stock_id] || (C[R.stock_id] = []), C[R.stock_id].push(R);
       }), k.value = C;
     }
-    async function Z() {
+    async function Q(w, p, C, R) {
+      if (confirm(`Are you sure you want to delete resource "${R}"?`))
+        try {
+          const { error: O } = await n.schema("hf").from("thesisStockResources").delete().eq("id", C);
+          if (O) throw O;
+          await B(), _("success", "Resource Deleted", `"${R}" has been deleted.`);
+        } catch (O) {
+          _("error", "Error", O.message);
+        }
+    }
+    async function V() {
       b.value = !0;
       try {
-        let v = "", p = "", C = null;
-        if (m.value === "pdf" && w.value) {
-          const { data: R, error: W } = await n.storage.from("resources").upload(`pdfs/${Date.now()}_${w.value.name}`, w.value);
-          if (W) throw W;
-          v = R.path, p = w.value.name;
-        } else m.value === "link" && (v = g.value.trim());
+        let w = "", p = "", C = null;
+        if (m.value === "pdf" && v.value) {
+          const { data: R, error: O } = await n.storage.from("resources").upload(`pdfs/${Date.now()}_${v.value.name}`, v.value);
+          if (O) throw O;
+          w = R.path, p = v.value.name;
+        } else m.value === "link" && (w = g.value.trim());
         await n.schema("hf").from("thesisStockResources").insert([{
           stock_id: f.value,
           type: m.value,
-          url: v,
+          url: w,
           file_name: p || null,
           file_content: C,
           created_by: o.value
-        }]), c.value = !1, await B(), V("success", "Resource Added");
-      } catch (v) {
-        V("error", "Error", v.message);
+        }]), c.value = !1, await B(), _("success", "Resource Added");
+      } catch (w) {
+        _("error", "Error", w.message);
       } finally {
         b.value = !1;
       }
     }
-    function O(v, p) {
-      f.value = p, m.value = "pdf", g.value = "", w.value = null, c.value = !0;
+    function Ce(w, p) {
+      f.value = p, m.value = "pdf", g.value = "", v.value = null, c.value = !0;
     }
-    function we() {
-      h.value = u.value.trim() || "Thesis Management", P(h.value), d.value = !1;
+    function Fe() {
+      h.value = u.value.trim() || "Thesis Management", A(h.value), d.value = !1;
     }
-    At(() => {
-      h.value = S(), a.value = Mt(), B(), window.addEventListener("popstate", () => {
-        h.value = S(), a.value = Mt();
+    Ot(() => {
+      h.value = S(), a.value = Lt(), B(), window.addEventListener("popstate", () => {
+        h.value = S(), a.value = Lt();
       });
-    }), Te(a, (v) => {
-      Lt(v);
+    }), ke(a, (w) => {
+      St(w);
     }, { deep: !0 });
     async function He() {
-      var v;
+      var w;
       try {
         const { data: { user: p } } = await n.auth.getUser();
-        p != null && p.email ? o.value = p.email : (v = p == null ? void 0 : p.user_metadata) != null && v.name ? o.value = p.user_metadata.name : t.userId && (o.value = t.userId);
+        p != null && p.email ? o.value = p.email : (w = p == null ? void 0 : p.user_metadata) != null && w.name ? o.value = p.user_metadata.name : t.userId && (o.value = t.userId);
       } catch (p) {
         console.error("Error fetching current user:", p), t.userId && (o.value = t.userId);
       }
     }
     He();
-    const Ce = H({}), T = H(null), ye = H(null), K = H(!1), Ne = H(""), ee = H("");
-    async function Ee() {
+    const T = H({}), Ae = H(null), oe = H(null), fe = H(!1), We = H(""), Z = H("");
+    async function ye() {
       try {
-        const { data: v, error: p } = await n.schema("hf").from("thesisStocks").select("*").order("symbol");
+        const { data: w, error: p } = await n.schema("hf").from("thesisStocks").select("*").order("symbol");
         if (p) throw p;
         const C = {};
-        v == null || v.forEach((R) => {
+        w == null || w.forEach((R) => {
           C[R.thesis_id] || (C[R.thesis_id] = []), C[R.thesis_id].push(R);
-        }), Ce.value = C;
-      } catch (v) {
-        console.error("Error loading thesis stocks:", v), V("error", "Error", `Failed to load instruments: ${v.message}`);
+        }), T.value = C;
+      } catch (w) {
+        console.error("Error loading thesis stocks:", w), _("error", "Error", `Failed to load instruments: ${w.message}`);
       }
     }
-    Te(() => s.data.value, (v) => {
-      v && v.length > 0 && Ee();
+    ke(() => s.data.value, (w) => {
+      w && w.length > 0 && ye();
     }, { immediate: !0 });
-    function hi(v) {
-      a.value.has(v) ? a.value.delete(v) : a.value.add(v), Lt(a.value);
+    function di(w) {
+      a.value.has(w) ? a.value.delete(w) : a.value.add(w), St(a.value);
     }
-    function di(v) {
-      Ne.value = v, ee.value = "", K.value = !0;
+    function ui(w) {
+      We.value = w, Z.value = "", fe.value = !0;
     }
-    async function Rt() {
-      if (!(!ee.value.trim() || !Ne.value))
+    async function xt() {
+      if (!(!Z.value.trim() || !We.value))
         try {
-          const { data: v, error: p } = await n.schema("hf").from("thesisStocks").insert([{
-            thesis_id: Ne.value,
-            symbol: ee.value.trim().toUpperCase(),
+          const { data: w, error: p } = await n.schema("hf").from("thesisStocks").insert([{
+            thesis_id: We.value,
+            symbol: Z.value.trim().toUpperCase(),
             pe_ratio: null,
             peg_ratio: null,
             passed_checks: !1,
@@ -11484,30 +11500,30 @@ const sr = { class: "thesis-item" }, nr = { class: "thesis-expand-icon" }, rr = 
             next_earnings_date: null
           }]).select();
           if (p) throw p;
-          await Ee(), ee.value = "", K.value = !1, V("success", "Instrument Added", `${ee.value} has been added to the thesis`);
-        } catch (v) {
-          console.error("Error adding stock:", v), V("error", "Error", `Failed to add instrument: ${v.message}`);
+          await ye(), Z.value = "", fe.value = !1, _("success", "Instrument Added", `${Z.value} has been added to the thesis`);
+        } catch (w) {
+          console.error("Error adding stock:", w), _("error", "Error", `Failed to add instrument: ${w.message}`);
         }
     }
-    async function ui(v, p, C) {
+    async function ci(w, p, C) {
       if (confirm(`Are you sure you want to remove ${C} from this thesis?`))
         try {
           const { error: R } = await n.schema("hf").from("thesisStocks").delete().eq("id", p);
           if (R) throw R;
-          await Ee(), V("success", "Instrument Removed", `${C} has been removed from the thesis`);
+          await ye(), _("success", "Instrument Removed", `${C} has been removed from the thesis`);
         } catch (R) {
-          console.error("Error deleting stock:", R), V("error", "Error", `Failed to remove stock: ${R.message}`);
+          console.error("Error deleting stock:", R), _("error", "Error", `Failed to remove stock: ${R.message}`);
         }
     }
-    function ci(v, p, C) {
-      T.value = { thesisId: v, stockId: p.id, field: C }, ye.value = p[C];
+    function fi(w, p, C) {
+      Ae.value = { thesisId: w, stockId: p.id, field: C }, oe.value = p[C];
     }
-    function We() {
-      T.value = null, ye.value = null;
+    function Ge() {
+      Ae.value = null, oe.value = null;
     }
-    async function fi(v, p, C) {
+    async function pi(w, p, C) {
       if (!o.value) {
-        V("error", "Error", "User information not available"), We();
+        _("error", "Error", "User information not available"), Ge();
         return;
       }
       try {
@@ -11516,153 +11532,153 @@ const sr = { class: "thesis-item" }, nr = { class: "thesis-expand-icon" }, rr = 
           // <-- use the value from Tabulator
           [`${p}_updated_by`]: o.value,
           [`${p}_updated_at`]: (/* @__PURE__ */ new Date()).toISOString()
-        }, { error: W } = await n.schema("hf").from("thesisStocks").update(R).eq("id", v.id);
-        if (W) throw W;
-        await Ee(), We(), V("success", "Updated", `${p.replace("_", " ")} has been updated`);
+        }, { error: O } = await n.schema("hf").from("thesisStocks").update(R).eq("id", w.id);
+        if (O) throw O;
+        await ye(), Ge(), _("success", "Updated", `${p.replace("_", " ")} has been updated`);
       } catch (R) {
-        console.error("Error updating stock:", R), V("error", "Error", `Failed to update: ${R.message}`);
+        console.error("Error updating stock:", R), _("error", "Error", `Failed to update: ${R.message}`);
       }
     }
-    function pi(v, p) {
-      const C = v[`${p}_updated_by`], R = v[`${p}_updated_at`];
+    function mi(w, p) {
+      const C = w[`${p}_updated_by`], R = w[`${p}_updated_at`];
       if (C && R) {
-        const W = new Date(R).toLocaleString();
+        const O = new Date(R).toLocaleString();
         return `Updated by: ${C}
-Updated at: ${W}`;
+Updated at: ${O}`;
       }
       return "No updates yet";
     }
-    const q = H(!1), A = H("add"), U = H({ title: "", description: "", parent_thesis_id: null }), N = H({ id: "", title: "", description: "", parent_thesis_id: null }), Ge = Re({
-      get: () => A.value === "add" ? U.value.title : N.value.title,
-      set: (v) => {
-        A.value === "add" ? U.value.title = v : N.value.title = v;
+    const K = H(!1), P = H("add"), U = H({ title: "", description: "", parent_thesis_id: null }), W = H({ id: "", title: "", description: "", parent_thesis_id: null }), je = Ee({
+      get: () => P.value === "add" ? U.value.title : W.value.title,
+      set: (w) => {
+        P.value === "add" ? U.value.title = w : W.value.title = w;
       }
-    }), xt = Re({
-      get: () => A.value === "add" ? U.value.description : N.value.description,
-      set: (v) => {
-        A.value === "add" ? U.value.description = v : N.value.description = v;
+    }), kt = Ee({
+      get: () => P.value === "add" ? U.value.description : W.value.description,
+      set: (w) => {
+        P.value === "add" ? U.value.description = w : W.value.description = w;
       }
-    }), kt = Re({
-      get: () => A.value === "add" ? U.value.parent_thesis_id : N.value.parent_thesis_id,
-      set: (v) => {
-        A.value === "add" ? U.value.parent_thesis_id = v : N.value.parent_thesis_id = v;
+    }), Tt = Ee({
+      get: () => P.value === "add" ? U.value.parent_thesis_id : W.value.parent_thesis_id,
+      set: (w) => {
+        P.value === "add" ? U.value.parent_thesis_id = w : W.value.parent_thesis_id = w;
       }
     }), Pe = H([]);
-    let mi = 0;
-    function V(v, p, C) {
-      const R = mi++;
-      Pe.value.push({ id: R, type: v, title: p, message: C }), setTimeout(() => {
-        je(R);
+    let gi = 0;
+    function _(w, p, C) {
+      const R = gi++;
+      Pe.value.push({ id: R, type: w, title: p, message: C }), setTimeout(() => {
+        Ue(R);
       }, 5e3);
     }
-    function je(v) {
-      const p = Pe.value.findIndex((C) => C.id === v);
+    function Ue(w) {
+      const p = Pe.value.findIndex((C) => C.id === w);
       p !== -1 && Pe.value.splice(p, 1);
     }
-    function gi() {
-      A.value = "add", U.value = { title: "", description: "", parent_thesis_id: null }, q.value = !0;
+    function bi() {
+      P.value = "add", U.value = { title: "", description: "", parent_thesis_id: null }, K.value = !0;
     }
-    async function bi() {
+    async function vi() {
       if (U.value.title.trim())
         try {
-          const { data: v, error: p } = await n.schema("hf").from("thesisMaster").insert([{
+          const { data: w, error: p } = await n.schema("hf").from("thesisMaster").insert([{
             title: U.value.title.trim(),
             description: U.value.description.trim() || null,
             parent_thesis_id: U.value.parent_thesis_id || null
           }]).select();
           if (p) throw p;
-          r.invalidateQueries({ queryKey: ["thesis"] }), U.value = { title: "", description: "", parent_thesis_id: null }, q.value = !1, V("success", "Thesis Added", "New thesis has been created successfully");
-        } catch (v) {
-          console.error("Error adding thesis:", v), V("error", "Error", `Failed to add thesis: ${v.message}`);
+          r.invalidateQueries({ queryKey: ["thesis"] }), U.value = { title: "", description: "", parent_thesis_id: null }, K.value = !1, _("success", "Thesis Added", "New thesis has been created successfully");
+        } catch (w) {
+          console.error("Error adding thesis:", w), _("error", "Error", `Failed to add thesis: ${w.message}`);
         }
     }
-    function vi(v) {
-      N.value = {
-        id: v.id,
-        title: v.title,
-        description: v.description || "",
-        parent_thesis_id: v.parent_thesis_id || null
-      }, A.value = "edit", q.value = !0;
+    function wi(w) {
+      W.value = {
+        id: w.id,
+        title: w.title,
+        description: w.description || "",
+        parent_thesis_id: w.parent_thesis_id || null
+      }, P.value = "edit", K.value = !0;
     }
-    function wi() {
-      N.value = { id: "", title: "", description: "", parent_thesis_id: null }, q.value = !1;
+    function Ci() {
+      W.value = { id: "", title: "", description: "", parent_thesis_id: null }, K.value = !1;
     }
-    async function Ci() {
-      if (N.value.title.trim())
+    async function yi() {
+      if (W.value.title.trim())
         try {
-          const { error: v } = await n.schema("hf").from("thesisMaster").update({
-            title: N.value.title.trim(),
-            description: N.value.description.trim() || null,
-            parent_thesis_id: N.value.parent_thesis_id || null
-          }).eq("id", N.value.id);
-          if (v) throw v;
-          r.invalidateQueries({ queryKey: ["thesis"] }), N.value = { id: "", title: "", description: "", parent_thesis_id: null }, q.value = !1, V("success", "Thesis Updated", "Thesis has been updated successfully");
-        } catch (v) {
-          console.error("Error updating thesis:", v), V("error", "Error", `Failed to update thesis: ${v.message}`);
+          const { error: w } = await n.schema("hf").from("thesisMaster").update({
+            title: W.value.title.trim(),
+            description: W.value.description.trim() || null,
+            parent_thesis_id: W.value.parent_thesis_id || null
+          }).eq("id", W.value.id);
+          if (w) throw w;
+          r.invalidateQueries({ queryKey: ["thesis"] }), W.value = { id: "", title: "", description: "", parent_thesis_id: null }, K.value = !1, _("success", "Thesis Updated", "Thesis has been updated successfully");
+        } catch (w) {
+          console.error("Error updating thesis:", w), _("error", "Error", `Failed to update thesis: ${w.message}`);
         }
     }
-    async function yi(v, p) {
+    async function Ei(w, p) {
       if (confirm(`Are you sure you want to archive thesis "${p}"?
 
 Note: This will also archive all instruments associated with this thesis.`))
         try {
-          await n.schema("hf").from("thesisStocks").delete().eq("thesis_id", v);
-          const { error: C } = await n.schema("hf").from("thesisMaster").delete().eq("id", v);
+          await n.schema("hf").from("thesisStocks").delete().eq("thesis_id", w);
+          const { error: C } = await n.schema("hf").from("thesisMaster").delete().eq("id", w);
           if (C) throw C;
-          r.invalidateQueries({ queryKey: ["thesis"] }), await Ee(), V("success", "Thesis Deleted", "Thesis and associated instruments have been deleted successfully");
+          r.invalidateQueries({ queryKey: ["thesis"] }), await ye(), _("success", "Thesis Deleted", "Thesis and associated instruments have been deleted successfully");
         } catch (C) {
-          console.error("Error deleting thesis:", C), V("error", "Error", `Failed to archive thesis: ${C.message}`);
+          console.error("Error deleting thesis:", C), _("error", "Error", `Failed to archive thesis: ${C.message}`);
         }
     }
-    function Tt(v, p) {
+    function Mt(w, p) {
       var R;
-      if (v === p) return !1;
-      const C = (R = s.data.value) == null ? void 0 : R.find((W) => W.id === v);
-      return C ? C.parent_thesis_id === p ? !1 : C.parent_thesis_id ? Tt(C.parent_thesis_id, p) : !0 : !0;
+      if (w === p) return !1;
+      const C = (R = s.data.value) == null ? void 0 : R.find((O) => O.id === w);
+      return C ? C.parent_thesis_id === p ? !1 : C.parent_thesis_id ? Mt(C.parent_thesis_id, p) : !0 : !0;
     }
-    const Ei = Re(() => {
+    const Ri = Ee(() => {
       if (!s.data.value) return [];
-      const v = A.value === "edit" ? N.value.id : null;
-      return s.data.value.filter((p) => !(v && !Tt(p.id, v)));
-    }), Ri = Re(() => {
+      const w = P.value === "edit" ? W.value.id : null;
+      return s.data.value.filter((p) => !(w && !Mt(p.id, w)));
+    }), xi = Ee(() => {
       if (!s.data.value) return [];
-      const v = s.data.value.filter((R) => !R.parent_thesis_id);
+      const w = s.data.value.filter((R) => !R.parent_thesis_id);
       function p(R) {
-        var W;
-        return ((W = s.data.value) == null ? void 0 : W.filter((Ue) => Ue.parent_thesis_id === R)) || [];
+        var O;
+        return ((O = s.data.value) == null ? void 0 : O.filter(($e) => $e.parent_thesis_id === R)) || [];
       }
       function C(R) {
-        const W = p(R.id);
+        const O = p(R.id);
         return {
           ...R,
-          children: W.map((Ue) => C(Ue))
+          children: O.map(($e) => C($e))
         };
       }
-      return v.map((R) => C(R));
+      return w.map((R) => C(R));
     });
-    function xi(v) {
-      ye.value = v;
+    function ki(w) {
+      oe.value = w;
     }
-    function Mt() {
+    function Lt() {
       const p = new URL(window.location.href).searchParams.get(`${t.window}_expanded_thesis`);
       return p ? new Set(p.split(",").filter(Boolean)) : /* @__PURE__ */ new Set();
     }
-    function Lt(v) {
+    function St(w) {
       const p = new URL(window.location.href);
-      v.size > 0 ? p.searchParams.set(`${t.window}_expanded_thesis`, Array.from(v).join(",")) : p.searchParams.delete(`${t.window}_expanded_thesis`), window.history.replaceState({}, "", p.toString());
+      w.size > 0 ? p.searchParams.set(`${t.window}_expanded_thesis`, Array.from(w).join(",")) : p.searchParams.delete(`${t.window}_expanded_thesis`), window.history.replaceState({}, "", p.toString());
     }
-    return (v, p) => (M(), z("div", pr, [
-      fe(s).isLoading.value ? (M(), z("div", mr, [...p[24] || (p[24] = [
+    return (w, p) => (M(), z("div", mr, [
+      pe(s).isLoading.value ? (M(), z("div", gr, [...p[24] || (p[24] = [
         E("div", { class: "loading-spinner" }, null, -1),
-        Ot(" Loading thesis... ", -1)
-      ])])) : fe(s).isError.value ? (M(), z("div", gr, [
+        _t(" Loading thesis... ", -1)
+      ])])) : pe(s).isError.value ? (M(), z("div", br, [
         p[25] || (p[25] = E("h3", null, "Error loading thesis", -1)),
-        E("p", null, J(fe(s).error.value), 1)
-      ])) : fe(s).isSuccess.value ? (M(), z("div", br, [
-        E("div", vr, [
+        E("p", null, J(pe(s).error.value), 1)
+      ])) : pe(s).isSuccess.value ? (M(), z("div", vr, [
+        E("div", wr, [
           E("h2", null, [
             E("span", {
-              class: Je({ "thesis-header-clickable": t.showHeaderLink }),
+              class: Ke({ "thesis-header-clickable": t.showHeaderLink }),
               onClick: p[0] || (p[0] = (C) => t.showHeaderLink && i("navigate"))
             }, J(h.value), 3),
             E("button", {
@@ -11672,10 +11688,10 @@ Note: This will also archive all instruments associated with this thesis.`))
               style: { width: "auto", padding: "2px 7px", "font-size": "13px", background: "none", border: "none", color: "#888", cursor: "pointer" }
             }, "✎")
           ]),
-          E("div", wr, [
+          E("div", Cr, [
             E("button", {
               class: "btn btn-add",
-              onClick: gi
+              onClick: bi
             }, [...p[26] || (p[26] = [
               E("span", { class: "icon" }, "➕", -1)
             ])]),
@@ -11686,198 +11702,199 @@ Note: This will also archive all instruments associated with this thesis.`))
             }, " X ")
           ])
         ]),
-        E("div", Cr, [
-          !fe(s).data.value || fe(s).data.value.length === 0 ? (M(), z("div", yr, [...p[27] || (p[27] = [
+        E("div", yr, [
+          !pe(s).data.value || pe(s).data.value.length === 0 ? (M(), z("div", Er, [...p[27] || (p[27] = [
             E("p", null, 'No thesis found. Click "Add New Thesis" to create one.', -1)
-          ])])) : (M(), z("div", Er, [
-            (M(!0), z(Ae, null, Oe(Ri.value, (C) => (M(), _t(fr, {
+          ])])) : (M(), z("div", Rr, [
+            (M(!0), z(Oe, null, _e(xi.value, (C) => (M(), Bt(pr, {
               key: C.id,
               thesis: C,
               level: 0,
-              "thesis-stocks": Ce.value,
+              "thesis-stocks": T.value,
               "expanded-thesis": a.value,
-              "editing-cell": T.value,
-              "editing-value": ye.value,
+              "editing-cell": Ae.value,
+              "editing-value": oe.value,
               "stock-resources": k.value,
-              onToggle: hi,
-              onEdit: vi,
-              onDelete: yi,
-              onAddStock: di,
-              onDeleteStock: ui,
-              onStartEditCell: ci,
-              onSaveEdit: fi,
-              onCancelEdit: We,
-              onGetCellMetadata: pi,
-              onUpdateEditingValue: xi,
-              onAddResource: O
+              onToggle: di,
+              onEdit: wi,
+              onDelete: Ei,
+              onAddStock: ui,
+              onDeleteStock: ci,
+              onStartEditCell: fi,
+              onSaveEdit: pi,
+              onCancelEdit: Ge,
+              onGetCellMetadata: mi,
+              onUpdateEditingValue: ki,
+              onAddResource: Ce,
+              onDeleteResource: Q
             }, null, 8, ["thesis", "thesis-stocks", "expanded-thesis", "editing-cell", "editing-value", "stock-resources"]))), 128))
           ]))
         ])
       ])) : X("", !0),
-      q.value ? (M(), z("div", {
+      K.value ? (M(), z("div", {
         key: 3,
         class: "modal-overlay",
-        onClick: p[9] || (p[9] = (C) => q.value = !1)
+        onClick: p[9] || (p[9] = (C) => K.value = !1)
       }, [
         E("div", {
           class: "modal-content",
           onClick: p[8] || (p[8] = ue(() => {
           }, ["stop"]))
         }, [
-          E("div", Rr, [
-            E("h3", null, J(A.value === "add" ? "Add New Thesis" : "Edit Thesis"), 1),
+          E("div", xr, [
+            E("h3", null, J(P.value === "add" ? "Add New Thesis" : "Edit Thesis"), 1),
             E("button", {
               class: "modal-close",
-              onClick: p[2] || (p[2] = (C) => q.value = !1)
+              onClick: p[2] || (p[2] = (C) => K.value = !1)
             }, "×")
           ]),
-          E("div", xr, [
-            E("div", kr, [
+          E("div", kr, [
+            E("div", Tr, [
               E("label", {
-                for: A.value === "add" ? "thesis-title" : "edit-thesis-title"
-              }, " Title * ", 8, Tr),
+                for: P.value === "add" ? "thesis-title" : "edit-thesis-title"
+              }, " Title * ", 8, Mr),
               ae(E("input", {
-                id: A.value === "add" ? "thesis-title" : "edit-thesis-title",
-                "onUpdate:modelValue": p[3] || (p[3] = (C) => Ge.value = C),
+                id: P.value === "add" ? "thesis-title" : "edit-thesis-title",
+                "onUpdate:modelValue": p[3] || (p[3] = (C) => je.value = C),
                 type: "text",
                 placeholder: "Enter thesis title",
                 maxlength: "100",
                 autofocus: ""
-              }, null, 8, Mr), [
-                [xe, Ge.value]
+              }, null, 8, Lr), [
+                [Re, je.value]
               ])
             ]),
-            E("div", Lr, [
+            E("div", Sr, [
               E("label", {
-                for: A.value === "add" ? "thesis-description" : "edit-thesis-description"
-              }, " Description ", 8, Sr),
+                for: P.value === "add" ? "thesis-description" : "edit-thesis-description"
+              }, " Description ", 8, Dr),
               ae(E("textarea", {
-                id: A.value === "add" ? "thesis-description" : "edit-thesis-description",
-                "onUpdate:modelValue": p[4] || (p[4] = (C) => xt.value = C),
+                id: P.value === "add" ? "thesis-description" : "edit-thesis-description",
+                "onUpdate:modelValue": p[4] || (p[4] = (C) => kt.value = C),
                 placeholder: "Enter thesis description (optional)",
                 rows: "4",
                 maxlength: "500"
-              }, null, 8, Dr), [
-                [xe, xt.value]
+              }, null, 8, zr), [
+                [Re, kt.value]
               ])
             ]),
-            E("div", zr, [
+            E("div", Fr, [
               E("label", {
-                for: A.value === "add" ? "thesis-parent" : "edit-thesis-parent"
-              }, " Parent Thesis ", 8, Fr),
+                for: P.value === "add" ? "thesis-parent" : "edit-thesis-parent"
+              }, " Parent Thesis ", 8, Hr),
               ae(E("select", {
-                id: A.value === "add" ? "thesis-parent" : "edit-thesis-parent",
-                "onUpdate:modelValue": p[5] || (p[5] = (C) => kt.value = C)
+                id: P.value === "add" ? "thesis-parent" : "edit-thesis-parent",
+                "onUpdate:modelValue": p[5] || (p[5] = (C) => Tt.value = C)
               }, [
                 p[28] || (p[28] = E("option", { value: null }, "None (Root Thesis)", -1)),
-                (M(!0), z(Ae, null, Oe(Ei.value, (C) => (M(), z("option", {
+                (M(!0), z(Oe, null, _e(Ri.value, (C) => (M(), z("option", {
                   key: C.id,
                   value: C.id
                 }, J(C.title), 9, Pr))), 128))
-              ], 8, Hr), [
-                [Dt, kt.value]
+              ], 8, Ar), [
+                [zt, Tt.value]
               ]),
               p[29] || (p[29] = E("small", { class: "form-hint" }, "Select a parent thesis to create a hierarchical structure", -1))
             ])
           ]),
-          E("div", Ar, [
+          E("div", Or, [
             E("button", {
               class: "btn btn-cancel",
-              onClick: p[6] || (p[6] = (C) => A.value === "edit" ? wi() : q.value = !1)
+              onClick: p[6] || (p[6] = (C) => P.value === "edit" ? Ci() : K.value = !1)
             }, " Cancel "),
             E("button", {
               class: "btn btn-primary",
-              onClick: p[7] || (p[7] = (C) => A.value === "add" ? bi() : Ci()),
-              disabled: !Ge.value.trim()
-            }, J(A.value === "add" ? "Add Thesis" : "Save Changes"), 9, Or)
+              onClick: p[7] || (p[7] = (C) => P.value === "add" ? vi() : yi()),
+              disabled: !je.value.trim()
+            }, J(P.value === "add" ? "Add Thesis" : "Save Changes"), 9, _r)
           ])
         ])
       ])) : X("", !0),
-      K.value ? (M(), z("div", {
+      fe.value ? (M(), z("div", {
         key: 4,
         class: "modal-overlay",
-        onClick: p[14] || (p[14] = (C) => K.value = !1)
+        onClick: p[14] || (p[14] = (C) => fe.value = !1)
       }, [
         E("div", {
           class: "modal-content",
           onClick: p[13] || (p[13] = ue(() => {
           }, ["stop"]))
         }, [
-          E("div", _r, [
+          E("div", Br, [
             p[30] || (p[30] = E("h3", null, "Add Instrument to Thesis", -1)),
             E("button", {
               class: "modal-close",
-              onClick: p[10] || (p[10] = (C) => K.value = !1)
+              onClick: p[10] || (p[10] = (C) => fe.value = !1)
             }, "×")
           ]),
-          E("div", Br, [
-            E("div", Vr, [
+          E("div", Vr, [
+            E("div", Ir, [
               p[31] || (p[31] = E("label", { for: "stock-symbol" }, "Instrument Symbol *", -1)),
               ae(E("input", {
                 id: "stock-symbol",
-                "onUpdate:modelValue": p[11] || (p[11] = (C) => ee.value = C),
+                "onUpdate:modelValue": p[11] || (p[11] = (C) => Z.value = C),
                 type: "text",
                 placeholder: "Enter instrument symbol (e.g., AAPL)",
                 maxlength: "10",
                 autofocus: "",
-                onKeyup: Li(Rt, ["enter"])
+                onKeyup: Si(xt, ["enter"])
               }, null, 544), [
-                [xe, ee.value]
+                [Re, Z.value]
               ])
             ])
           ]),
-          E("div", Ir, [
+          E("div", Nr, [
             E("button", {
               class: "btn btn-cancel",
-              onClick: p[12] || (p[12] = (C) => K.value = !1)
+              onClick: p[12] || (p[12] = (C) => fe.value = !1)
             }, " Cancel "),
             E("button", {
               class: "btn btn-primary",
-              onClick: Rt,
-              disabled: !ee.value.trim()
-            }, " Add Instrument ", 8, Nr)
+              onClick: xt,
+              disabled: !Z.value.trim()
+            }, " Add Instrument ", 8, Wr)
           ])
         ])
       ])) : X("", !0),
-      E("div", Wr, [
-        Si(Di, {
+      E("div", Gr, [
+        Di(zi, {
           name: "toast",
           tag: "div"
         }, {
-          default: zi(() => [
-            (M(!0), z(Ae, null, Oe(Pe.value, (C) => (M(), z("div", {
+          default: Fi(() => [
+            (M(!0), z(Oe, null, _e(Pe.value, (C) => (M(), z("div", {
               key: C.id,
-              class: Je(["toast", `toast-${C.type}`]),
-              onClick: (R) => je(C.id)
+              class: Ke(["toast", `toast-${C.type}`]),
+              onClick: (R) => Ue(C.id)
             }, [
-              E("div", jr, [
-                C.type === "success" ? (M(), z("span", Ur, "✅")) : C.type === "error" ? (M(), z("span", $r, "❌")) : C.type === "warning" ? (M(), z("span", Xr, "⚠️")) : C.type === "info" ? (M(), z("span", Jr, "ℹ️")) : X("", !0)
+              E("div", Ur, [
+                C.type === "success" ? (M(), z("span", $r, "✅")) : C.type === "error" ? (M(), z("span", Xr, "❌")) : C.type === "warning" ? (M(), z("span", Jr, "⚠️")) : C.type === "info" ? (M(), z("span", Kr, "ℹ️")) : X("", !0)
               ]),
-              E("div", Kr, [
-                E("div", qr, J(C.title), 1),
-                C.message ? (M(), z("div", Yr, J(C.message), 1)) : X("", !0)
+              E("div", qr, [
+                E("div", Yr, J(C.title), 1),
+                C.message ? (M(), z("div", Qr, J(C.message), 1)) : X("", !0)
               ]),
               E("button", {
                 class: "toast-close",
-                onClick: ue((R) => je(C.id), ["stop"]),
+                onClick: ue((R) => Ue(C.id), ["stop"]),
                 "aria-label": "Close notification"
-              }, " × ", 8, Qr)
-            ], 10, Gr))), 128))
+              }, " × ", 8, Zr)
+            ], 10, jr))), 128))
           ]),
           _: 1
         })
       ]),
-      d.value ? (M(), z("div", Zr, [
-        E("div", eo, [
+      d.value ? (M(), z("div", eo, [
+        E("div", to, [
           p[32] || (p[32] = E("h3", null, "Rename App", -1)),
           ae(E("input", {
             "onUpdate:modelValue": p[15] || (p[15] = (C) => u.value = C),
             placeholder: "App name"
           }, null, 512), [
-            [xe, u.value]
+            [Re, u.value]
           ]),
-          E("div", to, [
-            E("button", { onClick: we }, "Save"),
+          E("div", io, [
+            E("button", { onClick: Fe }, "Save"),
             E("button", {
               onClick: p[16] || (p[16] = (C) => d.value = !1)
             }, "Cancel")
@@ -11894,15 +11911,15 @@ Note: This will also archive all instruments associated with this thesis.`))
           onClick: p[22] || (p[22] = ue(() => {
           }, ["stop"]))
         }, [
-          E("div", io, [
+          E("div", so, [
             p[33] || (p[33] = E("h3", null, "Add Resource", -1)),
             E("button", {
               class: "modal-close",
               onClick: p[17] || (p[17] = (C) => c.value = !1)
             }, "×")
           ]),
-          E("div", so, [
-            E("div", no, [
+          E("div", no, [
+            E("div", ro, [
               p[35] || (p[35] = E("label", null, "Type", -1)),
               ae(E("select", {
                 "onUpdate:modelValue": p[18] || (p[18] = (C) => m.value = C)
@@ -11910,28 +11927,28 @@ Note: This will also archive all instruments associated with this thesis.`))
                 E("option", { value: "pdf" }, "PDF", -1),
                 E("option", { value: "link" }, "Webpage/YouTube Link", -1)
               ])], 512), [
-                [Dt, m.value]
+                [zt, m.value]
               ])
             ]),
-            m.value === "pdf" ? (M(), z("div", ro, [
+            m.value === "pdf" ? (M(), z("div", oo, [
               p[36] || (p[36] = E("label", null, "PDF File", -1)),
               E("input", {
                 type: "file",
                 accept: "application/pdf",
-                onChange: p[19] || (p[19] = (C) => w.value = C.target.files[0])
+                onChange: p[19] || (p[19] = (C) => v.value = C.target.files[0])
               }, null, 32)
-            ])) : (M(), z("div", oo, [
+            ])) : (M(), z("div", ao, [
               p[37] || (p[37] = E("label", null, "URL", -1)),
               ae(E("input", {
                 type: "url",
                 "onUpdate:modelValue": p[20] || (p[20] = (C) => g.value = C),
                 placeholder: "https://..."
               }, null, 512), [
-                [xe, g.value]
+                [Re, g.value]
               ])
             ]))
           ]),
-          E("div", ao, [
+          E("div", lo, [
             E("button", {
               class: "btn btn-cancel",
               onClick: p[21] || (p[21] = (C) => c.value = !1)
@@ -11939,19 +11956,19 @@ Note: This will also archive all instruments associated with this thesis.`))
             E("button", {
               class: "btn btn-primary",
               disabled: b.value,
-              onClick: Z
-            }, " Save ", 8, lo)
+              onClick: V
+            }, " Save ", 8, ho)
           ])
         ])
       ])) : X("", !0)
     ]));
   }
-}), uo = /* @__PURE__ */ li(ho, [["__scopeId", "data-v-7da61526"]]), bo = {
+}), co = /* @__PURE__ */ hi(uo, [["__scopeId", "data-v-f662a66e"]]), vo = {
   install(l) {
-    l.component("Thesis", uo);
+    l.component("Thesis", co);
   }
 };
 export {
-  uo as Thesis,
-  bo as default
+  co as Thesis,
+  vo as default
 };
