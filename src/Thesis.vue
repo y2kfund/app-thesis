@@ -15,6 +15,7 @@ const props = withDefaults(defineProps<ThesisProps>(), {
 const emit = defineEmits<{ 
   'minimize': []
   'navigate': []
+  'maximize': []
 }>()
 
 // Query thesis data
@@ -692,6 +693,13 @@ function writeExpandedThesisToUrl(expanded: Set<string>) {
         <div class="thesis-header-actions">
           <button class="btn btn-add" @click="showThesisModalForAdd">
             <span class="icon">➕</span>
+          </button>
+          <button
+              @click="emit('maximize')"
+              class="btn btn-minimize"
+              title="Maximize"
+            >
+            ⤢
           </button>
           <button 
             class="btn btn-minimize" 

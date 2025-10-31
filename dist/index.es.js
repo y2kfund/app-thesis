@@ -11386,7 +11386,7 @@ const nr = { class: "thesis-item" }, rr = { class: "thesis-expand-icon" }, or = 
     showHeaderLink: { type: Boolean, default: !1 },
     window: { default: null }
   },
-  emits: ["minimize", "navigate"],
+  emits: ["minimize", "navigate", "maximize"],
   setup(l, { emit: e }) {
     const t = l, i = e, s = Hi(), n = Ai(), r = Pi(), o = H(""), a = H(/* @__PURE__ */ new Set()), h = H("Thesis Management"), d = H(!1), u = H(""), c = H(!1), f = H(""), m = H("pdf"), g = H(""), v = H(null), b = H(!1), k = H({});
     function S() {
@@ -11668,11 +11668,11 @@ Note: This will also archive all instruments associated with this thesis.`))
       w.size > 0 ? p.searchParams.set(`${t.window}_expanded_thesis`, Array.from(w).join(",")) : p.searchParams.delete(`${t.window}_expanded_thesis`), window.history.replaceState({}, "", p.toString());
     }
     return (w, p) => (M(), z("div", mr, [
-      pe(s).isLoading.value ? (M(), z("div", gr, [...p[24] || (p[24] = [
+      pe(s).isLoading.value ? (M(), z("div", gr, [...p[25] || (p[25] = [
         E("div", { class: "loading-spinner" }, null, -1),
         _t(" Loading thesis... ", -1)
       ])])) : pe(s).isError.value ? (M(), z("div", br, [
-        p[25] || (p[25] = E("h3", null, "Error loading thesis", -1)),
+        p[26] || (p[26] = E("h3", null, "Error loading thesis", -1)),
         E("p", null, J(pe(s).error.value), 1)
       ])) : pe(s).isSuccess.value ? (M(), z("div", vr, [
         E("div", wr, [
@@ -11692,18 +11692,23 @@ Note: This will also archive all instruments associated with this thesis.`))
             E("button", {
               class: "btn btn-add",
               onClick: bi
-            }, [...p[26] || (p[26] = [
+            }, [...p[27] || (p[27] = [
               E("span", { class: "icon" }, "➕", -1)
             ])]),
             E("button", {
+              onClick: p[1] || (p[1] = (C) => i("maximize")),
               class: "btn btn-minimize",
-              onClick: p[1] || (p[1] = (C) => i("minimize")),
+              title: "Maximize"
+            }, " ⤢ "),
+            E("button", {
+              class: "btn btn-minimize",
+              onClick: p[2] || (p[2] = (C) => i("minimize")),
               title: "Close"
             }, " X ")
           ])
         ]),
         E("div", yr, [
-          !pe(s).data.value || pe(s).data.value.length === 0 ? (M(), z("div", Er, [...p[27] || (p[27] = [
+          !pe(s).data.value || pe(s).data.value.length === 0 ? (M(), z("div", Er, [...p[28] || (p[28] = [
             E("p", null, 'No thesis found. Click "Add New Thesis" to create one.', -1)
           ])])) : (M(), z("div", Rr, [
             (M(!0), z(Oe, null, _e(xi.value, (C) => (M(), Bt(pr, {
@@ -11734,18 +11739,18 @@ Note: This will also archive all instruments associated with this thesis.`))
       K.value ? (M(), z("div", {
         key: 3,
         class: "modal-overlay",
-        onClick: p[9] || (p[9] = (C) => K.value = !1)
+        onClick: p[10] || (p[10] = (C) => K.value = !1)
       }, [
         E("div", {
           class: "modal-content",
-          onClick: p[8] || (p[8] = ue(() => {
+          onClick: p[9] || (p[9] = ue(() => {
           }, ["stop"]))
         }, [
           E("div", xr, [
             E("h3", null, J(P.value === "add" ? "Add New Thesis" : "Edit Thesis"), 1),
             E("button", {
               class: "modal-close",
-              onClick: p[2] || (p[2] = (C) => K.value = !1)
+              onClick: p[3] || (p[3] = (C) => K.value = !1)
             }, "×")
           ]),
           E("div", kr, [
@@ -11755,7 +11760,7 @@ Note: This will also archive all instruments associated with this thesis.`))
               }, " Title * ", 8, Mr),
               ae(E("input", {
                 id: P.value === "add" ? "thesis-title" : "edit-thesis-title",
-                "onUpdate:modelValue": p[3] || (p[3] = (C) => je.value = C),
+                "onUpdate:modelValue": p[4] || (p[4] = (C) => je.value = C),
                 type: "text",
                 placeholder: "Enter thesis title",
                 maxlength: "100",
@@ -11770,7 +11775,7 @@ Note: This will also archive all instruments associated with this thesis.`))
               }, " Description ", 8, Dr),
               ae(E("textarea", {
                 id: P.value === "add" ? "thesis-description" : "edit-thesis-description",
-                "onUpdate:modelValue": p[4] || (p[4] = (C) => kt.value = C),
+                "onUpdate:modelValue": p[5] || (p[5] = (C) => kt.value = C),
                 placeholder: "Enter thesis description (optional)",
                 rows: "4",
                 maxlength: "500"
@@ -11784,9 +11789,9 @@ Note: This will also archive all instruments associated with this thesis.`))
               }, " Parent Thesis ", 8, Hr),
               ae(E("select", {
                 id: P.value === "add" ? "thesis-parent" : "edit-thesis-parent",
-                "onUpdate:modelValue": p[5] || (p[5] = (C) => Tt.value = C)
+                "onUpdate:modelValue": p[6] || (p[6] = (C) => Tt.value = C)
               }, [
-                p[28] || (p[28] = E("option", { value: null }, "None (Root Thesis)", -1)),
+                p[29] || (p[29] = E("option", { value: null }, "None (Root Thesis)", -1)),
                 (M(!0), z(Oe, null, _e(Ri.value, (C) => (M(), z("option", {
                   key: C.id,
                   value: C.id
@@ -11794,17 +11799,17 @@ Note: This will also archive all instruments associated with this thesis.`))
               ], 8, Ar), [
                 [zt, Tt.value]
               ]),
-              p[29] || (p[29] = E("small", { class: "form-hint" }, "Select a parent thesis to create a hierarchical structure", -1))
+              p[30] || (p[30] = E("small", { class: "form-hint" }, "Select a parent thesis to create a hierarchical structure", -1))
             ])
           ]),
           E("div", Or, [
             E("button", {
               class: "btn btn-cancel",
-              onClick: p[6] || (p[6] = (C) => P.value === "edit" ? Ci() : K.value = !1)
+              onClick: p[7] || (p[7] = (C) => P.value === "edit" ? Ci() : K.value = !1)
             }, " Cancel "),
             E("button", {
               class: "btn btn-primary",
-              onClick: p[7] || (p[7] = (C) => P.value === "add" ? vi() : yi()),
+              onClick: p[8] || (p[8] = (C) => P.value === "add" ? vi() : yi()),
               disabled: !je.value.trim()
             }, J(P.value === "add" ? "Add Thesis" : "Save Changes"), 9, _r)
           ])
@@ -11813,26 +11818,26 @@ Note: This will also archive all instruments associated with this thesis.`))
       fe.value ? (M(), z("div", {
         key: 4,
         class: "modal-overlay",
-        onClick: p[14] || (p[14] = (C) => fe.value = !1)
+        onClick: p[15] || (p[15] = (C) => fe.value = !1)
       }, [
         E("div", {
           class: "modal-content",
-          onClick: p[13] || (p[13] = ue(() => {
+          onClick: p[14] || (p[14] = ue(() => {
           }, ["stop"]))
         }, [
           E("div", Br, [
-            p[30] || (p[30] = E("h3", null, "Add Instrument to Thesis", -1)),
+            p[31] || (p[31] = E("h3", null, "Add Instrument to Thesis", -1)),
             E("button", {
               class: "modal-close",
-              onClick: p[10] || (p[10] = (C) => fe.value = !1)
+              onClick: p[11] || (p[11] = (C) => fe.value = !1)
             }, "×")
           ]),
           E("div", Vr, [
             E("div", Ir, [
-              p[31] || (p[31] = E("label", { for: "stock-symbol" }, "Instrument Symbol *", -1)),
+              p[32] || (p[32] = E("label", { for: "stock-symbol" }, "Instrument Symbol *", -1)),
               ae(E("input", {
                 id: "stock-symbol",
-                "onUpdate:modelValue": p[11] || (p[11] = (C) => Z.value = C),
+                "onUpdate:modelValue": p[12] || (p[12] = (C) => Z.value = C),
                 type: "text",
                 placeholder: "Enter instrument symbol (e.g., AAPL)",
                 maxlength: "10",
@@ -11846,7 +11851,7 @@ Note: This will also archive all instruments associated with this thesis.`))
           E("div", Nr, [
             E("button", {
               class: "btn btn-cancel",
-              onClick: p[12] || (p[12] = (C) => fe.value = !1)
+              onClick: p[13] || (p[13] = (C) => fe.value = !1)
             }, " Cancel "),
             E("button", {
               class: "btn btn-primary",
@@ -11886,9 +11891,9 @@ Note: This will also archive all instruments associated with this thesis.`))
       ]),
       d.value ? (M(), z("div", eo, [
         E("div", to, [
-          p[32] || (p[32] = E("h3", null, "Rename App", -1)),
+          p[33] || (p[33] = E("h3", null, "Rename App", -1)),
           ae(E("input", {
-            "onUpdate:modelValue": p[15] || (p[15] = (C) => u.value = C),
+            "onUpdate:modelValue": p[16] || (p[16] = (C) => u.value = C),
             placeholder: "App name"
           }, null, 512), [
             [Re, u.value]
@@ -11896,7 +11901,7 @@ Note: This will also archive all instruments associated with this thesis.`))
           E("div", io, [
             E("button", { onClick: Fe }, "Save"),
             E("button", {
-              onClick: p[16] || (p[16] = (C) => d.value = !1)
+              onClick: p[17] || (p[17] = (C) => d.value = !1)
             }, "Cancel")
           ])
         ])
@@ -11904,26 +11909,26 @@ Note: This will also archive all instruments associated with this thesis.`))
       c.value ? (M(), z("div", {
         key: 6,
         class: "modal-overlay",
-        onClick: p[23] || (p[23] = (C) => c.value = !1)
+        onClick: p[24] || (p[24] = (C) => c.value = !1)
       }, [
         E("div", {
           class: "modal-content",
-          onClick: p[22] || (p[22] = ue(() => {
+          onClick: p[23] || (p[23] = ue(() => {
           }, ["stop"]))
         }, [
           E("div", so, [
-            p[33] || (p[33] = E("h3", null, "Add Resource", -1)),
+            p[34] || (p[34] = E("h3", null, "Add Resource", -1)),
             E("button", {
               class: "modal-close",
-              onClick: p[17] || (p[17] = (C) => c.value = !1)
+              onClick: p[18] || (p[18] = (C) => c.value = !1)
             }, "×")
           ]),
           E("div", no, [
             E("div", ro, [
-              p[35] || (p[35] = E("label", null, "Type", -1)),
+              p[36] || (p[36] = E("label", null, "Type", -1)),
               ae(E("select", {
-                "onUpdate:modelValue": p[18] || (p[18] = (C) => m.value = C)
-              }, [...p[34] || (p[34] = [
+                "onUpdate:modelValue": p[19] || (p[19] = (C) => m.value = C)
+              }, [...p[35] || (p[35] = [
                 E("option", { value: "pdf" }, "PDF", -1),
                 E("option", { value: "link" }, "Webpage/YouTube Link", -1)
               ])], 512), [
@@ -11931,17 +11936,17 @@ Note: This will also archive all instruments associated with this thesis.`))
               ])
             ]),
             m.value === "pdf" ? (M(), z("div", oo, [
-              p[36] || (p[36] = E("label", null, "PDF File", -1)),
+              p[37] || (p[37] = E("label", null, "PDF File", -1)),
               E("input", {
                 type: "file",
                 accept: "application/pdf",
-                onChange: p[19] || (p[19] = (C) => v.value = C.target.files[0])
+                onChange: p[20] || (p[20] = (C) => v.value = C.target.files[0])
               }, null, 32)
             ])) : (M(), z("div", ao, [
-              p[37] || (p[37] = E("label", null, "URL", -1)),
+              p[38] || (p[38] = E("label", null, "URL", -1)),
               ae(E("input", {
                 type: "url",
-                "onUpdate:modelValue": p[20] || (p[20] = (C) => g.value = C),
+                "onUpdate:modelValue": p[21] || (p[21] = (C) => g.value = C),
                 placeholder: "https://..."
               }, null, 512), [
                 [Re, g.value]
@@ -11951,7 +11956,7 @@ Note: This will also archive all instruments associated with this thesis.`))
           E("div", lo, [
             E("button", {
               class: "btn btn-cancel",
-              onClick: p[21] || (p[21] = (C) => c.value = !1)
+              onClick: p[22] || (p[22] = (C) => c.value = !1)
             }, "Cancel"),
             E("button", {
               class: "btn btn-primary",
@@ -11963,7 +11968,7 @@ Note: This will also archive all instruments associated with this thesis.`))
       ])) : X("", !0)
     ]));
   }
-}), co = /* @__PURE__ */ hi(uo, [["__scopeId", "data-v-f662a66e"]]), vo = {
+}), co = /* @__PURE__ */ hi(uo, [["__scopeId", "data-v-010d74d9"]]), vo = {
   install(l) {
     l.component("Thesis", co);
   }
